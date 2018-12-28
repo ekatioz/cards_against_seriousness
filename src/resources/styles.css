@@ -1,0 +1,56 @@
+@font-face {
+    font-family: ClozeFont;
+    src: url(./orange_juice.ttf);
+}
+
+body {
+    background-color: #222;
+    color: #fff;
+}
+
+.cloze {
+    font-family: ClozeFont;
+    text-align: center;
+    font-size: 40pt;
+}
+
+.hand {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+@media screen and (orientation:portrait) {
+    .hand {
+        height: 30%;
+    }
+}
+
+@media screen and (orientation:landscape) {
+    .hand {
+        height: 70%;
+    }
+}
+
+.card {
+    position: absolute;
+    width: 20%;
+    height: 90%;
+    background: whitesmoke;
+    box-shadow: 0px 0px 2px 1px #000;
+    border-radius: 5%;
+    padding: 10px;
+    transform-origin: 50% 150%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    transition: all 200ms;
+    font-family: ClozeFont;
+    font-size: xx-large;
+    color: #000;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 12px 6px #000;
+    z-index: 5;
+}
