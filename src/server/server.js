@@ -1,7 +1,7 @@
 const WebSocket = require('ws');
 const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://localhost:27017/";
-const wss = new WebSocket.Server({ port: 13700 });
+const url = "mongodb://raspberrypi:27017/";
+const wss = new WebSocket.Server({ port: 13700 ,useNewUrlParser: true });
 
 // Broadcast to all.
 wss.broadcast = data => {
@@ -41,7 +41,7 @@ function handleRequest(ws, data) {
         const dbo = db.db("cards_against");
         dbo.collection("cards").find({type:data.topic},{ projection: { _id: 0, type: 0} }).toArray((err, result) => {
           if (err) throw err;
-          const response = getRandom(result.map(r => r.text),data.count);
+          const response = getRandom(result.map(r => r.text),data.count||1);
           ws.send(JSON.stringify({type:data.type,topic:data.topic,response:response}));
           console.log(response);
           db.close();

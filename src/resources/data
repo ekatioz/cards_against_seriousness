@@ -1,0 +1,16 @@
+{ "_id" : ObjectId("5c2624f749869f905e04c574"), "type" : "whitecard", "text" : "nicht an Giraffen zu glauben" }
+{ "_id" : ObjectId("5c2624f749869f905e04c575"), "type" : "whitecard", "text" : "Kapitalhai" }
+{ "_id" : ObjectId("5c2624f749869f905e04c576"), "type" : "whitecard", "text" : "Taschen voll Geld" }
+{ "_id" : ObjectId("5c2624f749869f905e04c577"), "type" : "whitecard", "text" : "einen Penis zu haben" }
+{ "_id" : ObjectId("5c2624f749869f905e04c578"), "type" : "whitecard", "text" : "eine homoerotische Volleyball-Montage" }
+{ "_id" : ObjectId("5c2624f749869f905e04c579"), "type" : "whitecard", "text" : "dämonische Besessenheit" }
+{ "_id" : ObjectId("5c2624f749869f905e04c57a"), "type" : "whitecard", "text" : "wichtige Neuigkeiten über Taylor Swift" }
+{ "_id" : ObjectId("5c2624f749869f905e04c57b"), "type" : "whitecard", "text" : "Hitlers Schnurrbart" }
+{ "_id" : ObjectId("5c2624f749869f905e04c57c"), "type" : "whitecard", "text" : "die Verletzung der Meschenrechte" }
+{ "_id" : ObjectId("5c2624f749869f905e04c57d"), "type" : "whitecard", "text" : "Rassismus" }
+{ "_id" : ObjectId("5c2624f749869f905e04c57e"), "type" : "whitecard", "text" : "natürliche Auslese" }
+
+{ "_id" : ObjectId("5c26226949869f905e04c570"), "type" : "blackcard", "text" : [ "Ohne", "wäre alles besser!" ] }
+{ "_id" : ObjectId("5c2622e449869f905e04c571"), "type" : "blackcard", "text" : [ "Beim Sex denke ich gerne an", "." ] }
+{ "_id" : ObjectId("5c26230649869f905e04c572"), "type" : "blackcard", "text" : [ "Ich trinke um", "zu vergessen." ] }
+{ "_id" : ObjectId("5c26234649869f905e04c573"), "type" : "blackcard", "text" : [ "Hier an der Schule für begabte Kinder erlauben wir den Schülern", "in ihrem eigenen Tempo zu erkunden." ] }
