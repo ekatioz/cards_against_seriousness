@@ -54,3 +54,35 @@ body {
     box-shadow: 0px 0px 12px 6px #000;
     z-index: 5;
 }
+
+.lobby {
+    padding:10%;
+}
+
+.username-input{
+    font-family: ClozeFont;
+    background-color: transparent;
+    font-size: 40pt;
+    border:2px solid white;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    text-align: center;
+    color: #fff;
+    width: 100%;
+    text-decoration: none;
+}
+
+.start-button{
+    font-family: ClozeFont;
+    background-color: #eee;
+    border:none;
+    border-radius: 5%;
+    font-size: 50pt;
+    position: absolute;
+    bottom:15%;
+    width: 30%;
+    right:0;
+    left:0;
+    margin: 0 auto;
+}

@@ -1,7 +1,13 @@
 const WebSocket = require('ws');
-const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://raspberrypi:27017/";
-const wss = new WebSocket.Server({ port: 13700 ,useNewUrlParser: true });
+const wss = new WebSocket.Server({ port: 13700 });
+
+var mysql = require('mysql')
+var connection = mysql.createConnection({
+    host: 'raspberrypi',
+    user: 'root',
+    password: 'jla3vw39y',
+    database: 'cards_against'
+});
 
 // Broadcast to all.
 wss.broadcast = data => {
@@ -17,12 +23,12 @@ wss.on('connection', ws => {
     ws.on('close', data => {
         console.log('connection closed')
     });
-    ws.on('message',raw => {
+    ws.on('message', raw => {
         const data = JSON.parse(raw);
         if (data.type === 'get') {
-            handleRequest(ws,data);
-        }else{
-            console.log('is else',data.type)
+            handleRequest(ws, data);
+        } else {
+            console.log('is else', data.type)
         }
 
 
@@ -36,22 +42,22 @@ wss.on('connection', ws => {
 });
 
 function handleRequest(ws, data) {
-    MongoClient.connect(url, (err, db) => {
+    const query = `SELECT value FROM cards where type = "${data.topic}";`;
+    console.log(query);
+    connection.query(query, (err, rows) => {
         if (err) throw err;
-        const dbo = db.db("cards_against");
-        dbo.collection("cards").find({type:data.topic},{ projection: { _id: 0, type: 0} }).toArray((err, result) => {
-          if (err) throw err;
-          const response = getRandom(result.map(r => r.text),data.count||1);
-          ws.send(JSON.stringify({type:data.type,topic:data.topic,response:response}));
-          console.log(response);
-          db.close();
-        });
-      });
-    
+        var response = '';
+        if (data.topic === 'whitecard') {
+            response = getRandom(rows.map(r => r.value), data.count);
+        } else {
+            response = getRandom(rows.map(r => JSON.parse(r.value)))[0];
+        }
+        ws.send(JSON.stringify({ type: data.type, topic: data.topic, response: response }));
+    });
 }
 
 
-function getRandom(arr, n) {
+function getRandom(arr, n = 1) {
     var result = new Array(n),
         len = arr.length,
         taken = new Array(len);
