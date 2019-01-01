@@ -1,4 +1,4 @@
-const mysql = require('mysql')
+const mysql = require('mysql');
 const connection = mysql.createConnection({
     host: 'raspberrypi',
     user: 'root',
@@ -9,20 +9,32 @@ const connection = mysql.createConnection({
 function DataBase() {
 }
 
-DataBase.prototype.getCards = function (topic, count,callback) {
-    const query = `SELECT value FROM cards where type = "${topic}";`;
+DataBase.prototype.addCard = function (topic, text, callback) {
+    const query = `INSERT INTO cards(type,value) VALUES (${connection.escape(topic)},${connection.escape(text)});`;
     console.log(query);
-    connection.query(query, (err, rows) => {
-        if (err) throw err;
+    connection.query(query, (err, rows) => callback(err, rows));
+};
+
+DataBase.prototype.getRandomCards = function (topic, count, callback) {
+    this.getCards(topic, (rows) => {
         var response = '';
         if (topic === 'whitecard') {
             response = getRandom(rows.map(r => r.value), count);
         } else {
             response = getRandom(rows.map(r => JSON.parse(r.value)))[0];
         }
-        callback(response)
-    });  
-}
+        callback(response);
+    });
+};
+
+DataBase.prototype.getCards = function (topic, callback) {
+    const query = `SELECT value FROM cards where type = "${topic}";`;
+    console.log(query);
+    connection.query(query, (err, rows) => {
+        if (err) throw err;
+        callback(rows);
+    });
+};
 
 function getRandom(arr, n = 1) {
     var result = new Array(n),

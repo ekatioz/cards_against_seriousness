@@ -1,11 +1,18 @@
-function Round(players,chooser,cloze) {
+function Round(players,chooser) {
     this.players = players;
     this.chooser = chooser;
-    this.cloze = cloze;
   }
-  // class methods
-  Round.prototype.foo = function() {
-    console.log(this.cloze);
+
+  Round.prototype.setCloze = function(cloze) {
+    this.cloze = cloze;
   };
-  // export the class
+
+  Round.prototype.getPlayers = function() {
+    return this.players.filter(p => p !== this.chooser);
+  };
+
+  Round.prototype.getChooser = function() {
+    return this.chooser;
+  };
+
   module.exports = Round;

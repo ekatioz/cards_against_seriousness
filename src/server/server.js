@@ -20,12 +20,20 @@ sock.onNewPlayer(player => {
 });
 sock.onStartGame((starter, players) => {
     console.log(`${starter.name} started a game`);
-    db.getCards('blackcard', 1, response => {
-        this.round = new Round(players, starter, response);
-        sock.broadcast({ type: 'startGame' }, starter);
+    round = new Round(players, starter);
+    sock.broadcast({ type: 'startGame' }, starter);
+    db.getRandomCards('blackcard', 1, response => {
+        round.setCloze(response);
         sock.broadcast({ type: 'get', topic: 'blackcard', response: response });
     });
+    round.getPlayers().forEach(player => {
+        db.getRandomCards('whitecard', 5, response => {
+            sock.send(player, { type: 'get', topic: 'whitecard', response: response })
+        });
+    });
 });
+
+
 sock.onConfirmCard((player, text) => {
     console.log(`${text} from ${player.name} confirmed`)
 });
@@ -34,7 +42,7 @@ sock.onConfirmCard((player, text) => {
 
 sock.onRequest((player, request) => {
     const { type, topic, count } = request;
-    db.getCards(topic, count, response => {
+    db.getRandomCards(topic, count, response => {
         sock.send(player, { type: type, topic: topic, response: response });
     });
 });

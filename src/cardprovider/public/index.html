@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Card Provider</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="cardprovider.css" />
+</head>
+
+<body>
+    <h1>Whitecards</h1>
+    <input id="whiteText" type="text">
+    <button id="addWhite">hinzufügen</button>
+    <br>
+    <div id="list">
+
+    </div>
+
+    <script>
+
+        function update() {
+            console.log('update')
+            fetch('/update').then(res => {
+                list.innerHTML = '';
+                res.json().then(json => json.forEach(element => {
+                    var entry = document.createElement('div');
+                    entry.innerText = element;
+                    list.appendChild(entry);
+                }));
+            })
+        }
+
+        var list = document.getElementById("list");
+        var addWhite = document.getElementById("addWhite");
+        var whiteText = document.getElementById("whiteText");
+        addWhite.addEventListener('click', (e) => fetch('/provide?text='+whiteText.value).then(() => update()));
+        update();
+        
+        
+
+
+
+
+    </script>
+</body>
+
+</html>
