@@ -116,20 +116,45 @@ function getRandom(arr, n = 1) {
 
 export class Lobby {
 
-    constructor(startCallback) {
+    constructor(loginCallback,startCallback) {
         const element = document.createElement('div');
         const username = document.createElement('input');
         const start = document.createElement('button');
-
+        this.userlist = [];
+        this.lobbylist = document.createElement('div');
+        
         element.className = 'lobby';
         username.value = getRandom(names);
-        username.className = 'username-input'
+        username.className = 'username-input';
         start.innerText = 'Weiter';
-        start.className = 'start-button'
-        start.addEventListener('click', (evt) => startCallback());
+        start.className = 'start-button';
+        const startListener = (evt) => {
+            this.username = username.value;
+            element.removeChild(username);
+            start.innerText = 'Start';
+            start.removeEventListener('click',startListener);
+            start.addEventListener('click', () => startCallback());
+            element.appendChild(this.lobbylist);
+            this.lobbylist.className = 'lobby-list';
+            loginCallback();
+        };
+        start.addEventListener('click', startListener);
         element.appendChild(username);
         element.appendChild(start);
+
         this.element = element;
+    }
+
+    set users(users){
+        this.userlist = users;
+        this.lobbylist.innerHTML ='';
+        this.userlist.forEach(user => {
+            const entry = document.createElement('div');
+            entry.className = 'lobby-entry';
+            entry.innerText = user;
+            this.lobbylist.appendChild(entry);
+        });
+
     }
 
     get text() {

@@ -11,7 +11,10 @@ body {
 .cloze {
     font-family: ClozeFont;
     text-align: center;
-    font-size: 40pt;
+    font-size: 3em;
+    position: relative;
+    line-height: 1.5em;
+    overflow: auto;
 }
 
 .hand {
@@ -28,7 +31,8 @@ body {
 
 @media screen and (orientation:landscape) {
     .hand {
-        height: 70%;
+        height: 60%;
+        max-height: 20em;
     }
 }
 
@@ -38,7 +42,7 @@ body {
     height: 90%;
     background: whitesmoke;
     box-shadow: 0px 0px 2px 1px #000;
-    border-radius: 5%;
+    border-radius: 15px;
     padding: 10px;
     transform-origin: 50% 150%;
     left: 0;
@@ -46,23 +50,26 @@ body {
     margin: 0 auto;
     transition: all 200ms;
     font-family: ClozeFont;
-    font-size: xx-large;
+    font-size: 1.5em;
     color: #000;
+    word-break: break-word;
+    bottom: 0%;
 }
 
 .card:hover {
     box-shadow: 0px 0px 12px 6px #000;
     z-index: 5;
+    bottom: 5%;
 }
 
 .lobby {
-    padding:10%;
+    margin: 20pt 10pt;
 }
 
 .username-input{
     font-family: ClozeFont;
     background-color: transparent;
-    font-size: 40pt;
+    font-size: 3em;
     border:2px solid white;
     border-top: 0px;
     border-left: 0px;
@@ -73,16 +80,35 @@ body {
     text-decoration: none;
 }
 
-.start-button{
+.start-button {
     font-family: ClozeFont;
     background-color: #eee;
-    border:none;
-    border-radius: 5%;
-    font-size: 50pt;
+    border: none;
+    border-radius: 15px;
+    font-size: 3em;
+    line-height: 1.5em;
     position: absolute;
-    bottom:15%;
-    width: 30%;
-    right:0;
-    left:0;
-    margin: 0 auto;
+    margin-bottom: 20pt;
+    width: 80%;
+    margin-right: 20pt;
+    bottom: 0;
+    right: 0;
+}
+
+.lobby-list {
+    font-family: ClozeFont;
+    font-size: xx-large;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.lobby-entry {
+    flex: 1;
+    background-color: #555;
+    padding: 1% 2%;
+    border-radius: 15px;
+    margin: 0 4pt 4pt;
+    text-align: center;
+    white-space: nowrap;
 }
