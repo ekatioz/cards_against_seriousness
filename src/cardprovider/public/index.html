@@ -24,6 +24,7 @@
             console.log('update')
             fetch('/update').then(res => {
                 list.innerHTML = '';
+                whiteText.value = '';
                 res.json().then(json => json.forEach(element => {
                     var entry = document.createElement('div');
                     entry.innerText = element;
@@ -35,10 +36,14 @@
         var list = document.getElementById("list");
         var addWhite = document.getElementById("addWhite");
         var whiteText = document.getElementById("whiteText");
-        addWhite.addEventListener('click', (e) => fetch('/provide?text='+whiteText.value).then(() => update()));
+        addWhite.addEventListener('click', (e) => {
+            if (whiteText.value !== '') {
+                fetch('/provide?text=' + whiteText.value).then(() => update());
+            }
+        });
         update();
-        
-        
+
+
 
 
 
