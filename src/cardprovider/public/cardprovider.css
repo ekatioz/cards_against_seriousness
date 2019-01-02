@@ -1,0 +1,21 @@
+.whites{
+    width: 47%;
+    position: absolute;
+    left:0;
+}
+
+.blacks{
+    width: 47%;
+    position: absolute;
+    right:0;
+}
+
+.entry{
+    border-bottom: 1px solid #bbb;
+    line-height: 25px;
+}
+
+.textInput {
+    width: 90%;
+    height: 8em;
+}

@@ -10,44 +10,81 @@
 </head>
 
 <body>
-    <h1>Whitecards</h1>
-    <input id="whiteText" type="text">
-    <button id="addWhite">hinzufügen</button>
-    <br>
-    <div id="list">
+    <div class="whites">
+        <h1>Whitecards</h1>
+        <textarea class="textInput" id="whiteText"></textarea>
+        <button id="addWhite">hinzufügen</button>
+        <br>
+        <div id="list"></div>
+    </div>
 
+    <div class="blacks">
+        <h1>Blackcards</h1>
+        <textarea class="textInput" id="blackText"></textarea>
+        <button id="addGap">Lücke einfügen</button>
+        <button id="addBlack">hinzufügen</button>
+        <br>
+        <div id="listBlack"></div>
     </div>
 
     <script>
 
-        function update() {
+        var list = document.getElementById("list");
+        var listBlack = document.getElementById("listBlack");
+        var addWhite = document.getElementById("addWhite");
+        var addBlack = document.getElementById("addBlack");
+        var whiteText = document.getElementById("whiteText");
+        var blackText = document.getElementById("blackText");
+        var addGap = document.getElementById("addGap");
+
+        function update(type) {
             console.log('update')
-            fetch('/update').then(res => {
-                list.innerHTML = '';
-                whiteText.value = '';
-                res.json().then(json => json.forEach(element => {
-                    var entry = document.createElement('div');
-                    entry.innerText = element;
-                    list.appendChild(entry);
-                }));
+            fetch(`/update?type=${type}`).then(res => {
+                console.log(type);
+                if (type === 'whitecard') {
+                    list.innerHTML = '';
+                    whiteText.value = '';
+                    res.json().then(json => json.forEach(element => {
+                        var entry = document.createElement('div');
+                        entry.className = 'entry';
+                        entry.innerText = element;
+                        list.appendChild(entry);
+                    }));
+                } else {
+                    listBlack.innerHTML = '';
+                    blackText.value = '';
+                    res.json().then(json => json.forEach(element => {
+                        var entry = document.createElement('div');
+                        entry.className = 'entry';
+                        var parts = JSON.parse(element);
+                        var string = '';
+                        parts.forEach((part,i) => {
+                            string = string + part + (i === parts.length-1? '' : '💣');
+                        });
+
+                        entry.innerText = string;
+                        listBlack.appendChild(entry);
+                    }));
+                }
             })
         }
 
-        var list = document.getElementById("list");
-        var addWhite = document.getElementById("addWhite");
-        var whiteText = document.getElementById("whiteText");
+        addGap.addEventListener('click', (e) => {
+            blackText.value = blackText.value + '💣';
+            blackText.focus();
+        });
         addWhite.addEventListener('click', (e) => {
             if (whiteText.value !== '') {
-                fetch('/provide?text=' + whiteText.value).then(() => update());
+                fetch(`/provide?text=${whiteText.value}&type=whitecard`).then(() => update('whitecard'));
             }
         });
-        update();
-
-
-
-
-
-
+        addBlack.addEventListener('click', (e) => {
+            if (blackText.value !== '') {
+                fetch(`/provide?text=${blackText.value}&type=blackcard`).then(() => update('blackcard'));
+            }
+        });
+        update('whitecard');
+        update('blackcard'); 
     </script>
 </body>
 

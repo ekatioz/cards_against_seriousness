@@ -8,8 +8,9 @@ app.use(express.static(join(__dirname, 'public')));
 app.setMaxListeners(1);
 
 app.get('/update', (req, res) => {
-    console.log('update')
-    db.getCards('whitecard',rows => {
+    var type = req.query.type;
+    console.log('update', type);
+    db.getCards(type,rows => {
         res.send(JSON.stringify(rows.map(r => r.value)));
     });
 });
@@ -17,7 +18,11 @@ app.get('/update', (req, res) => {
 
 app.get('/provide', (req, res) => {
     console.log(req.query.text);
-    db.addCard('whitecard',req.query.text, () => res.send('done!'));
+    var {text,type} = req.query;
+    if (type === 'blackcard') {  
+        text = JSON.stringify(text.split('💣').map(t => t.trim()));
+    }
+    db.addCard(type,text, () => res.send('done!'));
 });
 
 
