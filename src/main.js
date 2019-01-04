@@ -43,9 +43,19 @@ connection.onmessage = e => {
     } else if (data.type === 'userlist') {
         lobby.users = data.users;
         console.log(data.users);
-    }else if (data.type === 'startGame') {
-        console.log('startgame')
+    } else if (data.type === 'startGame') {
         startGame();
+    } else if (data.type === 'cardConfirmed') {
+        var cards = document.getElementById('cards');
+        if(!cards){
+            cards = document.createElement('div');
+            cards.id = 'cards';
+            document.body.appendChild(cards);
+        }
+        const newCard = document.createElement("div");
+        newCard.classList.add('card');
+        newCard.classList.add('covered');
+        cards.appendChild(newCard);
     }
 };
 

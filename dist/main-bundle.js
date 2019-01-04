@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "e2140fb13cd4f2f126fd";
+/******/ 	var hotCurrentHash = "9f41195f6eece8a4dbcc";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -819,9 +819,10 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 // Imports
 var urlEscape = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/url-escape.js */ "./node_modules/css-loader/dist/runtime/url-escape.js");
 var ___CSS_LOADER_URL___0___ = urlEscape(__webpack_require__(/*! ./orange_juice.ttf */ "./src/resources/orange_juice.ttf"));
+var ___CSS_LOADER_URL___1___ = urlEscape(__webpack_require__(/*! ./card.png */ "./src/resources/card.png"));
 
 // Module
-exports.push([module.i, "@font-face {\r\n    font-family: ClozeFont;\r\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\r\n}\r\n\r\nbody {\r\n    background-color: #222;\r\n    color: #fff;\r\n}\r\n\r\n.cloze {\r\n    font-family: ClozeFont;\r\n    text-align: center;\r\n    font-size: 3em;\r\n    position: relative;\r\n    line-height: 1.5em;\r\n    overflow: auto;\r\n}\r\n\r\n.hand {\r\n    position: fixed;\r\n    bottom: 0;\r\n    width: 100%;\r\n}\r\n\r\n@media screen and (orientation:portrait) {\r\n    .hand {\r\n        height: 30%;\r\n    }\r\n}\r\n\r\n@media screen and (orientation:landscape) {\r\n    .hand {\r\n        height: 60%;\r\n        max-height: 20em;\r\n    }\r\n}\r\n\r\n.card {\r\n    position: absolute;\r\n    width: 20%;\r\n    height: 90%;\r\n    background: whitesmoke;\r\n    box-shadow: 0px 0px 2px 1px #000;\r\n    border-radius: 15px;\r\n    padding: 10px;\r\n    transform-origin: 50% 150%;\r\n    left: 0;\r\n    right: 0;\r\n    margin: 0 auto;\r\n    transition: all 200ms;\r\n    font-family: ClozeFont;\r\n    font-size: 1.5em;\r\n    color: #000;\r\n    word-break: break-word;\r\n    bottom: 0%;\r\n}\r\n\r\n.card:hover {\r\n    box-shadow: 0px 0px 12px 6px #000;\r\n    z-index: 5;\r\n    bottom: 5%;\r\n}\r\n\r\n.lobby {\r\n    margin: 20pt 10pt;\r\n}\r\n\r\n.username-input{\r\n    font-family: ClozeFont;\r\n    background-color: transparent;\r\n    font-size: 3em;\r\n    border:2px solid white;\r\n    border-top: 0px;\r\n    border-left: 0px;\r\n    border-right: 0px;\r\n    text-align: center;\r\n    color: #fff;\r\n    width: 100%;\r\n    text-decoration: none;\r\n}\r\n\r\n.start-button {\r\n    font-family: ClozeFont;\r\n    background-color: #eee;\r\n    border: none;\r\n    border-radius: 15px;\r\n    font-size: 3em;\r\n    line-height: 1.5em;\r\n    position: absolute;\r\n    margin-bottom: 20pt;\r\n    width: 80%;\r\n    margin-right: 20pt;\r\n    bottom: 0;\r\n    right: 0;\r\n}\r\n\r\n.lobby-list {\r\n    font-family: ClozeFont;\r\n    font-size: xx-large;\r\n    display: flex;\r\n    width: 100%;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.lobby-entry {\r\n    flex: 1;\r\n    background-color: #555;\r\n    padding: 1% 2%;\r\n    border-radius: 15px;\r\n    margin: 0 4pt 4pt;\r\n    text-align: center;\r\n    white-space: nowrap;\r\n}", ""]);
+exports.push([module.i, "@font-face {\r\n    font-family: ClozeFont;\r\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\r\n}\r\n\r\nbody {\r\n    background-color: #222;\r\n    color: #fff;\r\n}\r\n\r\n.cloze {\r\n    font-family: ClozeFont;\r\n    text-align: center;\r\n    font-size: 3em;\r\n    position: relative;\r\n    line-height: 1.5em;\r\n    overflow: auto;\r\n}\r\n\r\n.hand {\r\n    position: fixed;\r\n    bottom: 0;\r\n    width: 100%;\r\n}\r\n\r\n@media screen and (orientation:portrait) {\r\n    .hand {\r\n        height: 30%;\r\n    }\r\n}\r\n\r\n@media screen and (orientation:landscape) {\r\n    .hand {\r\n        height: 60%;\r\n        max-height: 20em;\r\n    }\r\n}\r\n\r\n.card {\r\n    position: absolute;\r\n    width: 20%;\r\n    height: 90%;\r\n    background: whitesmoke;\r\n    box-shadow: 0px 0px 2px 1px #000;\r\n    border-radius: 15px;\r\n    padding: 10px;\r\n    transform-origin: 50% 150%;\r\n    left: 0;\r\n    right: 0;\r\n    margin: 0 auto;\r\n    transition: all 200ms;\r\n    font-family: ClozeFont;\r\n    font-size: 1.5em;\r\n    color: #000;\r\n    word-break: break-word;\r\n    bottom: 0%;\r\n}\r\n\r\n.card:hover {\r\n    box-shadow: 0px 0px 12px 6px #000;\r\n    z-index: 5;\r\n    bottom: 5%;\r\n}\r\n\r\n#cards {\r\n    position: absolute;\r\n    left: 10%;\r\n    right: 10%;\r\n    top: 50%;\r\n    bottom: 10%;\r\n}\r\n\r\n.card.covered {\r\n    background-image: url(" + ___CSS_LOADER_URL___1___ + ");\r\n    background-size: contain;\r\n    box-shadow: 0px 0px 2px 1px whitesmoke;\r\n    background-repeat: no-repeat;\r\n    background-color: #222;\r\n    background-position: center;\r\n    position: relative;\r\n    display: inline-block;\r\n    margin: 0.5em;\r\n}\r\n\r\n.card.covered:hover {\r\n    box-shadow: 0px 0px 12px 6px whitesmoke;\r\n}\r\n\r\n.lobby {\r\n    margin: 20pt 10pt;\r\n}\r\n\r\n.username-input {\r\n    font-family: ClozeFont;\r\n    background-color: transparent;\r\n    font-size: 3em;\r\n    border: 2px solid white;\r\n    border-top: 0px;\r\n    border-left: 0px;\r\n    border-right: 0px;\r\n    text-align: center;\r\n    color: #fff;\r\n    width: 100%;\r\n    text-decoration: none;\r\n}\r\n\r\n.start-button {\r\n    font-family: ClozeFont;\r\n    background-color: #eee;\r\n    border: none;\r\n    border-radius: 15px;\r\n    font-size: 3em;\r\n    line-height: 1.5em;\r\n    position: absolute;\r\n    margin-bottom: 20pt;\r\n    width: 80%;\r\n    margin-right: 20pt;\r\n    bottom: 0;\r\n    right: 0;\r\n}\r\n\r\n.lobby-list {\r\n    font-family: ClozeFont;\r\n    font-size: xx-large;\r\n    display: flex;\r\n    width: 100%;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.lobby-entry {\r\n    flex: 1;\r\n    background-color: #555;\r\n    padding: 1% 2%;\r\n    border-radius: 15px;\r\n    margin: 0 4pt 4pt;\r\n    text-align: center;\r\n    white-space: nowrap;\r\n}", ""]);
 
 
 
@@ -1875,9 +1876,19 @@ connection.onmessage = e => {
     } else if (data.type === 'userlist') {
         lobby.users = data.users;
         console.log(data.users);
-    }else if (data.type === 'startGame') {
-        console.log('startgame')
+    } else if (data.type === 'startGame') {
         startGame();
+    } else if (data.type === 'cardConfirmed') {
+        var cards = document.getElementById('cards');
+        if(!cards){
+            cards = document.createElement('div');
+            cards.id = 'cards';
+            document.body.appendChild(cards);
+        }
+        const newCard = document.createElement("div");
+        newCard.classList.add('card');
+        newCard.classList.add('covered');
+        cards.appendChild(newCard);
     }
 };
 
@@ -1908,6 +1919,17 @@ function handleResponse(topic, response) {
 function publishConfirmation(text) {
     sendToSocket({ type: 'confirmCard', text: text });
 }
+
+/***/ }),
+
+/***/ "./src/resources/card.png":
+/*!********************************!*\
+  !*** ./src/resources/card.png ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "img/card-1e67c304.png";
 
 /***/ }),
 

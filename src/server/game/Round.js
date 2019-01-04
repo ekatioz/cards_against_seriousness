@@ -1,18 +1,23 @@
-function Round(players,chooser) {
-    this.players = players;
-    this.chooser = chooser;
-  }
+function Round(cloze, chooser) {
+  this.cloze = cloze;
+  this.chooser = chooser;
+  this.cards = [];
+}
 
-  Round.prototype.setCloze = function(cloze) {
-    this.cloze = cloze;
-  };
+Round.prototype.getChooser = function () {
+  return this.chooser;
+};
 
-  Round.prototype.getPlayers = function() {
-    return this.players.filter(p => p !== this.chooser);
-  };
+Round.prototype.confirmCard = function (player, card) {
+  this.cards.push({ player: player, card: card });
+};
 
-  Round.prototype.getChooser = function() {
-    return this.chooser;
-  };
+Round.prototype.getUsedCards = function () {
+  return this.cards;
+};
 
-  module.exports = Round;
+Round.prototype.getUsedCloze = function () {
+  return this.cloze;
+};
+
+module.exports = Round;

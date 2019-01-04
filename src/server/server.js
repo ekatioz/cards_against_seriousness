@@ -1,13 +1,16 @@
 const HTTP_Server = require('./HTTP_Server');
 const WebSocket_Server = require('./Websocket_Server');
 const DataBase = require('./DataBase');
-const Round = require('./game/Round');
+const Game = require('./game/Game');
 
 const http = new HTTP_Server().start(8081);
 const sock = new WebSocket_Server().start(13700);
 const db = new DataBase();
 
-var round;
+const blackcard = 'blackcard';
+const whitecard = 'whitecard';
+
+var game;
 
 
 sock.onPlayerLeft(player => {
@@ -18,24 +21,33 @@ sock.onNewPlayer(player => {
     console.log(`${player.name} joined`);
     sock.publishPlayers();
 });
+
 sock.onStartGame((starter, players) => {
     console.log(`${starter.name} started a game`);
-    round = new Round(players, starter);
-    sock.broadcast({ type: 'startGame' }, starter);
-    db.getRandomCards('blackcard', 1, response => {
-        round.setCloze(response);
-        sock.broadcast({ type: 'get', topic: 'blackcard', response: response });
-    });
-    round.getPlayers().forEach(player => {
-        db.getRandomCards('whitecard', 5, response => {
-            sock.send(player, { type: 'get', topic: 'whitecard', response: response })
-        });
-    });
+    game = new Game(players);
+    db.getRandomCards(blackcard)
+        .then(cloze => {
+            game.newRound(cloze);
+            sock.broadcast({ type: 'startGame' }, starter);
+            sock.broadcast({ type: 'get', topic: blackcard, response: cloze });
+            return players.filter(p => p !== game.getCurrentRound().getChooser());
+        }).then(actualPlayers =>
+            db.getRandomCards(whitecard, actualPlayers.length * 5)
+                .then(cards => {
+                    sock.send(actualPlayers[0], "Hallo!");
+                    actualPlayers.forEach(player =>
+                        sock.send(player,
+                            { type: 'get', topic: whitecard, response: cards.splice(0, 5) })
+                    );
+                })
+        );
 });
 
 
-sock.onConfirmCard((player, text) => {
-    console.log(`${text} from ${player.name} confirmed`)
+sock.onConfirmCard((player, card) => {
+    console.log(`${card} from ${player.name} confirmed`);
+    game.getCurrentRound().confirmCard(player, card);
+    sock.send(game.getCurrentRound().getChooser(),{type:"cardConfirmed"});
 });
 
 
