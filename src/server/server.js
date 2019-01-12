@@ -2,6 +2,7 @@ const HTTP_Server = require('./HTTP_Server');
 const WebSocket_Server = require('./Websocket_Server');
 const DataBase = require('./DataBase');
 const Game = require('./game/Game');
+const CAS = require('../commonStrings');
 
 const http = new HTTP_Server().start(8081);
 const sock = new WebSocket_Server().start(13700);
@@ -30,14 +31,16 @@ sock.onStartGame((starter, players) => {
     game.onAllCardsConfirmed((master, cards) => {
         console.log(cards);
         sock.send(master, { type: 'reveal', cards: cards.map(c => c.card) });
-    }
-    );
+    });
     db.getRandomCards(blackcard)
         .then(cloze => {
             game.newRound(cloze);
             sock.broadcast({ type: 'startGame' }, starter);
             sock.broadcast({ type: blackcard, response: cloze });
-            return players.filter(p => p !== game.getCurrentRound().getMaster());
+            const master = game.getCurrentRound().getMaster();
+            sock.send(master, { type: 'role', role: CAS.role_master });
+            sock.broadcast({ type: 'role', role: CAS.role_slave }, master);
+            return players.filter(p => p !== master);
         }).then(slaves =>
             db.getRandomCards(whitecard, slaves.length * initialCards)
                 .then(cards =>
@@ -49,9 +52,34 @@ sock.onStartGame((starter, players) => {
         );
 });
 
+sock.onChooseCard(card => {
+    const winner = game.getCurrentRound().getUsedCards().filter(c => c.card === card)[0].player;
+    sock.broadcast({ type: 'winner', player: winner.name });
+});
 
 sock.onConfirmCard((player, card) => {
     console.log(`${card} from ${player.name} confirmed`);
     sock.send(game.getCurrentRound().getMaster(), { type: 'cardConfirmed' });
     game.confirmCard(player, card);
+});
+
+sock.onNextRound(player => {
+    db.getRandomCards(blackcard)
+    .then(cloze => {
+        game.newRound(cloze);
+        sock.broadcast({ type: 'nextRound' }, player);
+        sock.broadcast({ type: blackcard, response: cloze });
+        const master = game.getCurrentRound().getMaster();
+        sock.send(master, { type: 'role', role: CAS.role_master });
+        sock.broadcast({ type: 'role', role: CAS.role_slave }, master);
+        return players.filter(p => p !== master);
+    }).then(slaves =>
+        db.getRandomCards(whitecard)
+            .then(cards =>
+                slaves.forEach(player =>
+                    sock.send(player,
+                        { type: whitecard, response: cards.splice(0, 1) })
+                )
+            )
+    );
 });

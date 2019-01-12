@@ -7,8 +7,8 @@ function Game(players) {
 }
 
 Game.prototype.newRound = function (cloze) {
-    const i = rounds[0]
-        ? this.players.indexOf(getCurrentRound().getMaster())
+    let i = this.rounds[0]
+        ? this.players.indexOf(this.getCurrentRound().getMaster())
         : Math.floor((Math.random() * this.players.length) - 1);
     i++;
     i = i === this.players.length ? 0 : i;

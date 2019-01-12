@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "4bc643191ef811a10279";
+/******/ 	var hotCurrentHash = "8baf89a93177fda4e0a5";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -822,7 +822,7 @@ var ___CSS_LOADER_URL___0___ = urlEscape(__webpack_require__(/*! ./orange_juice.
 var ___CSS_LOADER_URL___1___ = urlEscape(__webpack_require__(/*! ./card.png */ "./src/resources/card.png"));
 
 // Module
-exports.push([module.i, "@font-face {\r\n    font-family: ClozeFont;\r\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\r\n}\r\n\r\nbody {\r\n    background-color: #222;\r\n    color: #fff;\r\n}\r\n\r\n.cloze {\r\n    font-family: ClozeFont;\r\n    text-align: center;\r\n    font-size: 3em;\r\n    position: relative;\r\n    line-height: 1.5em;\r\n    overflow: auto;\r\n    transition: all 1s;\r\n}\r\n\r\n.cloze.center{\r\n    margin: 10%;\r\n}\r\n\r\n.hand {\r\n    position: fixed;\r\n    bottom: 0;\r\n    width: 100%;\r\n    transition: all 1s;\r\n}\r\n\r\n.hand.locked{\r\n    bottom: -10em;\r\n    opacity: 0.2;\r\n    pointer-events: none;\r\n}\r\n\r\n@media screen and (orientation:portrait) {\r\n    .hand {\r\n        height: 30%;\r\n    }\r\n}\r\n\r\n@media screen and (orientation:landscape) {\r\n    .hand {\r\n        height: 60%;\r\n        max-height: 20em;\r\n    }\r\n}\r\n\r\n.card {\r\n    position: absolute;\r\n    width: 20%;\r\n    height: 90%;\r\n    background: whitesmoke;\r\n    box-shadow: 0px 0px 2px 1px #000;\r\n    border-radius: 15px;\r\n    padding: 10px;\r\n    transform-origin: 50% 150%;\r\n    left: 0;\r\n    right: 0;\r\n    margin: 0 auto;\r\n    transition: all 200ms;\r\n    font-family: ClozeFont;\r\n    font-size: 1.5em;\r\n    color: #000;\r\n    word-break: break-word;\r\n    bottom: 0%;\r\n}\r\n\r\n.card:hover {\r\n    box-shadow: 0px 0px 12px 6px #000;\r\n    z-index: 5;\r\n    bottom: 5%;\r\n}\r\n\r\n#cards {\r\n    position: absolute;\r\n    left: 10%;\r\n    right: 10%;\r\n    top: 50%;\r\n    bottom: 10%;\r\n}\r\n\r\n.card.covered {\r\n    background-image: url(" + ___CSS_LOADER_URL___1___ + ");\r\n    background-size: contain;\r\n    box-shadow: 0px 0px 2px 1px whitesmoke;\r\n    background-repeat: no-repeat;\r\n    background-color: #222;\r\n    background-position: center;\r\n    position: relative;\r\n    display: inline-grid;\r\n    margin: 0.5em;\r\n}\r\n.card.revealed {\r\n    position: relative;\r\n    display: inline-grid;\r\n    margin: 0.5em;\r\n}\r\n.card.locked{\r\n    pointer-events: none;\r\n    opacity: 0.2;\r\n}\r\n\r\n.card.covered:hover {\r\n    box-shadow: 0px 0px 12px 6px whitesmoke;\r\n}\r\n\r\n.lobby {\r\n    margin: 20pt 10pt;\r\n}\r\n\r\n.username-input {\r\n    font-family: ClozeFont;\r\n    background-color: transparent;\r\n    font-size: 3em;\r\n    border: 2px solid white;\r\n    border-top: 0px;\r\n    border-left: 0px;\r\n    border-right: 0px;\r\n    text-align: center;\r\n    color: #fff;\r\n    width: 100%;\r\n    text-decoration: none;\r\n}\r\n\r\n.start-button {\r\n    font-family: ClozeFont;\r\n    background-color: #eee;\r\n    border: none;\r\n    border-radius: 15px;\r\n    font-size: 3em;\r\n    line-height: 1.5em;\r\n    position: absolute;\r\n    margin-bottom: 20pt;\r\n    width: 80%;\r\n    margin-right: 20pt;\r\n    bottom: 0;\r\n    right: 0;\r\n}\r\n\r\n.lobby-list {\r\n    font-family: ClozeFont;\r\n    font-size: xx-large;\r\n    display: flex;\r\n    width: 100%;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.lobby-entry {\r\n    flex: 1;\r\n    background-color: #555;\r\n    padding: 1% 2%;\r\n    border-radius: 15px;\r\n    margin: 0 4pt 4pt;\r\n    text-align: center;\r\n    white-space: nowrap;\r\n}", ""]);
+exports.push([module.i, "@font-face {\r\n    font-family: ClozeFont;\r\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\r\n}\r\n\r\nbody {\r\n    background-color: #222;\r\n    color: #fff;\r\n}\r\n\r\n.cloze {\r\n    font-family: ClozeFont;\r\n    text-align: center;\r\n    font-size: 3em;\r\n    position: relative;\r\n    line-height: 1.5em;\r\n    overflow: auto;\r\n    transition: all 1s;\r\n}\r\n\r\n.cloze.center{\r\n    margin: 10%;\r\n}\r\n\r\n.hand {\r\n    position: fixed;\r\n    bottom: 0;\r\n    width: 100%;\r\n    transition: all 1s;\r\n}\r\n\r\n.hand.locked{\r\n    bottom: -10em;\r\n    opacity: 0.2;\r\n    pointer-events: none;\r\n}\r\n\r\n@media screen and (orientation:portrait) {\r\n    .hand {\r\n        height: 30%;\r\n    }\r\n}\r\n\r\n@media screen and (orientation:landscape) {\r\n    .hand {\r\n        height: 60%;\r\n        max-height: 20em;\r\n    }\r\n}\r\n\r\n.card {\r\n    position: absolute;\r\n    width: 20%;\r\n    height: 90%;\r\n    background: whitesmoke;\r\n    box-shadow: 0px 0px 2px 1px #000;\r\n    border-radius: 15px;\r\n    padding: 10px;\r\n    transform-origin: 50% 150%;\r\n    left: 0;\r\n    right: 0;\r\n    margin: 0 auto;\r\n    transition: all 200ms;\r\n    font-family: ClozeFont;\r\n    font-size: 1.5em;\r\n    color: #000;\r\n    word-break: break-word;\r\n    bottom: 0%;\r\n}\r\n\r\n.card:hover {\r\n    box-shadow: 0px 0px 12px 6px #000;\r\n    z-index: 5;\r\n    bottom: 5%;\r\n}\r\n\r\n#cards {\r\n    position: absolute;\r\n    left: 10%;\r\n    right: 10%;\r\n    top: 50%;\r\n    bottom: 10%;\r\n}\r\n\r\n.card.covered {\r\n    background-image: url(" + ___CSS_LOADER_URL___1___ + ");\r\n    background-size: contain;\r\n    box-shadow: 0px 0px 2px 1px whitesmoke;\r\n    background-repeat: no-repeat;\r\n    background-color: #222;\r\n    background-position: center;\r\n    position: relative;\r\n    display: inline-grid;\r\n    margin: 0.5em;\r\n}\r\n.card.revealed {\r\n    position: relative;\r\n    display: inline-grid;\r\n    margin: 0.5em;\r\n}\r\n.card.locked{\r\n    pointer-events: none;\r\n    opacity: 0.2;\r\n}\r\n\r\n.card.covered:hover {\r\n    box-shadow: 0px 0px 12px 6px whitesmoke;\r\n}\r\n\r\n.lobby {\r\n    margin: 20pt 10pt;\r\n}\r\n\r\n.username-input {\r\n    font-family: ClozeFont;\r\n    background-color: transparent;\r\n    font-size: 3em;\r\n    border: 2px solid white;\r\n    border-top: 0px;\r\n    border-left: 0px;\r\n    border-right: 0px;\r\n    text-align: center;\r\n    color: #fff;\r\n    width: 100%;\r\n    text-decoration: none;\r\n}\r\n\r\n.start-button {\r\n    font-family: ClozeFont;\r\n    background-color: #eee;\r\n    border: none;\r\n    border-radius: 15px;\r\n    font-size: 3em;\r\n    line-height: 1.5em;\r\n    position: absolute;\r\n    margin-bottom: 20pt;\r\n    width: 80%;\r\n    margin-right: 20pt;\r\n    bottom: 0;\r\n    right: 0;\r\n}\r\n\r\n.lobby-list {\r\n    font-family: ClozeFont;\r\n    font-size: xx-large;\r\n    display: flex;\r\n    width: 100%;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.lobby-entry {\r\n    flex: 1;\r\n    background-color: #555;\r\n    padding: 1% 2%;\r\n    border-radius: 15px;\r\n    margin: 0 4pt 4pt;\r\n    text-align: center;\r\n    white-space: nowrap;\r\n}\r\n\r\n.winner {\r\n    font-family: ClozeFont;\r\n    text-align: right;\r\n    font-size: 2.5em;\r\n    position: fixed;\r\n    line-height: 1.5em;\r\n    overflow: auto;\r\n    top: 0.1em;\r\n    right: 0.5em;\r\n    color: #aaa;\r\n}", ""]);
 
 
 
@@ -1891,6 +1891,20 @@ Object.freeze(instance);
 
 /***/ }),
 
+/***/ "./src/commonStrings.js":
+/*!******************************!*\
+  !*** ./src/commonStrings.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+    role_master: 'master',
+    role_slave: 'slave',
+};
+
+/***/ }),
+
 /***/ "./src/main.js":
 /*!*********************!*\
   !*** ./src/main.js ***!
@@ -1909,6 +1923,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Cloze__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Cloze */ "./src/Cloze.js");
 /* harmony import */ var _Lobby__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Lobby */ "./src/Lobby.js");
 /* harmony import */ var _Socket__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Socket */ "./src/Socket.js");
+/* harmony import */ var _commonStrings__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./commonStrings */ "./src/commonStrings.js");
+/* harmony import */ var _commonStrings__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_commonStrings__WEBPACK_IMPORTED_MODULE_7__);
+
 
 
 
@@ -1920,6 +1937,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const cloze = new _Cloze__WEBPACK_IMPORTED_MODULE_4__["Cloze"]();
 const hand = new _Hand__WEBPACK_IMPORTED_MODULE_0__["Hand"]();
+var role = '';
 const lobby = new _Lobby__WEBPACK_IMPORTED_MODULE_5__["Lobby"](
     () => {
         _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].send({ type: 'newUser', name: lobby.username });
@@ -1932,7 +1950,7 @@ const lobby = new _Lobby__WEBPACK_IMPORTED_MODULE_5__["Lobby"](
 
 _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('whitecard', data =>
     data.response.map(text =>
-        new _Card__WEBPACK_IMPORTED_MODULE_1__["Card"](
+        new _Card__WEBPACK_IMPORTED_MODULE_1__["Card"]( // TODO
             text,
             (c) => cloze.fillGap(c),
             (c) => confirmCard(c)))
@@ -1946,11 +1964,35 @@ _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('userlist', data => lobby.use
 
 _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('startGame', () => startGame());
 
+_Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('nextRound', () => nextRound());
+
 _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('cardConfirmed', () => addCoveredCard());
 
 _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('lock', () => lockUI());
 
 _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('reveal', data => revealCards(data.cards));
+
+_Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('winner', data => showWinner(data.player));
+
+_Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('role', _role => role = _role.role);
+
+function showWinner(player) {
+    const winner = document.createElement('div');
+    winner.className = 'winner';
+    winner.innerText = `${player} gewinnt diese Runde!`;
+    if(role === _commonStrings__WEBPACK_IMPORTED_MODULE_7___default.a.role_master){
+        const start = document.createElement('button');
+        start.innerText = 'Weiter';
+        start.className = 'start-button';
+        start.addEventListener('click', (evt) => {
+            _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].send({ type: 'nextRound' });
+            document.body.removeChild(start);
+            nextRound();
+        });
+        document.body.appendChild(start);
+    }
+    document.body.appendChild(winner);
+}
 
 function lockUI() {
     hand.lock();
@@ -1963,6 +2005,12 @@ function startGame() {
     document.body.appendChild(hand.element);
 }
 
+function nextRound() {
+    document.body.removeChild(document.getElementsByClassName('winner')[0]);
+    cloze.top();
+    hand.unlock();
+}
+
 function revealCards(cards) {
     const cardElements = document.getElementsByClassName('covered');
     for (let i = 0; i < cardElements.length; i++) {
@@ -1972,6 +2020,13 @@ function revealCards(cards) {
             element.classList.add('revealed');
             element.innerText = cards[i];
             element.removeEventListener('click', this);
+            element.addEventListener('click', function (e) {
+                _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].send({ type: 'chooseCard', card: cards[i] });
+                element.removeEventListener('click', this);
+                cloze.fillGap({ text: cards[i] }); // TODO
+                cloze.center();
+                document.body.removeChild(document.getElementById('cards'));
+            });
         });
         element.classList.remove('locked');
     };
@@ -1984,11 +2039,11 @@ function addCoveredCard() {
         cards.id = 'cards';
         document.body.appendChild(cards);
     }
-    const newCard = document.createElement("div");
+    const newCard = document.createElement('div');
     newCard.classList.add('card');
     newCard.classList.add('covered');
     newCard.classList.add('locked');
-    newCard.innerHTML = "&nbsp;";
+    newCard.innerHTML = '&nbsp;';
 
     cards.appendChild(newCard);
 }

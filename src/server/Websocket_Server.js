@@ -28,14 +28,28 @@ WebSocket_Server.prototype.start = function (port) {
             } else if (data.type === 'confirmCard') {
                 this.confirmCardCallback(this.getPlayer(ws), data.text);
             } else if (data.type === 'startGame') {
-                this.startGameCallback(this.getPlayer(ws),this.players);
-            }else{
+                this.startGameCallback(this.getPlayer(ws), this.players);
+            } else if (data.type === 'chooseCard') {
+                this.chooseCardCallback(data.card);
+            } else if (data.type === 'nextRound') {
+                this.nextRoundCallback(this.getPlayer(ws));
+            } else {
                 console.log('is else', data.type);
             }
         });
     });
     return this;
 };
+
+
+WebSocket_Server.prototype.onNextRound = function (callback) {
+    this.nextRoundCallback = callback;
+};
+
+WebSocket_Server.prototype.onChooseCard = function (callback) {
+    this.chooseCardCallback = callback;
+};
+
 WebSocket_Server.prototype.onStartGame = function (callback) {
     this.startGameCallback = callback;
 };
@@ -58,12 +72,12 @@ WebSocket_Server.prototype.publishPlayers = function () {
 
 WebSocket_Server.prototype.broadcast = function (data, omit_player) {
     this.wss.clients.forEach(client => {
-        const sock = omit_player?omit_player.socket:null;
+        const sock = omit_player ? omit_player.socket : null;
 
         if (client.readyState === WebSocket.OPEN && client !== sock) {
             client.send(JSON.stringify(data));
-        }else{
-            console.log(this.getPlayer(client).name , "omitted");
+        } else {
+            console.log(this.getPlayer(client).name, "omitted");
         }
     });
 };

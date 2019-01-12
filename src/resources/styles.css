@@ -157,3 +157,15 @@ body {
     text-align: center;
     white-space: nowrap;
 }
+
+.winner {
+    font-family: ClozeFont;
+    text-align: right;
+    font-size: 2.5em;
+    position: fixed;
+    line-height: 1.5em;
+    overflow: auto;
+    top: 0.1em;
+    right: 0.5em;
+    color: #aaa;
+}
