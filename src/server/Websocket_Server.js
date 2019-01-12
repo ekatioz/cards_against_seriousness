@@ -4,7 +4,7 @@ const Player = require('./game/Player');
 function WebSocket_Server() {
     this.players = [];
     this.getPlayer = function (ws) {
-        return this.players.find((player) => (player.socket === ws));
+        return this.players.find((player) => (player.socket === ws)) || new Player('unknown');
     };
 }
 
@@ -21,9 +21,7 @@ WebSocket_Server.prototype.start = function (port) {
         });
         ws.on('message', raw => {
             const data = JSON.parse(raw);
-            if (data.type === 'get') {
-                this.requestCallback(this.getPlayer(ws), data);
-            } else if (data.type === 'newUser') {
+            if (data.type === 'newUser') {
                 const player = new Player(data.name, ws);
                 this.players.push(player);
                 this.newPlayerCallback(player);
@@ -40,10 +38,6 @@ WebSocket_Server.prototype.start = function (port) {
 };
 WebSocket_Server.prototype.onStartGame = function (callback) {
     this.startGameCallback = callback;
-};
-
-WebSocket_Server.prototype.onRequest = function (callback) {
-    this.requestCallback = callback;
 };
 
 WebSocket_Server.prototype.onPlayerLeft = function (callback) {

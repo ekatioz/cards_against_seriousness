@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "9f41195f6eece8a4dbcc";
+/******/ 	var hotCurrentHash = "4bc643191ef811a10279";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -822,7 +822,7 @@ var ___CSS_LOADER_URL___0___ = urlEscape(__webpack_require__(/*! ./orange_juice.
 var ___CSS_LOADER_URL___1___ = urlEscape(__webpack_require__(/*! ./card.png */ "./src/resources/card.png"));
 
 // Module
-exports.push([module.i, "@font-face {\r\n    font-family: ClozeFont;\r\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\r\n}\r\n\r\nbody {\r\n    background-color: #222;\r\n    color: #fff;\r\n}\r\n\r\n.cloze {\r\n    font-family: ClozeFont;\r\n    text-align: center;\r\n    font-size: 3em;\r\n    position: relative;\r\n    line-height: 1.5em;\r\n    overflow: auto;\r\n}\r\n\r\n.hand {\r\n    position: fixed;\r\n    bottom: 0;\r\n    width: 100%;\r\n}\r\n\r\n@media screen and (orientation:portrait) {\r\n    .hand {\r\n        height: 30%;\r\n    }\r\n}\r\n\r\n@media screen and (orientation:landscape) {\r\n    .hand {\r\n        height: 60%;\r\n        max-height: 20em;\r\n    }\r\n}\r\n\r\n.card {\r\n    position: absolute;\r\n    width: 20%;\r\n    height: 90%;\r\n    background: whitesmoke;\r\n    box-shadow: 0px 0px 2px 1px #000;\r\n    border-radius: 15px;\r\n    padding: 10px;\r\n    transform-origin: 50% 150%;\r\n    left: 0;\r\n    right: 0;\r\n    margin: 0 auto;\r\n    transition: all 200ms;\r\n    font-family: ClozeFont;\r\n    font-size: 1.5em;\r\n    color: #000;\r\n    word-break: break-word;\r\n    bottom: 0%;\r\n}\r\n\r\n.card:hover {\r\n    box-shadow: 0px 0px 12px 6px #000;\r\n    z-index: 5;\r\n    bottom: 5%;\r\n}\r\n\r\n#cards {\r\n    position: absolute;\r\n    left: 10%;\r\n    right: 10%;\r\n    top: 50%;\r\n    bottom: 10%;\r\n}\r\n\r\n.card.covered {\r\n    background-image: url(" + ___CSS_LOADER_URL___1___ + ");\r\n    background-size: contain;\r\n    box-shadow: 0px 0px 2px 1px whitesmoke;\r\n    background-repeat: no-repeat;\r\n    background-color: #222;\r\n    background-position: center;\r\n    position: relative;\r\n    display: inline-block;\r\n    margin: 0.5em;\r\n}\r\n\r\n.card.covered:hover {\r\n    box-shadow: 0px 0px 12px 6px whitesmoke;\r\n}\r\n\r\n.lobby {\r\n    margin: 20pt 10pt;\r\n}\r\n\r\n.username-input {\r\n    font-family: ClozeFont;\r\n    background-color: transparent;\r\n    font-size: 3em;\r\n    border: 2px solid white;\r\n    border-top: 0px;\r\n    border-left: 0px;\r\n    border-right: 0px;\r\n    text-align: center;\r\n    color: #fff;\r\n    width: 100%;\r\n    text-decoration: none;\r\n}\r\n\r\n.start-button {\r\n    font-family: ClozeFont;\r\n    background-color: #eee;\r\n    border: none;\r\n    border-radius: 15px;\r\n    font-size: 3em;\r\n    line-height: 1.5em;\r\n    position: absolute;\r\n    margin-bottom: 20pt;\r\n    width: 80%;\r\n    margin-right: 20pt;\r\n    bottom: 0;\r\n    right: 0;\r\n}\r\n\r\n.lobby-list {\r\n    font-family: ClozeFont;\r\n    font-size: xx-large;\r\n    display: flex;\r\n    width: 100%;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.lobby-entry {\r\n    flex: 1;\r\n    background-color: #555;\r\n    padding: 1% 2%;\r\n    border-radius: 15px;\r\n    margin: 0 4pt 4pt;\r\n    text-align: center;\r\n    white-space: nowrap;\r\n}", ""]);
+exports.push([module.i, "@font-face {\r\n    font-family: ClozeFont;\r\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\r\n}\r\n\r\nbody {\r\n    background-color: #222;\r\n    color: #fff;\r\n}\r\n\r\n.cloze {\r\n    font-family: ClozeFont;\r\n    text-align: center;\r\n    font-size: 3em;\r\n    position: relative;\r\n    line-height: 1.5em;\r\n    overflow: auto;\r\n    transition: all 1s;\r\n}\r\n\r\n.cloze.center{\r\n    margin: 10%;\r\n}\r\n\r\n.hand {\r\n    position: fixed;\r\n    bottom: 0;\r\n    width: 100%;\r\n    transition: all 1s;\r\n}\r\n\r\n.hand.locked{\r\n    bottom: -10em;\r\n    opacity: 0.2;\r\n    pointer-events: none;\r\n}\r\n\r\n@media screen and (orientation:portrait) {\r\n    .hand {\r\n        height: 30%;\r\n    }\r\n}\r\n\r\n@media screen and (orientation:landscape) {\r\n    .hand {\r\n        height: 60%;\r\n        max-height: 20em;\r\n    }\r\n}\r\n\r\n.card {\r\n    position: absolute;\r\n    width: 20%;\r\n    height: 90%;\r\n    background: whitesmoke;\r\n    box-shadow: 0px 0px 2px 1px #000;\r\n    border-radius: 15px;\r\n    padding: 10px;\r\n    transform-origin: 50% 150%;\r\n    left: 0;\r\n    right: 0;\r\n    margin: 0 auto;\r\n    transition: all 200ms;\r\n    font-family: ClozeFont;\r\n    font-size: 1.5em;\r\n    color: #000;\r\n    word-break: break-word;\r\n    bottom: 0%;\r\n}\r\n\r\n.card:hover {\r\n    box-shadow: 0px 0px 12px 6px #000;\r\n    z-index: 5;\r\n    bottom: 5%;\r\n}\r\n\r\n#cards {\r\n    position: absolute;\r\n    left: 10%;\r\n    right: 10%;\r\n    top: 50%;\r\n    bottom: 10%;\r\n}\r\n\r\n.card.covered {\r\n    background-image: url(" + ___CSS_LOADER_URL___1___ + ");\r\n    background-size: contain;\r\n    box-shadow: 0px 0px 2px 1px whitesmoke;\r\n    background-repeat: no-repeat;\r\n    background-color: #222;\r\n    background-position: center;\r\n    position: relative;\r\n    display: inline-grid;\r\n    margin: 0.5em;\r\n}\r\n.card.revealed {\r\n    position: relative;\r\n    display: inline-grid;\r\n    margin: 0.5em;\r\n}\r\n.card.locked{\r\n    pointer-events: none;\r\n    opacity: 0.2;\r\n}\r\n\r\n.card.covered:hover {\r\n    box-shadow: 0px 0px 12px 6px whitesmoke;\r\n}\r\n\r\n.lobby {\r\n    margin: 20pt 10pt;\r\n}\r\n\r\n.username-input {\r\n    font-family: ClozeFont;\r\n    background-color: transparent;\r\n    font-size: 3em;\r\n    border: 2px solid white;\r\n    border-top: 0px;\r\n    border-left: 0px;\r\n    border-right: 0px;\r\n    text-align: center;\r\n    color: #fff;\r\n    width: 100%;\r\n    text-decoration: none;\r\n}\r\n\r\n.start-button {\r\n    font-family: ClozeFont;\r\n    background-color: #eee;\r\n    border: none;\r\n    border-radius: 15px;\r\n    font-size: 3em;\r\n    line-height: 1.5em;\r\n    position: absolute;\r\n    margin-bottom: 20pt;\r\n    width: 80%;\r\n    margin-right: 20pt;\r\n    bottom: 0;\r\n    right: 0;\r\n}\r\n\r\n.lobby-list {\r\n    font-family: ClozeFont;\r\n    font-size: xx-large;\r\n    display: flex;\r\n    width: 100%;\r\n    flex-wrap: wrap;\r\n}\r\n\r\n.lobby-entry {\r\n    flex: 1;\r\n    background-color: #555;\r\n    padding: 1% 2%;\r\n    border-radius: 15px;\r\n    margin: 0 4pt 4pt;\r\n    text-align: center;\r\n    white-space: nowrap;\r\n}", ""]);
 
 
 
@@ -1540,6 +1540,14 @@ class Card {
         this.element = element;
     }
 
+    lock(){
+        this.locked = true;
+    }
+
+    unlock(){
+        this.locked = false;
+    }
+
     get text() {
         return this.element.innerText;
     }
@@ -1570,6 +1578,14 @@ class Cloze {
 
     get text() {
         return this.element.innerText;
+    }
+
+    center(){
+        this.element.classList.add('center');
+    }
+
+    top(){
+        this.element.classList.remove('center');
     }
 
     setTextParts(...parts) {
@@ -1611,6 +1627,18 @@ class Hand {
         this.cards = [];
     }
 
+    lock(){
+        this.element.classList.add('locked');
+        this.cards.forEach(c => c.lock());
+        this.locked = true;
+    }
+
+    unlock(){
+        this.element.classList.remove('locked');
+        this.cards.forEach(c => c.unlock());
+        this.locked = false;
+    }
+
     addCard(card) {
         this.cards.push(card);
         this.element.appendChild(card.element);
@@ -1618,8 +1646,8 @@ class Hand {
     }
 
     removeCard(card) {
-        this.cards.push(card);
-        this.element.removeChild(card);
+        this.cards.splice(this.cards.indexOf(card), 1);
+        this.element.removeChild(card.element);
         this.realignCards();
     }
 
@@ -1814,6 +1842,55 @@ class Lobby {
 
 /***/ }),
 
+/***/ "./src/Socket.js":
+/*!***********************!*\
+  !*** ./src/Socket.js ***!
+  \***********************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+class Socket {
+
+    constructor() {
+        if (!Socket.instance) {
+            this._listeners = {};
+            this._connection = new WebSocket(`ws://${location.hostname}:13700`);
+            this._connection.onopen = () => console.log('ws connection open');
+            this._connection.onerror = error => console.log('WebSocket Error ' + error);
+            this._connection.onmessage = msg =>  {
+                const data = JSON.parse(msg.data);
+                console.log('message from socket', data);
+                if (this._listeners[data.type]) {
+                    this._listeners[data.type].forEach(cb => cb(data));
+                }
+            };
+            Socket.instance = this;
+        }
+        return Socket.instance;
+    }
+
+    send(data) {
+        this._connection.send(JSON.stringify(data));
+    }
+
+    on(type, callback) {
+        this._listeners[type] = this._listeners[type]
+            ? this._listeners[type].push(callback)
+            : [callback];
+    }
+
+
+}
+
+const instance = new Socket();
+Object.freeze(instance);
+
+/* harmony default export */ __webpack_exports__["default"] = (instance);
+
+/***/ }),
+
 /***/ "./src/main.js":
 /*!*********************!*\
   !*** ./src/main.js ***!
@@ -1831,6 +1908,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _resources_styles_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_resources_styles_css__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _Cloze__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Cloze */ "./src/Cloze.js");
 /* harmony import */ var _Lobby__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Lobby */ "./src/Lobby.js");
+/* harmony import */ var _Socket__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Socket */ "./src/Socket.js");
 
 
 
@@ -1838,23 +1916,46 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const connection = new WebSocket(`ws://${location.hostname}:13700`);
+
+
 const cloze = new _Cloze__WEBPACK_IMPORTED_MODULE_4__["Cloze"]();
 const hand = new _Hand__WEBPACK_IMPORTED_MODULE_0__["Hand"]();
-
-connection.onopen = () => console.log('ws connection open');
-
 const lobby = new _Lobby__WEBPACK_IMPORTED_MODULE_5__["Lobby"](
     () => {
-        sendToSocket({ type: 'newUser', name: lobby.username });
+        _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].send({ type: 'newUser', name: lobby.username });
     },
     () => {
-        sendToSocket({ type: 'startGame' });
+        _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].send({ type: 'startGame' });
         startGame();
     }
 );
-document.body.appendChild(lobby.element);
 
+_Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('whitecard', data =>
+    data.response.map(text =>
+        new _Card__WEBPACK_IMPORTED_MODULE_1__["Card"](
+            text,
+            (c) => cloze.fillGap(c),
+            (c) => confirmCard(c)))
+        .forEach((card, idx) =>
+            setTimeout(() => hand.addCard(card), idx * 100)
+        ));
+
+_Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('blackcard', data => cloze.setTextParts(...data.response));
+
+_Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('userlist', data => lobby.users = data.users);
+
+_Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('startGame', () => startGame());
+
+_Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('cardConfirmed', () => addCoveredCard());
+
+_Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('lock', () => lockUI());
+
+_Socket__WEBPACK_IMPORTED_MODULE_6__["default"].on('reveal', data => revealCards(data.cards));
+
+function lockUI() {
+    hand.lock();
+    cloze.center();
+}
 
 function startGame() {
     document.body.removeChild(lobby.element);
@@ -1862,63 +1963,45 @@ function startGame() {
     document.body.appendChild(hand.element);
 }
 
-// Log errors
-connection.onerror = error => {
-    console.log('WebSocket Error ' + error);
-};
+function revealCards(cards) {
+    const cardElements = document.getElementsByClassName('covered');
+    for (let i = 0; i < cardElements.length; i++) {
+        const element = cardElements[i];
+        element.addEventListener('click', function (e) {
+            element.classList.remove('covered');
+            element.classList.add('revealed');
+            element.innerText = cards[i];
+            element.removeEventListener('click', this);
+        });
+        element.classList.remove('locked');
+    };
+}
 
-// Log messages from the server
-connection.onmessage = e => {
-    const data = JSON.parse(e.data);
-    console.log('message', data);
-    if (data.type === 'get') {
-        handleResponse(data.topic, data.response);
-    } else if (data.type === 'userlist') {
-        lobby.users = data.users;
-        console.log(data.users);
-    } else if (data.type === 'startGame') {
-        startGame();
-    } else if (data.type === 'cardConfirmed') {
-        var cards = document.getElementById('cards');
-        if(!cards){
-            cards = document.createElement('div');
-            cards.id = 'cards';
-            document.body.appendChild(cards);
-        }
-        const newCard = document.createElement("div");
-        newCard.classList.add('card');
-        newCard.classList.add('covered');
-        cards.appendChild(newCard);
+function addCoveredCard() {
+    var cards = document.getElementById('cards');
+    if (!cards) {
+        cards = document.createElement('div');
+        cards.id = 'cards';
+        document.body.appendChild(cards);
     }
-};
+    const newCard = document.createElement("div");
+    newCard.classList.add('card');
+    newCard.classList.add('covered');
+    newCard.classList.add('locked');
+    newCard.innerHTML = "&nbsp;";
 
-function sendToSocket(data) {
-    connection.send(JSON.stringify(data));
+    cards.appendChild(newCard);
 }
 
-function handleResponse(topic, response) {
-    switch (topic) {
-        case 'whitecard':
-            response
-                .map(text => new _Card__WEBPACK_IMPORTED_MODULE_1__["Card"](
-                    text,
-                    (c) => cloze.fillGap(c),
-                    (c) => publishConfirmation(c.text)))
-                .forEach((card, idx) => {
-                    setTimeout(() => hand.addCard(card), idx * 100);
-                });
-            break;
-        case 'blackcard':
-            cloze.setTextParts(...response);
-            break;
-        default:
-            break;
-    }
+function confirmCard(card) {
+    hand.removeCard(card);
+    lockUI();
+    _Socket__WEBPACK_IMPORTED_MODULE_6__["default"].send({ type: 'confirmCard', text: card.text });
 }
 
-function publishConfirmation(text) {
-    sendToSocket({ type: 'confirmCard', text: text });
-}
+
+// Start Userinterface
+document.body.appendChild(lobby.element);
 
 /***/ }),
 

@@ -9,6 +9,14 @@ export class Card {
         this.element = element;
     }
 
+    lock(){
+        this.locked = true;
+    }
+
+    unlock(){
+        this.locked = false;
+    }
+
     get text() {
         return this.element.innerText;
     }

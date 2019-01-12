@@ -15,12 +15,24 @@ body {
     position: relative;
     line-height: 1.5em;
     overflow: auto;
+    transition: all 1s;
+}
+
+.cloze.center{
+    margin: 10%;
 }
 
 .hand {
     position: fixed;
     bottom: 0;
     width: 100%;
+    transition: all 1s;
+}
+
+.hand.locked{
+    bottom: -10em;
+    opacity: 0.2;
+    pointer-events: none;
 }
 
 @media screen and (orientation:portrait) {
@@ -78,8 +90,17 @@ body {
     background-color: #222;
     background-position: center;
     position: relative;
-    display: inline-block;
+    display: inline-grid;
     margin: 0.5em;
+}
+.card.revealed {
+    position: relative;
+    display: inline-grid;
+    margin: 0.5em;
+}
+.card.locked{
+    pointer-events: none;
+    opacity: 0.2;
 }
 
 .card.covered:hover {

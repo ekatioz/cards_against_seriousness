@@ -13,6 +13,14 @@ export class Cloze {
         return this.element.innerText;
     }
 
+    center(){
+        this.element.classList.add('center');
+    }
+
+    top(){
+        this.element.classList.remove('center');
+    }
+
     setTextParts(...parts) {
         let text = '';
         parts.forEach((part, idx) => {

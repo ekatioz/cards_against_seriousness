@@ -1,11 +1,12 @@
-function Round(cloze, chooser) {
+function Round(cloze, master) {
   this.cloze = cloze;
-  this.chooser = chooser;
+  this.master = master;
   this.cards = [];
+  this.confirmationPromise;
 }
 
-Round.prototype.getChooser = function () {
-  return this.chooser;
+Round.prototype.getMaster = function () {
+  return this.master;
 };
 
 Round.prototype.confirmCard = function (player, card) {

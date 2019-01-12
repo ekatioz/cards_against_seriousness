@@ -10,6 +10,8 @@ const db = new DataBase();
 const blackcard = 'blackcard';
 const whitecard = 'whitecard';
 
+const initialCards = 8;
+
 var game;
 
 
@@ -25,37 +27,31 @@ sock.onNewPlayer(player => {
 sock.onStartGame((starter, players) => {
     console.log(`${starter.name} started a game`);
     game = new Game(players);
+    game.onAllCardsConfirmed((master, cards) => {
+        console.log(cards);
+        sock.send(master, { type: 'reveal', cards: cards.map(c => c.card) });
+    }
+    );
     db.getRandomCards(blackcard)
         .then(cloze => {
             game.newRound(cloze);
             sock.broadcast({ type: 'startGame' }, starter);
-            sock.broadcast({ type: 'get', topic: blackcard, response: cloze });
-            return players.filter(p => p !== game.getCurrentRound().getChooser());
-        }).then(actualPlayers =>
-            db.getRandomCards(whitecard, actualPlayers.length * 5)
-                .then(cards => {
-                    sock.send(actualPlayers[0], "Hallo!");
-                    actualPlayers.forEach(player =>
+            sock.broadcast({ type: blackcard, response: cloze });
+            return players.filter(p => p !== game.getCurrentRound().getMaster());
+        }).then(slaves =>
+            db.getRandomCards(whitecard, slaves.length * initialCards)
+                .then(cards =>
+                    slaves.forEach(player =>
                         sock.send(player,
-                            { type: 'get', topic: whitecard, response: cards.splice(0, 5) })
-                    );
-                })
+                            { type: whitecard, response: cards.splice(0, initialCards) })
+                    )
+                )
         );
 });
 
 
 sock.onConfirmCard((player, card) => {
     console.log(`${card} from ${player.name} confirmed`);
-    game.getCurrentRound().confirmCard(player, card);
-    sock.send(game.getCurrentRound().getChooser(),{type:"cardConfirmed"});
+    sock.send(game.getCurrentRound().getMaster(), { type: 'cardConfirmed' });
+    game.confirmCard(player, card);
 });
-
-
-
-sock.onRequest((player, request) => {
-    const { type, topic, count } = request;
-    db.getRandomCards(topic, count, response => {
-        sock.send(player, { type: type, topic: topic, response: response });
-    });
-});
-

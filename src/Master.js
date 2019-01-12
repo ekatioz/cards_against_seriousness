@@ -1,4 +1,4 @@
-export class Hand {
+export class Master {
 
     constructor() {
         const element = document.createElement('div');

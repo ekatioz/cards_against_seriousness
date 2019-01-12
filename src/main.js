@@ -4,24 +4,47 @@ import 'reset-css';
 import './resources/styles.css';
 import { Cloze } from "./Cloze";
 import { Lobby } from "./Lobby";
+import Socket from "./Socket";
 
-const connection = new WebSocket(`ws://${location.hostname}:13700`);
+
 const cloze = new Cloze();
 const hand = new Hand();
-
-connection.onopen = () => console.log('ws connection open');
-
 const lobby = new Lobby(
     () => {
-        sendToSocket({ type: 'newUser', name: lobby.username });
+        Socket.send({ type: 'newUser', name: lobby.username });
     },
     () => {
-        sendToSocket({ type: 'startGame' });
+        Socket.send({ type: 'startGame' });
         startGame();
     }
 );
-document.body.appendChild(lobby.element);
 
+Socket.on('whitecard', data =>
+    data.response.map(text =>
+        new Card(
+            text,
+            (c) => cloze.fillGap(c),
+            (c) => confirmCard(c)))
+        .forEach((card, idx) =>
+            setTimeout(() => hand.addCard(card), idx * 100)
+        ));
+
+Socket.on('blackcard', data => cloze.setTextParts(...data.response));
+
+Socket.on('userlist', data => lobby.users = data.users);
+
+Socket.on('startGame', () => startGame());
+
+Socket.on('cardConfirmed', () => addCoveredCard());
+
+Socket.on('lock', () => lockUI());
+
+Socket.on('reveal', data => revealCards(data.cards));
+
+function lockUI() {
+    hand.lock();
+    cloze.center();
+}
 
 function startGame() {
     document.body.removeChild(lobby.element);
@@ -29,60 +52,42 @@ function startGame() {
     document.body.appendChild(hand.element);
 }
 
-// Log errors
-connection.onerror = error => {
-    console.log('WebSocket Error ' + error);
-};
+function revealCards(cards) {
+    const cardElements = document.getElementsByClassName('covered');
+    for (let i = 0; i < cardElements.length; i++) {
+        const element = cardElements[i];
+        element.addEventListener('click', function (e) {
+            element.classList.remove('covered');
+            element.classList.add('revealed');
+            element.innerText = cards[i];
+            element.removeEventListener('click', this);
+        });
+        element.classList.remove('locked');
+    };
+}
 
-// Log messages from the server
-connection.onmessage = e => {
-    const data = JSON.parse(e.data);
-    console.log('message', data);
-    if (data.type === 'get') {
-        handleResponse(data.topic, data.response);
-    } else if (data.type === 'userlist') {
-        lobby.users = data.users;
-        console.log(data.users);
-    } else if (data.type === 'startGame') {
-        startGame();
-    } else if (data.type === 'cardConfirmed') {
-        var cards = document.getElementById('cards');
-        if(!cards){
-            cards = document.createElement('div');
-            cards.id = 'cards';
-            document.body.appendChild(cards);
-        }
-        const newCard = document.createElement("div");
-        newCard.classList.add('card');
-        newCard.classList.add('covered');
-        cards.appendChild(newCard);
+function addCoveredCard() {
+    var cards = document.getElementById('cards');
+    if (!cards) {
+        cards = document.createElement('div');
+        cards.id = 'cards';
+        document.body.appendChild(cards);
     }
-};
+    const newCard = document.createElement("div");
+    newCard.classList.add('card');
+    newCard.classList.add('covered');
+    newCard.classList.add('locked');
+    newCard.innerHTML = "&nbsp;";
 
-function sendToSocket(data) {
-    connection.send(JSON.stringify(data));
+    cards.appendChild(newCard);
 }
 
-function handleResponse(topic, response) {
-    switch (topic) {
-        case 'whitecard':
-            response
-                .map(text => new Card(
-                    text,
-                    (c) => cloze.fillGap(c),
-                    (c) => publishConfirmation(c.text)))
-                .forEach((card, idx) => {
-                    setTimeout(() => hand.addCard(card), idx * 100);
-                });
-            break;
-        case 'blackcard':
-            cloze.setTextParts(...response);
-            break;
-        default:
-            break;
-    }
+function confirmCard(card) {
+    hand.removeCard(card);
+    lockUI();
+    Socket.send({ type: 'confirmCard', text: card.text });
 }
 
-function publishConfirmation(text) {
-    sendToSocket({ type: 'confirmCard', text: text });
-}
+
+// Start Userinterface
+document.body.appendChild(lobby.element);
