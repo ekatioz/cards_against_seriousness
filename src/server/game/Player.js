@@ -2,6 +2,7 @@
 function Player(name, socket) {
     this.name = name;
     this.socket = socket;
+    this.ready = false;
 }
 
 Player.prototype.equals = function (player) {

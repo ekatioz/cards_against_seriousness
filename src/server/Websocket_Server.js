@@ -1,5 +1,6 @@
 const WebSocket = require('ws');
 const Player = require('./game/Player');
+const { msgType } = require('../commonStrings');
 
 function WebSocket_Server() {
     this.players = [];
@@ -20,27 +21,33 @@ WebSocket_Server.prototype.start = function (port) {
             this.playerLeftCallback(player);
         });
         ws.on('message', raw => {
-            const data = JSON.parse(raw);
-            if (data.type === 'newUser') {
-                const player = new Player(data.name, ws);
+            const msg = JSON.parse(raw);
+            if (msg.type === msgType.newPlayer) {
+                const player = new Player(msg.name, ws);
                 this.players.push(player);
                 this.newPlayerCallback(player);
-            } else if (data.type === 'confirmCard') {
-                this.confirmCardCallback(this.getPlayer(ws), data.text);
-            } else if (data.type === 'startGame') {
-                this.startGameCallback(this.getPlayer(ws), this.players);
-            } else if (data.type === 'chooseCard') {
-                this.chooseCardCallback(data.card);
-            } else if (data.type === 'nextRound') {
+            } else if (msg.type === msgType.confirmCard) {
+                this.confirmCardCallback(this.getPlayer(ws), msg.text);
+            } else if (msg.type === msgType.chooseCard) {
+                this.chooseCardCallback(msg.card);
+            } else if (msg.type === msgType.nextRound) {
                 this.nextRoundCallback(this.getPlayer(ws));
+            } else if (msg.type === msgType.ready) {
+                const player = this.getPlayer(ws);
+                player.ready = true;
+                const allReady = (this.players.filter(p => !p.ready).length === 0);
+                this.playerReadyCallback(player, allReady, this.players);
             } else {
-                console.log('is else', data.type);
+                console.log('is else', msg.type);
             }
         });
     });
     return this;
 };
 
+WebSocket_Server.prototype.onPlayerReady = function (callback) {
+    this.playerReadyCallback = callback;
+};
 
 WebSocket_Server.prototype.onNextRound = function (callback) {
     this.nextRoundCallback = callback;
@@ -67,7 +74,7 @@ WebSocket_Server.prototype.onConfirmCard = function (callback) {
 };
 
 WebSocket_Server.prototype.publishPlayers = function () {
-    this.broadcast({ type: 'userlist', users: this.players.map(player => player.name) });
+    this.broadcast({ type: msgType.userlist, users: this.players.map(player => ({ name: player.name, ready: player.ready })) });
 };
 
 WebSocket_Server.prototype.broadcast = function (data, omit_player) {

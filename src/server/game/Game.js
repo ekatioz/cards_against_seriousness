@@ -6,6 +6,10 @@ function Game(players) {
     this.usedCards = [];
 }
 
+Game.prototype.getPlayers = function () {
+  return this.players;  
+};
+
 Game.prototype.newRound = function (cloze) {
     let i = this.rounds[0]
         ? this.players.indexOf(this.getCurrentRound().getMaster())

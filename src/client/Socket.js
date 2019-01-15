@@ -6,7 +6,7 @@ class Socket {
             this._connection = new WebSocket(`ws://${location.hostname}:13700`);
             this._connection.onopen = () => console.log('ws connection open');
             this._connection.onerror = error => console.log('WebSocket Error ' + error);
-            this._connection.onmessage = msg =>  {
+            this._connection.onmessage = msg => {
                 const data = JSON.parse(msg.data);
                 console.log('message from socket', data);
                 if (this._listeners[data.type]) {
@@ -23,9 +23,8 @@ class Socket {
     }
 
     on(type, callback) {
-        this._listeners[type] = this._listeners[type]
-            ? this._listeners[type].push(callback)
-            : [callback];
+        if (this._listeners[type]) this._listeners[type].push(callback);
+        else this._listeners[type] = [callback];
     }
 
 

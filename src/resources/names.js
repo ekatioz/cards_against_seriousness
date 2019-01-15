@@ -98,66 +98,9 @@ const names = [
     'Matthew Bannister',
     'Amani Cunningham',
     'Sayed Humphrey'
-]
+];
 
-function getRandom(arr, n = 1) {
-    var result = new Array(n),
-        len = arr.length,
-        taken = new Array(len);
-    if (n > len)
-        throw new RangeError("getRandom: more elements taken than available");
-    while (n--) {
-        var x = Math.floor(Math.random() * len);
-        result[n] = arr[x in taken ? taken[x] : x];
-        taken[x] = --len in taken ? taken[len] : len;
-    }
-    return result;
-}
-
-export class Lobby {
-
-    constructor(loginCallback,startCallback) {
-        const element = document.createElement('div');
-        const username = document.createElement('input');
-        const start = document.createElement('button');
-        this.userlist = [];
-        this.lobbylist = document.createElement('div');
-        
-        element.className = 'lobby';
-        username.value = getRandom(names);
-        username.className = 'username-input';
-        start.innerText = 'Weiter';
-        start.className = 'start-button';
-        const startListener = (evt) => {
-            this.username = username.value;
-            element.removeChild(username);
-            start.innerText = 'Start';
-            start.removeEventListener('click',startListener);
-            start.addEventListener('click', () => startCallback());
-            element.appendChild(this.lobbylist);
-            this.lobbylist.className = 'lobby-list';
-            loginCallback();
-        };
-        start.addEventListener('click', startListener);
-        element.appendChild(username);
-        element.appendChild(start);
-
-        this.element = element;
-    }
-
-    set users(users){
-        this.userlist = users;
-        this.lobbylist.innerHTML ='';
-        this.userlist.forEach(user => {
-            const entry = document.createElement('div');
-            entry.className = 'lobby-entry';
-            entry.innerText = user;
-            this.lobbylist.appendChild(entry);
-        });
-
-    }
-
-    get text() {
-        return this.element.innerText;
-    }
-}
+module.exports = function () {
+    var x = Math.floor(Math.random() * names.length);
+    return names[x];
+};

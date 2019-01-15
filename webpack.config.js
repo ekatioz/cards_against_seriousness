@@ -4,7 +4,7 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
-    main: ["./src/main.js"]
+    main: ["./src/client/CardsAgainst"]
   },
   mode: "development",
   output: {
@@ -15,23 +15,7 @@ module.exports = {
   devtool: "source-map",
   module: {
     rules: [
-      /*       {
-              test: /\.js$/,
-              use: [
-                {
-                  loader: "babel-loader"
-                }
-              ],
-              exclude: /node_modules/
-            }, */
-      {
-        test: /\.(ttf)$/,
-        use: [
-          {
-            loader: 'url-loader'
-          },
-        ]
-      },
+      { test: /\.(ttf)$/, loader: 'url-loader' },
       {
         test: /\.css$/,
         use: [
@@ -65,7 +49,7 @@ module.exports = {
             }
           }
         ]
-      }
+      },
     ]
   },
   devServer: {
