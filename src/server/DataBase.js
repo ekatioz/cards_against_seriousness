@@ -11,18 +11,18 @@ function DataBase() {
 
 DataBase.prototype.addCard = function (topic, text) {
     const q = `INSERT INTO cards(type,value) VALUES (${connection.escape(topic)},${connection.escape(text)});`;
-    console.log(q);
+ //   console.log(q);
     return query(q);
 };
 
-DataBase.prototype.getRandomCards = function (topic, count = 1) {
-    console.log(`get ${count} random cards of ${topic}`);
+DataBase.prototype.getRandomCards = function (topic, used = [], count = 1) {
+  //  console.log(`get ${count} random cards of ${topic}`);
     return this.getCards(topic).then((rows) => {
         var response = '';
         if (topic === 'whitecard') {
-            response = getRandom(rows.map(r => r.value), count);
+            response = getRandom(rows.map(r => r.value), used, count);
         } else {
-            response = getRandom(rows.map(r => JSON.parse(r.value)))[0];
+            response = getRandom(rows.map(r => JSON.parse(r.value)), used)[0];
         }
         return response;
     });
@@ -30,7 +30,7 @@ DataBase.prototype.getRandomCards = function (topic, count = 1) {
 
 DataBase.prototype.getCards = function (topic) {
     const q = `SELECT value FROM cards where type = "${topic}";`;
-    console.log(q);
+    //console.log(q);
     return query(q);
 };
 
@@ -43,16 +43,17 @@ function query(query) {
     });
 }
 
-function getRandom(arr, n = 1) {
-    var result = new Array(n),
-        len = arr.length,
-        taken = new Array(len);
-    if (n > len)
+function getRandom(arr, taken, n = 1) {
+    var result = [];
+    if ((n + taken.length) > arr.length)
         throw new RangeError("getRandom: more elements taken than available");
-    while (n--) {
-        var x = Math.floor(Math.random() * len);
-        result[n] = arr[x in taken ? taken[x] : x];
-        taken[x] = --len in taken ? taken[len] : len;
+    while (n) {
+        var i = Math.floor(Math.random() * arr.length);
+        if (!result.includes(arr[i]) && !taken.includes(arr[i])) {
+            console.log(arr[i],"is not in",result,"or",taken);
+            result.push(arr[i]);
+            n--;
+        }
     }
     return result;
 }

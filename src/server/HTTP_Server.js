@@ -9,10 +9,10 @@ function HTTP_Server() {
 
 HTTP_Server.prototype.start = function (port) {
     var server = this.app.listen(port, () => {
-        var host = server.address().address
-        var port = server.address().port 
-        console.log("Example app listening at http://%s:%s", host, port)
-     })   
-}
+        var host = server.address().address;
+        var port = server.address().port ;
+        console.log("Example app listening at http://%s:%s", host, port);
+     });   
+};
 
 module.exports = HTTP_Server;

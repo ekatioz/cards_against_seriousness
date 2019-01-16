@@ -22,7 +22,7 @@ Game.prototype.newRound = function (cloze) {
 Game.prototype.confirmCard = function (player, card) {
     this.getCurrentRound().confirmCard(player, card);
     const cards = this.getCurrentRound().getUsedCards();
-    console.log('confirmed', cards.length, 'of', this.players.length - 1);
+  //  console.log('confirmed', cards.length, 'of', this.players.length - 1);
     if (cards.length === this.players.length - 1) {
         this.allCardsConfirmed(this.getCurrentRound().getMaster(), cards);
     }
@@ -38,7 +38,7 @@ Game.prototype.getCurrentRound = function () {
 
 Game.prototype.getUsedCards = function () {
     const collector = [];
-    rounds.forEach(round => {
+    this.rounds.forEach(round => {
         collector.push(...round.getUsedCards());
     });
     return collector;
@@ -46,7 +46,7 @@ Game.prototype.getUsedCards = function () {
 
 Game.prototype.getUsedClozes = function () {
     const collector = [];
-    rounds.forEach(round => {
+    this.rounds.forEach(round => {
         collector.push(round.getUsedCloze());
     });
     return collector;

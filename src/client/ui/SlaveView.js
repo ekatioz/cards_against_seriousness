@@ -16,10 +16,16 @@ export class SlaveView extends FullscreenElement {
         this.addUiElement(this._hand);
     }
 
+    /**
+     * @param {(card: any) => void} cb
+     */
     set onCardConfirmed(cb){
         this._confirmedCallback = cb;
     }
 
+    /**
+     * @param {any} parts
+     */
     set cloze(parts){
         this._cloze.setTextParts(...parts);
     }

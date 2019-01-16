@@ -12,7 +12,6 @@ module.exports = {
     },
     msgType:{
         newPlayer: 'newUser',
-        startGame: 'startGame',
         ready: 'ready',
         userlist:'userlist',
         role:'role',

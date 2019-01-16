@@ -17,6 +17,7 @@ export class MasterView extends FullscreenElement {
             this._cCards.forEach(card => {
                 this.removeUiElement(card);
             });
+            this._cCards.length = 0;
             this._chooseCallback(choosen.text);
         });
         this._cCards.push(cCard);

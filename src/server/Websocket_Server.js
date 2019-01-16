@@ -84,7 +84,7 @@ WebSocket_Server.prototype.broadcast = function (data, omit_player) {
         if (client.readyState === WebSocket.OPEN && client !== sock) {
             client.send(JSON.stringify(data));
         } else {
-            console.log(this.getPlayer(client).name, "omitted");
+           // console.log(this.getPlayer(client).name, "omitted");
         }
     });
 };

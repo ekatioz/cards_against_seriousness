@@ -5,43 +5,64 @@ import { Login } from "./ui/Login";
 import { Lobby } from "./ui/Lobby";
 import { MasterView } from "./ui/MasterView";
 import { SlaveView } from "./ui/SlaveView";
+import { RoundEndView } from "./ui/RoundEndView";
 
 export class Controller {
+
     constructor() {
+        this.setUpUI();
+        this.setUpSocketListeners();
+        this._rounds = 0;
+    }
+
+    setUpUI() {
         this.lobby = new Lobby(() => Socket.send({ type: msgType.ready }));
         this.login = new Login(username => {
             Socket.send({ type: msgType.newPlayer, name: username });
+            document.title = `${username} - ${document.title}`;
             this.view = this.lobby;
         });
         this.master = new MasterView();
         this.slave = new SlaveView();
+        this.roundEnd = new RoundEndView();
+        this.master.onCardChoosen = card => {
+            Socket.send({ type: msgType.chooseCard, card: card });
+            this.view = this.roundEnd;
+        };
+        this.slave.onCardConfirmed = card => {
+            Socket.send({ type: msgType.confirmCard, text: card });
+            this.view = this.roundEnd;
+        };
+        this.roundEnd.onNextRound = () => Socket.send({ type: msgType.nextRound });
+    }
 
+    setUpSocketListeners() {
         Socket.on(msgType.userlist, data => this.lobby.players = data.users);
         Socket.on(msgType.role, data => this.role = data.role);
-        Socket.on(msgType.startGame, () => this.startGame());
         Socket.on(msgType.blackcard, data => {
             this.master.cloze = data.response;
             this.slave.cloze = data.response;
+            this.roundEnd.cloze = data.response;
         });
         Socket.on(msgType.whitecard, data => this.slave.addWhitecards(data.response));
         Socket.on(msgType.cardConfirmed, () => this.master.addCoveredCard());
         Socket.on(msgType.reveal, data => this.master.unlockCards(data.cards));
-        Socket.on(msgType.winner, data => alert(`${data.player} hat gewonnen mit: ${data.card}`));
-
-
-        Socket.on('nextRound', () => nextRound());
-        Socket.on('lock', () => lockUI());
-        
-
+        Socket.on(msgType.winner, data => {
+            this.roundEnd.setWinner(data.player, data.card);
+            if (this.role === role.master)
+                this.roundEnd.showNextRoundButton();
+        });
+        Socket.on(msgType.nextRound, () => this.newRound());
     }
 
-    startGame() {
+    newRound() {
+        this._rounds++;
+        if(this._rounds > 1) this.roundEnd.clear();
         if (this.role === role.master) {
             this.view = this.master;
-            this.master.onCardChoosen = card => Socket.send({type:msgType.chooseCard, card:card});
-        } else {
+        }
+        else {
             this.view = this.slave;
-            this.slave.onCardConfirmed = card => Socket.send({type:msgType.confirmCard, text:card});
         }
     }
 

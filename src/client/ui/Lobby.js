@@ -9,7 +9,11 @@ export class Lobby extends FullscreenElement {
         this.addClass('login');
         this._players = new PlayersList();
         this.addUiElement(this._players);
-        this.addUiElement(new ProceedButton('Bereit', () => readyCallback()));
+        const ready = new ProceedButton('Bereit', () => {
+            this.removeUiElement(ready);
+            readyCallback();
+        });
+        this.addUiElement(ready);
     }
 
     set players(players){

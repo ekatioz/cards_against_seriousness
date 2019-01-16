@@ -9,6 +9,10 @@ export class UiElement {
         }
     }
 
+    isAttached(){
+        return !!this.element.parentNode;
+    }
+
     addClickListener(cb){
         this.element.addEventListener('click',cb);
     }
