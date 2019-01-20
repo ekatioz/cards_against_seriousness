@@ -50,7 +50,7 @@ function getRandom(arr, taken, n = 1) {
     while (n) {
         var i = Math.floor(Math.random() * arr.length);
         if (!result.includes(arr[i]) && !taken.includes(arr[i])) {
-            console.log(arr[i],"is not in",result,"or",taken);
+          /*   console.log(arr[i],"is not in",result,"or",taken); */
             result.push(arr[i]);
             n--;
         }

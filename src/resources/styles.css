@@ -1,171 +1,34 @@
 @font-face {
-    font-family: ClozeFont;
-    src: url(./orange_juice.ttf);
+    font-family: permanentMarker;
+    src: url(./PermanentMarker.ttf);
 }
+
 
 body {
     background-color: #222;
     color: #fff;
+    font-family: permanentMarker;
 }
 
-.cloze {
-    font-family: ClozeFont;
-    text-align: center;
-    font-size: 3em;
-    position: relative;
-    line-height: 1.5em;
-    overflow: auto;
-    transition: all 1s;
-}
-
-.cloze.center{
-    margin: 10%;
-}
-
-.hand {
-    position: fixed;
+.fullscreen{
+    top:0;
     bottom: 0;
-    width: 100%;
-    transition: all 1s;
-}
-
-.hand.locked{
-    bottom: -10em;
-    opacity: 0.2;
-    pointer-events: none;
-}
-
-@media screen and (orientation:portrait) {
-    .hand {
-        height: 30%;
-    }
-}
-
-@media screen and (orientation:landscape) {
-    .hand {
-        height: 60%;
-        max-height: 20em;
-    }
-}
-
-.card {
-    position: absolute;
-    width: 20%;
-    height: 90%;
-    background: whitesmoke;
-    box-shadow: 0px 0px 2px 1px #000;
-    border-radius: 15px;
-    padding: 10px;
-    transform-origin: 50% 150%;
     left: 0;
     right: 0;
-    margin: 0 auto;
-    transition: all 200ms;
-    font-family: ClozeFont;
-    font-size: 1.5em;
-    color: #000;
-    word-break: break-word;
-    bottom: 0%;
-}
-
-.card:hover {
-    box-shadow: 0px 0px 12px 6px #000;
-    z-index: 5;
-    bottom: 5%;
-}
-
-#cards {
     position: absolute;
-    left: 10%;
-    right: 10%;
-    top: 50%;
-    bottom: 10%;
 }
 
-.card.covered {
-    background-image: url('card.png');
-    background-size: contain;
-    box-shadow: 0px 0px 2px 1px whitesmoke;
-    background-repeat: no-repeat;
-    background-color: #222;
-    background-position: center;
-    position: relative;
-    display: inline-grid;
-    margin: 0.5em;
-}
-.card.revealed {
-    position: relative;
-    display: inline-grid;
-    margin: 0.5em;
-}
-.card.locked{
-    pointer-events: none;
-    opacity: 0.2;
-}
-
-.card.covered:hover {
-    box-shadow: 0px 0px 12px 6px whitesmoke;
-}
-
-.lobby {
-    margin: 20pt 10pt;
-}
-
-.username-input {
-    font-family: ClozeFont;
-    background-color: transparent;
-    font-size: 3em;
-    border: 2px solid white;
-    border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;
-    text-align: center;
-    color: #fff;
-    width: 100%;
-    text-decoration: none;
-}
-
-.start-button {
-    font-family: ClozeFont;
-    background-color: #eee;
-    border: none;
-    border-radius: 15px;
-    font-size: 3em;
-    line-height: 1.5em;
-    position: absolute;
-    margin-bottom: 20pt;
-    width: 80%;
-    margin-right: 20pt;
-    bottom: 0;
-    right: 0;
-}
-
-.lobby-list {
-    font-family: ClozeFont;
-    font-size: xx-large;
-    display: flex;
-    width: 100%;
-    flex-wrap: wrap;
-}
-
-.lobby-entry {
-    flex: 1;
-    background-color: #555;
-    padding: 1% 2%;
-    border-radius: 15px;
-    margin: 0 4pt 4pt;
-    text-align: center;
-    white-space: nowrap;
-}
-
-.winner {
-    font-family: ClozeFont;
-    text-align: right;
-    font-size: 2.5em;
+.proceed-button{
     position: fixed;
-    line-height: 1.5em;
-    overflow: auto;
-    top: 0.1em;
-    right: 0.5em;
-    color: #aaa;
+    z-index: 5;
+    bottom: 10%;
+    width: 100%;
+    height: 3em;
+    border: 4px dashed whitesmoke;
+}
+
+.proceed-button > .button-text{
+    position: absolute;
+    right: 20%;
+    left: 20%;
 }
