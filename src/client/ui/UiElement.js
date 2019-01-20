@@ -1,6 +1,6 @@
 export class UiElement {
-    constructor() {
-        this.element = document.createElement('div');
+    constructor(elementTag = 'div') {
+        this.element = document.createElement(elementTag);
     }
 
     clear() {

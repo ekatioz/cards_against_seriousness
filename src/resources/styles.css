@@ -7,6 +7,7 @@ body {
     background-color: #222;
     color: #fff;
     font-family: permanentMarker;
+    font-size: 1.5em;
 }
 
 .fullscreen {
@@ -31,4 +32,40 @@ body {
     position: absolute;
     right: 20%;
     left: 20%;
+}
+
+.cloze{
+    height:33%;
+}
+
+.hand {
+    height: 67%;
+    overflow: -webkit-paged-x;
+    display: flex;
+    padding: 1em;
+}
+.coveredHand{
+    height: 67%;
+    overflow: -webkit-paged-x;
+    display: flex;
+    padding: 1em;
+}
+.card.covered {
+    font-size: 3em;
+    text-align: center;
+    padding: 10% 5%;
+}
+
+.card {
+    height: 100%;
+    margin-right: 1em;
+    background: whitesmoke;
+    width: 33.333%;
+    flex: 1;
+    min-width: 33.333%;
+    border: 1px solid #666;
+    color:#222;
+    border-radius: 1em;
+    padding: 1em;
+    word-break: break-word;
 }

@@ -17,6 +17,7 @@ export class CoveredCard extends Card {
         this.text = '🐵';
         this._coveredText = text;
         this._locked = false;
+        this.removeClass('locked');
     }
     
     _reveal(){
