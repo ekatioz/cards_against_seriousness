@@ -70,6 +70,9 @@ export class Controller {
         this.view = this.login;
     }
 
+    /**
+     * @param {{ element: any; }} uiElement
+     */
     set view(uiElement) {
         if (this._view) document.body.removeChild(this._view.element);
         document.body.appendChild(uiElement.element);

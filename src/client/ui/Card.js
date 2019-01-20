@@ -3,7 +3,7 @@ import { UiElement } from "./UiElement";
 export class Card extends UiElement {
 
     constructor(text, confirmationCallback) {
-        super();
+        super('span');
         if (confirmationCallback) this.addClickListener(e => confirmationCallback(this));
 
         this.addClass('card');

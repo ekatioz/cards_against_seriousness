@@ -90,7 +90,11 @@ WebSocket_Server.prototype.broadcast = function (data, omit_player) {
 };
 
 WebSocket_Server.prototype.send = function (player, data) {
-    player.socket.send(JSON.stringify(data));
+    if (player.socket.readyState === 1) {
+        player.socket.send(JSON.stringify(data));
+    } else {
+        this.players.splice(this.players.indexOf(player),1);
+    }
 };
 
 module.exports = WebSocket_Server;

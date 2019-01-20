@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "c73bccb4a963180c0dd8";
+/******/ 	var hotCurrentHash = "abdb98488430f5197bb2";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -821,7 +821,7 @@ var urlEscape = __webpack_require__(/*! ../../node_modules/css-loader/dist/runti
 var ___CSS_LOADER_URL___0___ = urlEscape(__webpack_require__(/*! ./PermanentMarker.ttf */ "./src/resources/PermanentMarker.ttf"));
 
 // Module
-exports.push([module.i, "@font-face {\r\n    font-family: permanentMarker;\r\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\r\n}\r\n\r\n\r\nbody {\r\n    background-color: #222;\r\n    color: #fff;\r\n    font-family: permanentMarker;\r\n}\r\n\r\n.fullscreen{\r\n    top:0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    position: absolute;\r\n}\r\n\r\n.proceed-button{\r\n    position: fixed;\r\n    z-index: 5;\r\n    bottom: 10%;\r\n    width: 100%;\r\n    height: 3em;\r\n    border: 4px dashed whitesmoke;\r\n}\r\n\r\n.proceed-button > .button-text{\r\n    position: absolute;\r\n    right: 20%;\r\n    left: 20%;\r\n}", ""]);
+exports.push([module.i, "@font-face {\r\n    font-family: permanentMarker;\r\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\r\n}\r\n\r\nbody {\r\n    background-color: #222;\r\n    color: #fff;\r\n    font-family: permanentMarker;\r\n    font-size: 1.5em;\r\n}\r\n\r\n.fullscreen {\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    position: absolute;\r\n    padding: 1em;\r\n}\r\n\r\n.proceed-button {\r\n    position: fixed;\r\n    z-index: 5;\r\n    bottom: 10%;\r\n    width: 100%;\r\n    height: 3em;\r\n    border: 4px dashed whitesmoke;\r\n}\r\n\r\n.proceed-button>.button-text {\r\n    position: absolute;\r\n    right: 20%;\r\n    left: 20%;\r\n}\r\n\r\n.cloze{\r\n    height:33%;\r\n}\r\n\r\n.hand {\r\n    height: 67%;\r\n    overflow: -webkit-paged-x;\r\n    display: flex;\r\n    padding: 1em;\r\n}\r\n.coveredHand{\r\n    height: 67%;\r\n    overflow: -webkit-paged-x;\r\n    display: flex;\r\n    padding: 1em;\r\n}\r\n.card.covered {\r\n    font-size: 3em;\r\n    text-align: center;\r\n    padding: 10% 5%;\r\n}\r\n\r\n.card {\r\n    height: 100%;\r\n    margin-right: 1em;\r\n    background: whitesmoke;\r\n    width: 33.333%;\r\n    flex: 1;\r\n    min-width: 33.333%;\r\n    border: 1px solid #666;\r\n    color:#222;\r\n    border-radius: 1em;\r\n    padding: 1em;\r\n    word-break: break-word;\r\n}", ""]);
 
 
 
@@ -1575,6 +1575,9 @@ class Controller {
         this.view = this.login;
     }
 
+    /**
+     * @param {{ element: any; }} uiElement
+     */
     set view(uiElement) {
         if (this._view) document.body.removeChild(this._view.element);
         document.body.appendChild(uiElement.element);
@@ -1649,7 +1652,7 @@ __webpack_require__.r(__webpack_exports__);
 class Card extends _UiElement__WEBPACK_IMPORTED_MODULE_0__["UiElement"] {
 
     constructor(text, confirmationCallback) {
-        super();
+        super('span');
         if (confirmationCallback) this.addClickListener(e => confirmationCallback(this));
 
         this.addClass('card');
@@ -1731,6 +1734,7 @@ class CoveredCard extends _Card__WEBPACK_IMPORTED_MODULE_1__["Card"] {
         this.text = '🐵';
         this._coveredText = text;
         this._locked = false;
+        this.removeClass('locked');
     }
     
     _reveal(){
@@ -1741,6 +1745,59 @@ class CoveredCard extends _Card__WEBPACK_IMPORTED_MODULE_1__["Card"] {
             this.addClickListener(() => this._confirmationCallback(this));
         }
     }
+}
+
+/***/ }),
+
+/***/ "./src/client/ui/CoveredHand.js":
+/*!**************************************!*\
+  !*** ./src/client/ui/CoveredHand.js ***!
+  \**************************************/
+/*! exports provided: CoveredHand */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CoveredHand", function() { return CoveredHand; });
+/* harmony import */ var _UiElement__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UiElement */ "./src/client/ui/UiElement.js");
+/* harmony import */ var _CoveredCard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CoveredCard */ "./src/client/ui/CoveredCard.js");
+
+
+
+class CoveredHand extends _UiElement__WEBPACK_IMPORTED_MODULE_0__["UiElement"]{
+
+
+
+    constructor(chooseCallback) {
+        super();
+        this.addClass('coveredHand');
+        this._chooseCallback = chooseCallback;
+        this._cCards = [];
+    }
+
+    addCoveredCard() {
+        const cCard = new _CoveredCard__WEBPACK_IMPORTED_MODULE_1__["CoveredCard"](choosen => {
+            this._cCards.forEach(card => {
+                this.removeUiElement(card);
+            });
+            this._cCards.length = 0;
+            this._chooseCallback(choosen.text);
+        });
+        this._cCards.push(cCard);
+        this.addUiElement(cCard);
+    }
+
+    unlockCards(cards) {
+        shuffle(cards).forEach((card, i) => this._cCards[i].revealCovered(card));
+    }
+}
+
+function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
 }
 
 /***/ }),
@@ -1887,13 +1944,13 @@ class Login extends _FullscreenElement__WEBPACK_IMPORTED_MODULE_0__["FullscreenE
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MasterView", function() { return MasterView; });
 /* harmony import */ var _Cloze__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Cloze */ "./src/client/ui/Cloze.js");
-/* harmony import */ var _FullscreenElement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FullscreenElement */ "./src/client/ui/FullscreenElement.js");
-/* harmony import */ var _CoveredCard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CoveredCard */ "./src/client/ui/CoveredCard.js");
+/* harmony import */ var _CoveredHand__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CoveredHand */ "./src/client/ui/CoveredHand.js");
+/* harmony import */ var _FullscreenElement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FullscreenElement */ "./src/client/ui/FullscreenElement.js");
 
 
 
 
-class MasterView extends _FullscreenElement__WEBPACK_IMPORTED_MODULE_1__["FullscreenElement"] {
+class MasterView extends _FullscreenElement__WEBPACK_IMPORTED_MODULE_2__["FullscreenElement"] {
 
     constructor() {
         super();
@@ -1901,39 +1958,25 @@ class MasterView extends _FullscreenElement__WEBPACK_IMPORTED_MODULE_1__["Fullsc
         this._cloze = new _Cloze__WEBPACK_IMPORTED_MODULE_0__["Cloze"]();
         this.addUiElement(this._cloze);
         this._cCards = [];
+        this._coveredHand = new _CoveredHand__WEBPACK_IMPORTED_MODULE_1__["CoveredHand"](confirmed => this._chooseCallback(confirmed));
+        this.addUiElement(this._coveredHand);
     }
 
-    addCoveredCard(){
-        const cCard = new _CoveredCard__WEBPACK_IMPORTED_MODULE_2__["CoveredCard"](choosen => {
-            this._cCards.forEach(card => {
-                this.removeUiElement(card);
-            });
-            this._cCards.length = 0;
-            this._chooseCallback(choosen.text);
-        });
-        this._cCards.push(cCard);
-        this.addUiElement(cCard);
+    addCoveredCard() {
+        this._coveredHand.addCoveredCard();
     }
 
-    unlockCards(cards){
-        shuffle(cards).forEach((card,i) => this._cCards[i].revealCovered(card));
+    unlockCards(cards) {
+        this._coveredHand.unlockCards(cards);
     }
 
-    set onCardChoosen(cb){
+    set onCardChoosen(cb) {
         this._chooseCallback = cb;
     }
 
-    set cloze(parts){
+    set cloze(parts) {
         this._cloze.setTextParts(...parts);
     }
-}
-
-function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
 }
 
 /***/ }),
@@ -2037,7 +2080,6 @@ class RoundEndView extends _FullscreenElement__WEBPACK_IMPORTED_MODULE_1__["Full
     setWinner(winner, card) {
         this._winner.innerText = `${winner} gewinnt diese Runde!`;
         this.addDomElement(this._winner);
-
         this._winningCard.innerText = card;
         this.addDomElement(this._winningCard);
     }
@@ -2053,7 +2095,7 @@ class RoundEndView extends _FullscreenElement__WEBPACK_IMPORTED_MODULE_1__["Full
     clear() {
         this.removeDomElement(this._winner);
         this.removeDomElement(this._winningCard);
-        if (this._nextRound.isAttached()) this.removeUiElement(this._nextRound);
+        this.removeUiElement(this._nextRound);
         this._cloze.clear();
     }
 }
@@ -2125,8 +2167,8 @@ class SlaveView extends _FullscreenElement__WEBPACK_IMPORTED_MODULE_1__["Fullscr
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UiElement", function() { return UiElement; });
 class UiElement {
-    constructor() {
-        this.element = document.createElement('div');
+    constructor(elementTag = 'div') {
+        this.element = document.createElement(elementTag);
     }
 
     clear() {
@@ -2135,16 +2177,16 @@ class UiElement {
         }
     }
 
-    isAttached(){
+    isAttached() {
         return !!this.element.parentNode;
     }
 
-    addClickListener(cb){
-        this.element.addEventListener('click',cb);
+    addClickListener(cb) {
+        this.element.addEventListener('click', cb);
     }
 
-    removeClickListener(cb){
-        this.element.removeEventListener('click',cb);
+    removeClickListener(cb) {
+        this.element.removeEventListener('click', cb);
     }
 
     addClass(name) {
@@ -2164,11 +2206,11 @@ class UiElement {
     }
 
     removeDomElement(domElement) {
-        this.element.removeChild(domElement);
+        if (!!domElement.parentNode) this.element.removeChild(domElement);
     }
 
     removeUiElement(uiElement) {
-        this.removeDomElement(uiElement.element);
+        if (uiElement.isAttached()) this.removeDomElement(uiElement.element);
     }
 }
 

@@ -1,5 +1,4 @@
-function Round(cloze, master) {
-  this.cloze = cloze;
+function Round(master) {
   this.master = master;
   this.cards = [];
   this.confirmationPromise;
@@ -13,12 +12,8 @@ Round.prototype.confirmCard = function (player, card) {
   this.cards.push({ player: player, card: card });
 };
 
-Round.prototype.getUsedCards = function () {
+Round.prototype.getConfirmedCards = function () {
   return this.cards;
-};
-
-Round.prototype.getUsedCloze = function () {
-  return this.cloze;
 };
 
 module.exports = Round;
