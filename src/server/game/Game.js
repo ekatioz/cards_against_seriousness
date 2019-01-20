@@ -4,13 +4,15 @@ function Game(players) {
     this.players = players;
     this.rounds = [];
     this.usedCards = [];
+    this.usedClozes = [];
 }
 
 Game.prototype.getPlayers = function () {
-  return this.players;  
+    return this.players;
 };
 
 Game.prototype.newRound = function (cloze) {
+    this.usedClozes.push(cloze);
     let i = this.rounds[0]
         ? this.players.indexOf(this.getCurrentRound().getMaster())
         : Math.floor((Math.random() * this.players.length) - 1);
@@ -19,10 +21,14 @@ Game.prototype.newRound = function (cloze) {
     this.rounds.push(new Round(cloze, this.players[i]));
 };
 
+Game.prototype.addUsedCards = function (cards) {
+    this.usedCards.push(...cards);
+};
+
 Game.prototype.confirmCard = function (player, card) {
     this.getCurrentRound().confirmCard(player, card);
-    const cards = this.getCurrentRound().getUsedCards();
-  //  console.log('confirmed', cards.length, 'of', this.players.length - 1);
+    const cards = this.getCurrentRound().getConfirmedCards();
+    //  console.log('confirmed', cards.length, 'of', this.players.length - 1);
     if (cards.length === this.players.length - 1) {
         this.allCardsConfirmed(this.getCurrentRound().getMaster(), cards);
     }
@@ -37,19 +43,11 @@ Game.prototype.getCurrentRound = function () {
 };
 
 Game.prototype.getUsedCards = function () {
-    const collector = [];
-    this.rounds.forEach(round => {
-        collector.push(...round.getUsedCards());
-    });
-    return collector;
+    return usedCards;
 };
 
 Game.prototype.getUsedClozes = function () {
-    const collector = [];
-    this.rounds.forEach(round => {
-        collector.push(round.getUsedCloze());
-    });
-    return collector;
+    return usedClozes;
 };
 
 module.exports = Game;

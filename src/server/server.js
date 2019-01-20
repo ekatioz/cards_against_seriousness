@@ -13,17 +13,17 @@ const initialCards = 5;
 var game;
 
 sock.onPlayerLeft(player => {
-  //  console.log(`${player.name} left`);
+    //  console.log(`${player.name} left`);
     sock.publishPlayers();
 });
 
 sock.onNewPlayer(player => {
-   // console.log(`${player.name} joined`);
+    // console.log(`${player.name} joined`);
     sock.publishPlayers();
 });
 
 sock.onPlayerReady((player, allReady, players) => {
-   // console.log(`${player.name} is ready`);
+    // console.log(`${player.name} is ready`);
     sock.publishPlayers();
     if (allReady) startGame(players);
 });
@@ -61,9 +61,11 @@ function distributeBlackcards() {
 
 function distributeWhitecards(players, count = 1) {
     db.getRandomCards(msgType.whitecard, game.getUsedCards().map(c => c.card), players.length * count)
-        .then(cards =>
+        .then(cards => {
+            game.addUsedCards(cards);
             players.forEach(player =>
-                sock.send(player, { type: msgType.whitecard, response: cards.splice(0, count) })));
+                sock.send(player, { type: msgType.whitecard, response: cards.splice(0, count) }));
+        });
 }
 
 function setUpNewRound(cloze) {

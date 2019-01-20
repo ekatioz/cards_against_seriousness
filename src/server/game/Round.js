@@ -13,12 +13,8 @@ Round.prototype.confirmCard = function (player, card) {
   this.cards.push({ player: player, card: card });
 };
 
-Round.prototype.getUsedCards = function () {
+Round.prototype.getConfirmCards = function () {
   return this.cards;
-};
-
-Round.prototype.getUsedCloze = function () {
-  return this.cloze;
 };
 
 module.exports = Round;
