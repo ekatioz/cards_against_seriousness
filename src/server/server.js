@@ -40,7 +40,7 @@ function startGame(players) {
 }
 
 sock.onChooseCard(card => {
-    const winner = game.getCurrentRound().getUsedCards().filter(c => c.card === card)[0].player;
+    const winner = game.getCurrentRound().getConfirmedCards().filter(c => c.card === card)[0].player;
     sock.broadcast({ type: 'winner', player: winner.name, card: card });
 });
 

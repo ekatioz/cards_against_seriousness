@@ -18,7 +18,7 @@ Game.prototype.newRound = function (cloze) {
         : Math.floor((Math.random() * this.players.length) - 1);
     i++;
     i = i === this.players.length ? 0 : i;
-    this.rounds.push(new Round(cloze, this.players[i]));
+    this.rounds.push(new Round(this.players[i]));
 };
 
 Game.prototype.addUsedCards = function (cards) {
@@ -43,11 +43,11 @@ Game.prototype.getCurrentRound = function () {
 };
 
 Game.prototype.getUsedCards = function () {
-    return usedCards;
+    return this.usedCards;
 };
 
 Game.prototype.getUsedClozes = function () {
-    return usedClozes;
+    return this.usedClozes;
 };
 
 module.exports = Game;
