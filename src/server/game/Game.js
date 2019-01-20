@@ -11,7 +11,12 @@ Game.prototype.getPlayers = function () {
     return this.players;
 };
 
+Game.prototype.addPlayer = function (player) {
+    player.new = true;
+};
+
 Game.prototype.newRound = function (cloze) {
+    this.players.forEach(player => player.new = false);
     this.usedClozes.push(cloze);
     let i = this.rounds[0]
         ? this.players.indexOf(this.getCurrentRound().getMaster())
@@ -28,8 +33,9 @@ Game.prototype.addUsedCards = function (cards) {
 Game.prototype.confirmCard = function (player, card) {
     this.getCurrentRound().confirmCard(player, card);
     const cards = this.getCurrentRound().getConfirmedCards();
-    //  console.log('confirmed', cards.length, 'of', this.players.length - 1);
-    if (cards.length === this.players.length - 1) {
+    console.log(this.players.map(p => `${p.name} - ${p.new}`));
+    console.log('confirmed', cards.length, 'of', this.players.filter(p => !p.new).length - 1);
+    if (cards.length === this.players.filter(p => !p.new).length - 1) {
         this.allCardsConfirmed(this.getCurrentRound().getMaster(), cards);
     }
 };
@@ -48,6 +54,10 @@ Game.prototype.getUsedCards = function () {
 
 Game.prototype.getUsedClozes = function () {
     return this.usedClozes;
+};
+
+Game.prototype.isRunning = function () {
+    return this.rounds.length !== 0;
 };
 
 module.exports = Game;

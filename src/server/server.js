@@ -13,23 +13,28 @@ const initialCards = 5;
 var game;
 
 sock.onPlayerLeft(player => {
-    //  console.log(`${player.name} left`);
     sock.publishPlayers();
 });
 
 sock.onNewPlayer(player => {
-    // console.log(`${player.name} joined`);
     sock.publishPlayers();
 });
 
 sock.onPlayerReady((player, allReady, players) => {
-    // console.log(`${player.name} is ready`);
     sock.publishPlayers();
-    if (allReady) startGame(players);
+    if (allReady){
+        if (!game || !game.isRunning()) startGame(players);
+        else joinGame(player);
+    }
 });
 
+function joinGame(player) {
+    console.log(player.name,'joined');
+    game.addPlayer(player);
+    distributeWhitecards([player], initialCards);
+}
+
 function startGame(players) {
-    //console.log('Starting a new Game');
     game = new Game(players);
     game.onAllCardsConfirmed((master, cards) => {
         sock.send(master, { type: 'reveal', cards: cards.map(c => c.card) });
