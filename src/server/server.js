@@ -14,6 +14,9 @@ var game;
 
 sock.onPlayerLeft(player => {
     sock.publishPlayers();
+    if (game && game.getCurrentRound().getMaster().equals(player)) {
+        newRound();
+    }
 });
 
 sock.onNewPlayer(player => {
@@ -22,14 +25,14 @@ sock.onNewPlayer(player => {
 
 sock.onPlayerReady((player, allReady, players) => {
     sock.publishPlayers();
-    if (allReady){
+    if (allReady) {
         if (!game || !game.isRunning()) startGame(players);
         else joinGame(player);
     }
 });
 
 function joinGame(player) {
-    console.log(player.name,'joined');
+    console.log(player.name, 'joined');
     game.addPlayer(player);
     distributeWhitecards([player], initialCards);
 }
@@ -55,9 +58,13 @@ sock.onConfirmCard((player, card) => {
     game.confirmCard(player, card);
 });
 
-sock.onNextRound(() =>
-    distributeBlackcards()
-        .then(() => distributeWhitecards(game.getPlayers().filter(p => p !== game.getCurrentRound().getMaster()))));
+sock.onNextRound(newRound);
+
+function newRound() {
+    distributeBlackcards().then(() =>
+        distributeWhitecards(game.getPlayers()
+            .filter(p => p !== game.getCurrentRound().getMaster())));
+}
 
 function distributeBlackcards() {
     return db.getRandomCards(msgType.blackcard, game.getUsedClozes())

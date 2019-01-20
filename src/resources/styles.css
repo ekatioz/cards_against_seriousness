@@ -3,22 +3,22 @@
     src: url(./PermanentMarker.ttf);
 }
 
-
 body {
     background-color: #222;
     color: #fff;
     font-family: permanentMarker;
 }
 
-.fullscreen{
-    top:0;
+.fullscreen {
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     position: absolute;
+    padding: 1em;
 }
 
-.proceed-button{
+.proceed-button {
     position: fixed;
     z-index: 5;
     bottom: 10%;
@@ -27,7 +27,7 @@ body {
     border: 4px dashed whitesmoke;
 }
 
-.proceed-button > .button-text{
+.proceed-button>.button-text {
     position: absolute;
     right: 20%;
     left: 20%;

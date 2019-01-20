@@ -26,7 +26,6 @@ export class RoundEndView extends FullscreenElement {
     setWinner(winner, card) {
         this._winner.innerText = `${winner} gewinnt diese Runde!`;
         this.addDomElement(this._winner);
-
         this._winningCard.innerText = card;
         this.addDomElement(this._winningCard);
     }
@@ -42,7 +41,7 @@ export class RoundEndView extends FullscreenElement {
     clear() {
         this.removeDomElement(this._winner);
         this.removeDomElement(this._winningCard);
-        if (this._nextRound.isAttached()) this.removeUiElement(this._nextRound);
+        this.removeUiElement(this._nextRound);
         this._cloze.clear();
     }
 }

@@ -9,16 +9,16 @@ export class UiElement {
         }
     }
 
-    isAttached(){
+    isAttached() {
         return !!this.element.parentNode;
     }
 
-    addClickListener(cb){
-        this.element.addEventListener('click',cb);
+    addClickListener(cb) {
+        this.element.addEventListener('click', cb);
     }
 
-    removeClickListener(cb){
-        this.element.removeEventListener('click',cb);
+    removeClickListener(cb) {
+        this.element.removeEventListener('click', cb);
     }
 
     addClass(name) {
@@ -38,10 +38,10 @@ export class UiElement {
     }
 
     removeDomElement(domElement) {
-        this.element.removeChild(domElement);
+        if (!!domElement.parentNode) this.element.removeChild(domElement);
     }
 
     removeUiElement(uiElement) {
-        this.removeDomElement(uiElement.element);
+        if (uiElement.isAttached()) this.removeDomElement(uiElement.element);
     }
 }
