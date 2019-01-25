@@ -15,10 +15,16 @@ WebSocket_Server.prototype.start = function (port) {
 
     this.wss.on('connection', ws => {
         console.log('new connection');
+        console.log('close con', this.wss.clients.size, 'cons', this.players.length, 'players');
         ws.on('close', data => {
             const player = this.getPlayer(ws);
-            this.players.splice(this.players.indexOf(player), 1);
-            this.playerLeftCallback(player);
+            const index = this.players.indexOf(player);
+            if(index >= 0){
+                this.players.splice(index, 1);
+                this.playerLeftCallback(player);
+                console.log(player.name, 'left');
+            }
+            console.log('close con', this.wss.clients.size, 'cons', this.players.length, 'players');
         });
         ws.on('message', raw => {
             const msg = JSON.parse(raw);
@@ -40,6 +46,8 @@ WebSocket_Server.prototype.start = function (port) {
             } else {
                 console.log('is else', msg.type);
             }
+            console.log('msg:',msg.type,
+                'close con', this.wss.clients.size, 'cons', this.players.length, 'players');
         });
     });
     return this;
@@ -90,7 +98,7 @@ WebSocket_Server.prototype.broadcast = function (data, omit_player) {
 };
 
 WebSocket_Server.prototype.send = function (player, data) {
-    if (player.socket.readyState === 1) {
+    if (player && player.socket.readyState === 1) {
         player.socket.send(JSON.stringify(data));
     } else {
         this.players.splice(this.players.indexOf(player),1);

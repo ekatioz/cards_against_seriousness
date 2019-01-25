@@ -6,8 +6,7 @@ function Player(name, socket) {
 }
 
 Player.prototype.equals = function (player) {
-    console.log(`${this.name === player.name} && ${this.socket === player.socket}`);
-    return this.name === player.name && this.socket === player.socket;
+    return player && this.name === player.name && this.socket === player.socket;
 };
 
 module.exports = Player;

@@ -14,7 +14,7 @@ var game;
 
 sock.onPlayerLeft(player => {
     sock.publishPlayers();
-    if (game && game.getCurrentRound().getMaster().equals(player)) {
+    if (game && player.equals(game.getCurrentRound().getMaster())) {
         newRound();
     }
 });
