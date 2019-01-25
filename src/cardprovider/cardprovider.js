@@ -10,19 +10,20 @@ app.setMaxListeners(1);
 app.get('/update', (req, res) => {
     var type = req.query.type;
     console.log('update', type);
-    db.getCards(type,rows => {
-        res.send(JSON.stringify(rows.map(r => r.value)));
-    });
+    db.getCards(type)
+        .then(rows => {
+            res.send(JSON.stringify(rows.map(r => r.value)));
+        });
 });
 
 
 app.get('/provide', (req, res) => {
     console.log(req.query.text);
-    var {text,type} = req.query;
-    if (type === 'blackcard') {  
+    var { text, type } = req.query;
+    if (type === 'blackcard') {
         text = JSON.stringify(text.split('💣').map(t => t.trim()));
     }
-    db.addCard(type,text, () => res.send('done!'));
+    db.addCard(type, text.then(() => res.send('done!')));
 });
 
 
