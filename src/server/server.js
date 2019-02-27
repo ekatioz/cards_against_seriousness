@@ -67,17 +67,18 @@ function newRound() {
 }
 
 function distributeBlackcards() {
-    return db.getRandomCards(msgType.blackcard, game.getUsedClozes())
+    return db.getRandomCards(msgType.blackcard)
         .then(cloze => setUpNewRound(cloze));
 }
 
 function distributeWhitecards(players, count = 1) {
-    db.getRandomCards(msgType.whitecard, game.getUsedCards().map(c => c.card), players.length * count)
-        .then(cards => {
-            game.addUsedCards(cards);
+    db.getRandomCards(msgType.whitecard, players.length * count)
+        .then(cards =>
             players.forEach(player =>
-                sock.send(player, { type: msgType.whitecard, response: cards.splice(0, count) }));
-        });
+                sock.send(player, {
+                    type: msgType.whitecard,
+                    response: cards.splice(0, count)
+                })));
 }
 
 function setUpNewRound(cloze) {

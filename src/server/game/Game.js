@@ -3,8 +3,6 @@ const Round = require('./Round');
 function Game(players) {
     this.players = players;
     this.rounds = [];
-    this.usedCards = [];
-    this.usedClozes = [];
 }
 
 Game.prototype.getPlayers = function () {
@@ -17,17 +15,12 @@ Game.prototype.addPlayer = function (player) {
 
 Game.prototype.newRound = function (cloze) {
     this.players.forEach(player => player.new = false);
-    this.usedClozes.push(cloze);
     let i = this.rounds[0]
         ? this.players.indexOf(this.getCurrentRound().getMaster())
         : Math.floor((Math.random() * this.players.length) - 1);
     i++;
     i = i === this.players.length ? 0 : i;
     this.rounds.push(new Round(this.players[i]));
-};
-
-Game.prototype.addUsedCards = function (cards) {
-    this.usedCards.push(...cards);
 };
 
 Game.prototype.confirmCard = function (player, card) {
@@ -46,14 +39,6 @@ Game.prototype.onAllCardsConfirmed = function (callback) {
 
 Game.prototype.getCurrentRound = function () {
     return this.rounds[this.rounds.length - 1];
-};
-
-Game.prototype.getUsedCards = function () {
-    return this.usedCards;
-};
-
-Game.prototype.getUsedClozes = function () {
-    return this.usedClozes;
 };
 
 Game.prototype.isRunning = function () {
