@@ -23,7 +23,7 @@ app.get('/provide', (req, res) => {
     if (type === 'blackcard') {
         text = JSON.stringify(text.split('💣').map(t => t.trim()));
     }
-    db.addCard(type, text.then(() => res.send('done!')));
+    db.addCard(type, text).then(() => res.send('done!'));
 });
 
 
