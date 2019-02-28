@@ -6,6 +6,8 @@ import { Lobby } from "./ui/Lobby";
 import { MasterView } from "./ui/MasterView";
 import { SlaveView } from "./ui/SlaveView";
 import { RoundEndView } from "./ui/RoundEndView";
+import { UiElement } from "./ui/UiElement";
+import { Notifications } from "./ui/Notifications";
 
 export class Controller {
 
@@ -16,6 +18,7 @@ export class Controller {
     }
 
     setUpUI() {
+        this.notifications = new Notifications();
         this.lobby = new Lobby(() => Socket.send({ type: msgType.ready }));
         this.login = new Login(username => {
             Socket.send({ type: msgType.newPlayer, name: username });
@@ -52,7 +55,11 @@ export class Controller {
             if (this.role === role.master)
                 this.roundEnd.showNextRoundButton();
         });
-        Socket.on(msgType.nextRound, () => this.newRound());
+        Socket.on(msgType.nextRound, data => {
+            this.newRound();
+            this.notifications.publish(`${data.master} wählt aus.`,10);
+        });
+        Socket.on(msgType.serverMessage, data => this.notifications.publish(data.msg));
     }
 
     newRound() {
@@ -68,10 +75,11 @@ export class Controller {
 
     init() {
         this.view = this.login;
+        document.body.appendChild(this.notifications.element);
     }
 
     /**
-     * @param {{ element: any; }} uiElement
+     * @param {UIElement} uiElement
      */
     set view(uiElement) {
         if (this._view) document.body.removeChild(this._view.element);

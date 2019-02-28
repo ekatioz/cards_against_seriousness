@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "e58172837637bb3347eb";
+/******/ 	var hotCurrentHash = "c1e83569a0390774cc8f";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -821,7 +821,7 @@ var urlEscape = __webpack_require__(/*! ../../node_modules/css-loader/dist/runti
 var ___CSS_LOADER_URL___0___ = urlEscape(__webpack_require__(/*! ./PermanentMarker.ttf */ "./src/resources/PermanentMarker.ttf"));
 
 // Module
-exports.push([module.i, "@font-face {\n    font-family: permanentMarker;\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\n}\n\nbody {\n    background-color: #222;\n    color: #fff;\n    font-family: permanentMarker;\n    font-size: 1.5em;\n}\n\n.fullscreen {\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    position: absolute;\n    padding: 1em;\n}\n\n.proceed-button {\n    position: fixed;\n    z-index: 5;\n    bottom: 10%;\n    width: 100%;\n    height: 3em;\n    border: 4px dashed whitesmoke;\n}\n\n.proceed-button>.button-text {\n    position: absolute;\n    right: 20%;\n    left: 20%;\n}\n\n.cloze{\n    height:33%;\n}\n\n.hand {\n    height: 67%;\n    overflow: -webkit-paged-x;\n    display: flex;\n    padding: 1em;\n}\n.coveredHand{\n    height: 67%;\n    overflow: -webkit-paged-x;\n    display: flex;\n    padding: 1em;\n}\n.card.covered {\n    font-size: 3em;\n    text-align: center;\n    padding: 10% 5%;\n}\n\n.card {\n    height: 100%;\n    margin-right: 1em;\n    background: whitesmoke;\n    width: 33.333%;\n    flex: 1;\n    min-width: 33.333%;\n    border: 1px solid #666;\n    color:#222;\n    border-radius: 1em;\n    padding: 1em;\n    word-break: break-word;\n}", ""]);
+exports.push([module.i, "@font-face {\n    font-family: permanentMarker;\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\n}\n\nbody {\n    background-color: #222;\n    color: #fff;\n    font-family: permanentMarker;\n    font-size: 1.5em;\n}\n\n.fullscreen {\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    position: absolute;\n    padding: 1em;\n}\n\n.proceed-button {\n    position: fixed;\n    z-index: 5;\n    bottom: 10%;\n    width: 100%;\n    height: 3em;\n    border: 4px dashed whitesmoke;\n    cursor: pointer;\n}\n\n.proceed-button>.button-text {\n    position: absolute;\n    right: 20%;\n    left: 20%;\n}\n\n.cloze{\n    height:33%;\n}\n\n.hand {\n    height: 67%;\n    overflow: -webkit-paged-x;\n    display: flex;\n    padding: 1em;\n}\n.coveredHand{\n    height: 67%;\n    overflow: -webkit-paged-x;\n    display: flex;\n    padding: 1em;\n}\n.card.covered {\n    font-size: 3em;\n    text-align: center;\n    padding: 10% 5%;\n}\n\n.card {\n    height: 100%;\n    margin-right: 1em;\n    background: whitesmoke;\n    width: 33.333%;\n    flex: 1;\n    min-width: 33.333%;\n    border: 1px solid #666;\n    color:#222;\n    border-radius: 1em;\n    padding: 1em;\n    word-break: break-word;\n    cursor: pointer;\n}\n\n.notifications {\n    position: fixed;\n    right: 0;\n    top: 0;\n    width: 30vw;\n    z-index: 30;\n    font-size: large;\n    text-align: right;\n    padding: 1em;\n    background-color: #222;\n    cursor: pointer;\n}\n\n.notification{\n    margin-bottom:0.5em;\n}", ""]);
 
 
 
@@ -1503,6 +1503,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_MasterView__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ui/MasterView */ "./src/client/ui/MasterView.js");
 /* harmony import */ var _ui_SlaveView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ui/SlaveView */ "./src/client/ui/SlaveView.js");
 /* harmony import */ var _ui_RoundEndView__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ui/RoundEndView */ "./src/client/ui/RoundEndView.js");
+/* harmony import */ var _ui_UiElement__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./ui/UiElement */ "./src/client/ui/UiElement.js");
+/* harmony import */ var _ui_Notifications__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./ui/Notifications */ "./src/client/ui/Notifications.js");
+
+
 
 
 
@@ -1521,6 +1525,7 @@ class Controller {
     }
 
     setUpUI() {
+        this.notifications = new _ui_Notifications__WEBPACK_IMPORTED_MODULE_8__["Notifications"]();
         this.lobby = new _ui_Lobby__WEBPACK_IMPORTED_MODULE_3__["Lobby"](() => _Socket__WEBPACK_IMPORTED_MODULE_0__["default"].send({ type: _commonStrings__WEBPACK_IMPORTED_MODULE_1__["msgType"].ready }));
         this.login = new _ui_Login__WEBPACK_IMPORTED_MODULE_2__["Login"](username => {
             _Socket__WEBPACK_IMPORTED_MODULE_0__["default"].send({ type: _commonStrings__WEBPACK_IMPORTED_MODULE_1__["msgType"].newPlayer, name: username });
@@ -1557,7 +1562,11 @@ class Controller {
             if (this.role === _commonStrings__WEBPACK_IMPORTED_MODULE_1__["role"].master)
                 this.roundEnd.showNextRoundButton();
         });
-        _Socket__WEBPACK_IMPORTED_MODULE_0__["default"].on(_commonStrings__WEBPACK_IMPORTED_MODULE_1__["msgType"].nextRound, () => this.newRound());
+        _Socket__WEBPACK_IMPORTED_MODULE_0__["default"].on(_commonStrings__WEBPACK_IMPORTED_MODULE_1__["msgType"].nextRound, data => {
+            this.newRound();
+            this.notifications.publish(`${data.master} wählt aus.`,10);
+        });
+        _Socket__WEBPACK_IMPORTED_MODULE_0__["default"].on(_commonStrings__WEBPACK_IMPORTED_MODULE_1__["msgType"].serverMessage, data => this.notifications.publish(data.msg));
     }
 
     newRound() {
@@ -1573,10 +1582,11 @@ class Controller {
 
     init() {
         this.view = this.login;
+        document.body.appendChild(this.notifications.element);
     }
 
     /**
-     * @param {{ element: any; }} uiElement
+     * @param {UIElement} uiElement
      */
     set view(uiElement) {
         if (this._view) document.body.removeChild(this._view.element);
@@ -1981,6 +1991,49 @@ class MasterView extends _FullscreenElement__WEBPACK_IMPORTED_MODULE_2__["Fullsc
 
 /***/ }),
 
+/***/ "./src/client/ui/Notifications.js":
+/*!****************************************!*\
+  !*** ./src/client/ui/Notifications.js ***!
+  \****************************************/
+/*! exports provided: Notifications */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Notifications", function() { return Notifications; });
+/* harmony import */ var _UiElement__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UiElement */ "./src/client/ui/UiElement.js");
+
+
+class Notifications extends _UiElement__WEBPACK_IMPORTED_MODULE_0__["UiElement"] {
+
+    constructor() {
+        super();
+        this.addClass('notifications');
+    }
+/**
+ * 
+ * @param {String} notifiaction 
+ * @param {number} duration 
+ */
+    publish(notifiaction, duration = 5) {
+        const notify = document.createElement('div');
+        notify.innerText = notifiaction;
+        notify.className = 'notification';
+        const removeNotification = () => {
+            this.removeDomElement(notify);
+            if (this.element.childElementCount == 0 ){
+                this.element.hidden = true;
+            }
+        };
+        notify.addEventListener('click', removeNotification);
+        this.addDomElement(notify);
+        this.element.removeAttribute('hidden');
+        setTimeout(removeNotification, duration * 1000);
+    }
+}
+
+/***/ }),
+
 /***/ "./src/client/ui/PlayersList.js":
 /*!**************************************!*\
   !*** ./src/client/ui/PlayersList.js ***!
@@ -2228,13 +2281,6 @@ module.exports = {
         master: 'master',
         slave: 'slave',
     },
-    ui:{
-        cloze: 'cloze',
-        card: 'card',
-        hand: 'hand',
-        proceedButton: 'button',
-        lobby: 'lobby'
-    },
     msgType:{
         newPlayer: 'newUser',
         ready: 'ready',
@@ -2247,7 +2293,8 @@ module.exports = {
         confirmCard: 'confirmCard',
         cardConfirmed: 'cardConfirmed',
         reveal: 'reveal',
-        winner:'winner'
+        winner:'winner',
+        serverMessage: 'serverMessage'
     }
 };
 

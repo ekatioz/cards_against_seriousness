@@ -26,6 +26,7 @@ body {
     width: 100%;
     height: 3em;
     border: 4px dashed whitesmoke;
+    cursor: pointer;
 }
 
 .proceed-button>.button-text {
@@ -68,4 +69,22 @@ body {
     border-radius: 1em;
     padding: 1em;
     word-break: break-word;
+    cursor: pointer;
+}
+
+.notifications {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 30vw;
+    z-index: 30;
+    font-size: large;
+    text-align: right;
+    padding: 1em;
+    background-color: #222;
+    cursor: pointer;
+}
+
+.notification{
+    margin-bottom:0.5em;
 }

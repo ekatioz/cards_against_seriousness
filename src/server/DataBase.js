@@ -1,3 +1,4 @@
+const { msgType } = require('../commonStrings');
 const mysql = require('mysql');
 const connection = mysql.createConnection({
     host: 'raspberrypi',
@@ -17,22 +18,28 @@ DataBase.prototype.addCard = function (topic, text) {
     return query(q);
 };
 
+DataBase.prototype.reloadCards = function () {
+    const promiseWhite = this.getCards(msgType.whitecard).then((rows) => {
+        this.whitecards = shuffle(rows.map(r => r.value));
+        console.log('loaded', this.whitecards.length, 'whitecards');
+    });
+    const promiseBlack = this.getCards(msgType.blackcard).then((rows) => {
+        this.blackcards = shuffle(rows.map(r => JSON.parse(r.value)));
+        console.log('loaded', this.blackcards.length, 'blackcards');
+    });
+
+    return Promise.all([promiseWhite, promiseBlack])
+        .then(() => (
+            { 
+                whitecards: this.whitecards.length,
+                blackcards: this.blackcards.length
+            }));
+};
+
 DataBase.prototype.getRandomCards = function (topic, count = 1) {
     return topic === 'whitecard'
-        ? (this.whitecards.length === 0
-            ? this.getCards(topic).then((rows) => {
-                this.whitecards = shuffle(rows.map(r => r.value));
-                console.log('loaded', this.whitecards.length, 'whitecards');
-            })
-            : Promise.resolve(() => null))
-            .then(() => this.whitecards.splice(0,count))
-        : (this.blackcards.length === 0
-            ? this.getCards(topic).then((rows) => {
-                this.blackcards = shuffle(rows.map(r => JSON.parse(r.value)));
-                console.log('loaded', this.blackcards.length, 'blackcards');
-            })
-            : Promise.resolve(() => null))
-            .then(() => this.blackcards.splice(0,1)[0]);
+        ? this.whitecards.splice(0, count)
+        : this.blackcards.splice(0, count)[0];
 };
 
 DataBase.prototype.getCards = function (topic) {

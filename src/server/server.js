@@ -13,9 +13,13 @@ const initialCards = 5;
 var game;
 
 sock.onPlayerLeft(player => {
-    sock.publishPlayers();
-    if (game && player.equals(game.getCurrentRound().getMaster())) {
-        newRound();
+    if(game.getPlayers().length > 0){
+        sock.publishPlayers();
+        if (game && player.equals(game.getCurrentRound().getMaster())) {
+            newRound();
+        }
+    } else {
+        game = null;
     }
 });
 
@@ -39,17 +43,21 @@ function joinGame(player) {
 
 function startGame(players) {
     game = new Game(players);
-    game.onAllCardsConfirmed((master, cards) => {
-        sock.send(master, { type: 'reveal', cards: cards.map(c => c.card) });
+    db.reloadCards().then(cardcounds => {
+        sock.broadcast({ type: msgType.serverMessage, msg: `${cardcounds.whitecards} whitecards geladen.` });
+        sock.broadcast({ type: msgType.serverMessage, msg: `${cardcounds.blackcards} blackcards geladen.` });
+        game.onAllCardsConfirmed((master, cards) => {
+            sock.send(master, { type: 'reveal', cards: cards.map(c => c.card) });
+        });
+        distributeWhitecards(players, initialCards);
+        distributeBlackcards();
+        distributeWhitecards(players.filter(p => p !== game.getCurrentRound().getMaster()));
     });
-    distributeWhitecards(players, initialCards);
-    distributeBlackcards()
-        .then(() => distributeWhitecards(players.filter(p => p !== game.getCurrentRound().getMaster())));
 }
 
 sock.onChooseCard(card => {
     const winner = game.getCurrentRound().getConfirmedCards().filter(c => c.card === card)[0].player;
-    sock.broadcast({ type: 'winner', player: winner.name, card: card });
+    sock.broadcast({ type: msgType.winner, player: winner.name, card: card });
 });
 
 sock.onConfirmCard((player, card) => {
@@ -61,24 +69,22 @@ sock.onConfirmCard((player, card) => {
 sock.onNextRound(newRound);
 
 function newRound() {
-    distributeBlackcards().then(() =>
-        distributeWhitecards(game.getPlayers()
-            .filter(p => p !== game.getCurrentRound().getMaster())));
+    distributeBlackcards();
+    distributeWhitecards(game.getPlayers()
+        .filter(p => p !== game.getCurrentRound().getMaster()));
 }
 
 function distributeBlackcards() {
-    return db.getRandomCards(msgType.blackcard)
-        .then(cloze => setUpNewRound(cloze));
+    return setUpNewRound(db.getRandomCards(msgType.blackcard));
 }
 
 function distributeWhitecards(players, count = 1) {
-    db.getRandomCards(msgType.whitecard, players.length * count)
-        .then(cards =>
-            players.forEach(player =>
-                sock.send(player, {
-                    type: msgType.whitecard,
-                    response: cards.splice(0, count)
-                })));
+    const cards = db.getRandomCards(msgType.whitecard, players.length * count);
+    players.forEach(player =>
+        sock.send(player, {
+            type: msgType.whitecard,
+            response: cards.splice(0, count)
+        }));
 }
 
 function setUpNewRound(cloze) {
@@ -86,7 +92,6 @@ function setUpNewRound(cloze) {
     const master = game.getCurrentRound().getMaster();
     sock.send(master, { type: msgType.role, role: role.master });
     sock.broadcast({ type: msgType.role, role: role.slave }, master);
-    sock.broadcast({ type: msgType.nextRound });
+    sock.broadcast({ type: msgType.nextRound, master: master.name });
     sock.broadcast({ type: msgType.blackcard, response: cloze });
 }
-

@@ -3,13 +3,6 @@ module.exports = {
         master: 'master',
         slave: 'slave',
     },
-    ui:{
-        cloze: 'cloze',
-        card: 'card',
-        hand: 'hand',
-        proceedButton: 'button',
-        lobby: 'lobby'
-    },
     msgType:{
         newPlayer: 'newUser',
         ready: 'ready',
@@ -22,6 +15,7 @@ module.exports = {
         confirmCard: 'confirmCard',
         cardConfirmed: 'cardConfirmed',
         reveal: 'reveal',
-        winner:'winner'
+        winner:'winner',
+        serverMessage: 'serverMessage'
     }
 };
