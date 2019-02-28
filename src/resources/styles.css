@@ -75,8 +75,7 @@ body {
 .notifications {
     position: fixed;
     right: 0;
-    top: 0;
-    width: 30vw;
+    top: 20vh;
     z-index: 30;
     font-size: large;
     text-align: right;
