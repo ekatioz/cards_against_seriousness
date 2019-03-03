@@ -60,6 +60,7 @@ export class Controller {
             this.notifications.publish(`${data.master} wählt aus.`,10);
         });
         Socket.on(msgType.serverMessage, data => this.notifications.publish(data.msg));
+        Socket.on(msgType.close, () => this.view = this.login);
     }
 
     newRound() {

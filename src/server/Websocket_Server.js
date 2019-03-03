@@ -13,9 +13,10 @@ function WebSocket_Server() {
 WebSocket_Server.prototype.start = function (port) {
     this.wss = new WebSocket.Server({ port: port });
 
-    this.wss.on('connection', ws => {
-        console.log('new connection');
-        console.log('close con', this.wss.clients.size, 'cons', this.players.length, 'players');
+    this.wss.on('connection', (ws, req) => {
+        const id = req.headers['sec-websocket-key'];
+        console.log('new connection',id);
+        console.log('open con', this.wss.clients.size, 'cons', this.players.length, 'players');
         ws.on('close', data => {
             const player = this.getPlayer(ws);
             const index = this.players.indexOf(player);
@@ -29,7 +30,7 @@ WebSocket_Server.prototype.start = function (port) {
         ws.on('message', raw => {
             const msg = JSON.parse(raw);
             if (msg.type === msgType.newPlayer) {
-                const player = new Player(msg.name, ws);
+                const player = new Player(msg.name,id ,ws);
                 this.players.push(player);
                 this.newPlayerCallback(player);
             } else if (msg.type === msgType.confirmCard) {

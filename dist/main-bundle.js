@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "c1e83569a0390774cc8f";
+/******/ 	var hotCurrentHash = "291b34cda6ec55d4c0f6";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -802,7 +802,7 @@
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \n   v2.0 | 20110126\n   License: none (public domain)\n*/\n\nhtml, body, div, span, applet, object, iframe,\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\na, abbr, acronym, address, big, cite, code,\ndel, dfn, em, img, ins, kbd, q, s, samp,\nsmall, strike, strong, sub, sup, tt, var,\nb, u, i, center,\ndl, dt, dd, ol, ul, li,\nfieldset, form, label, legend,\ntable, caption, tbody, tfoot, thead, tr, th, td,\narticle, aside, canvas, details, embed, \nfigure, figcaption, footer, header, hgroup, \nmenu, nav, output, ruby, section, summary,\ntime, mark, audio, video {\n\tmargin: 0;\n\tpadding: 0;\n\tborder: 0;\n\tfont-size: 100%;\n\tfont: inherit;\n\tvertical-align: baseline;\n}\n/* HTML5 display-role reset for older browsers */\narticle, aside, details, figcaption, figure, \nfooter, header, hgroup, menu, nav, section {\n\tdisplay: block;\n}\nbody {\n\tline-height: 1;\n}\nol, ul {\n\tlist-style: none;\n}\nblockquote, q {\n\tquotes: none;\n}\nblockquote:before, blockquote:after,\nq:before, q:after {\n\tcontent: '';\n\tcontent: none;\n}\ntable {\n\tborder-collapse: collapse;\n\tborder-spacing: 0;\n}\n* {\n    margin: 0;\n    padding: 0;\n    box-sizing: border-box;\n}", ""]);
+exports.push([module.i, "/* http://meyerweb.com/eric/tools/css/reset/ \r\n   v2.0 | 20110126\r\n   License: none (public domain)\r\n*/\r\n\r\nhtml, body, div, span, applet, object, iframe,\r\nh1, h2, h3, h4, h5, h6, p, blockquote, pre,\r\na, abbr, acronym, address, big, cite, code,\r\ndel, dfn, em, img, ins, kbd, q, s, samp,\r\nsmall, strike, strong, sub, sup, tt, var,\r\nb, u, i, center,\r\ndl, dt, dd, ol, ul, li,\r\nfieldset, form, label, legend,\r\ntable, caption, tbody, tfoot, thead, tr, th, td,\r\narticle, aside, canvas, details, embed, \r\nfigure, figcaption, footer, header, hgroup, \r\nmenu, nav, output, ruby, section, summary,\r\ntime, mark, audio, video {\r\n\tmargin: 0;\r\n\tpadding: 0;\r\n\tborder: 0;\r\n\tfont-size: 100%;\r\n\tfont: inherit;\r\n\tvertical-align: baseline;\r\n}\r\n/* HTML5 display-role reset for older browsers */\r\narticle, aside, details, figcaption, figure, \r\nfooter, header, hgroup, menu, nav, section {\r\n\tdisplay: block;\r\n}\r\nbody {\r\n\tline-height: 1;\r\n}\r\nol, ul {\r\n\tlist-style: none;\r\n}\r\nblockquote, q {\r\n\tquotes: none;\r\n}\r\nblockquote:before, blockquote:after,\r\nq:before, q:after {\r\n\tcontent: '';\r\n\tcontent: none;\r\n}\r\ntable {\r\n\tborder-collapse: collapse;\r\n\tborder-spacing: 0;\r\n}\r\n* {\r\n    margin: 0;\r\n    padding: 0;\r\n    box-sizing: border-box;\r\n}", ""]);
 
 
 
@@ -821,7 +821,7 @@ var urlEscape = __webpack_require__(/*! ../../node_modules/css-loader/dist/runti
 var ___CSS_LOADER_URL___0___ = urlEscape(__webpack_require__(/*! ./PermanentMarker.ttf */ "./src/resources/PermanentMarker.ttf"));
 
 // Module
-exports.push([module.i, "@font-face {\n    font-family: permanentMarker;\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\n}\n\nbody {\n    background-color: #222;\n    color: #fff;\n    font-family: permanentMarker;\n    font-size: 1.5em;\n}\n\n.fullscreen {\n    top: 0;\n    bottom: 0;\n    left: 0;\n    right: 0;\n    position: absolute;\n    padding: 1em;\n}\n\n.proceed-button {\n    position: fixed;\n    z-index: 5;\n    bottom: 10%;\n    width: 100%;\n    height: 3em;\n    border: 4px dashed whitesmoke;\n    cursor: pointer;\n}\n\n.proceed-button>.button-text {\n    position: absolute;\n    right: 20%;\n    left: 20%;\n}\n\n.cloze{\n    height:33%;\n}\n\n.hand {\n    height: 67%;\n    overflow: -webkit-paged-x;\n    display: flex;\n    padding: 1em;\n}\n.coveredHand{\n    height: 67%;\n    overflow: -webkit-paged-x;\n    display: flex;\n    padding: 1em;\n}\n.card.covered {\n    font-size: 3em;\n    text-align: center;\n    padding: 10% 5%;\n}\n\n.card {\n    height: 100%;\n    margin-right: 1em;\n    background: whitesmoke;\n    width: 33.333%;\n    flex: 1;\n    min-width: 33.333%;\n    border: 1px solid #666;\n    color:#222;\n    border-radius: 1em;\n    padding: 1em;\n    word-break: break-word;\n    cursor: pointer;\n}\n\n.notifications {\n    position: fixed;\n    right: 0;\n    top: 0;\n    width: 30vw;\n    z-index: 30;\n    font-size: large;\n    text-align: right;\n    padding: 1em;\n    background-color: #222;\n    cursor: pointer;\n}\n\n.notification{\n    margin-bottom:0.5em;\n}", ""]);
+exports.push([module.i, "@font-face {\r\n    font-family: permanentMarker;\r\n    src: url(" + ___CSS_LOADER_URL___0___ + ");\r\n}\r\n\r\nbody {\r\n    background-color: #222;\r\n    color: #fff;\r\n    font-family: permanentMarker;\r\n    font-size: 1.5em;\r\n}\r\n\r\n.fullscreen {\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    position: absolute;\r\n    padding: 1em;\r\n}\r\n\r\n.proceed-button {\r\n    position: fixed;\r\n    z-index: 5;\r\n    bottom: 4em;\r\n    cursor: pointer;\r\n    right: 4em;\r\n    background-color: #eeeeee;\r\n    background: linear-gradient(160deg, #eeeeee 0%, #eeeeee 40%, #ff9021 50%, #eeeeee 60%, #eeeeee 100%);\r\n    background-size: 400% 400%;\r\n    -webkit-background-clip: text;\r\n    -webkit-text-fill-color: transparent; \r\n    -webkit-animation: Shimmer 2s ease infinite;\r\n}\r\n\r\n@-webkit-keyframes Shimmer {\r\n    0% {\r\n        background-position: 100% 60%\r\n    }\r\n    100% {\r\n        background-position: 0% 45%\r\n    }\r\n}\r\n\r\n.proceed-button>.button-text {\r\n    font-size: 3em;\r\n}\r\n\r\n.cloze {\r\n    height: 33%;\r\n}\r\n\r\n.hand {\r\n    height: 67%;\r\n    overflow: -webkit-paged-x;\r\n    display: flex;\r\n    padding: 1em;\r\n}\r\n\r\n.coveredHand {\r\n    height: 67%;\r\n    overflow: -webkit-paged-x;\r\n    display: flex;\r\n    padding: 1em;\r\n}\r\n\r\n.card.covered {\r\n    font-size: 3em;\r\n    text-align: center;\r\n    padding: 10% 5%;\r\n}\r\n\r\n.card {\r\n    height: 100%;\r\n    margin-right: 1em;\r\n    background: whitesmoke;\r\n    width: 33.333%;\r\n    flex: 1;\r\n    min-width: 33.333%;\r\n    border: 1px solid #666;\r\n    color: #222;\r\n    border-radius: 1em;\r\n    padding: 1em;\r\n    word-break: break-word;\r\n    cursor: pointer;\r\n}\r\n\r\n.notifications {\r\n    position: fixed;\r\n    right: 0;\r\n    top: 20vh;\r\n    z-index: 30;\r\n    font-size: large;\r\n    text-align: right;\r\n    padding: 1em;\r\n    background-color: #222;\r\n    cursor: pointer;\r\n}\r\n\r\n.notification {\r\n    margin-bottom: 0.5em;\r\n}", ""]);
 
 
 
@@ -1567,6 +1567,7 @@ class Controller {
             this.notifications.publish(`${data.master} wählt aus.`,10);
         });
         _Socket__WEBPACK_IMPORTED_MODULE_0__["default"].on(_commonStrings__WEBPACK_IMPORTED_MODULE_1__["msgType"].serverMessage, data => this.notifications.publish(data.msg));
+        _Socket__WEBPACK_IMPORTED_MODULE_0__["default"].on(_commonStrings__WEBPACK_IMPORTED_MODULE_1__["msgType"].close, () => this.view = this.login);
     }
 
     newRound() {
@@ -1615,6 +1616,11 @@ class Socket {
             this._connection = new WebSocket(`ws://${location.hostname}:13700`);
             this._connection.onopen = () => console.log('ws connection open');
             this._connection.onerror = error => console.log('WebSocket Error ' + error);
+            this._connection.onclose = () => {
+                if (this._listeners['close']) {
+                    this._listeners['close'].forEach(cb => cb());
+                }
+            };
             this._connection.onmessage = msg => {
                 const data = JSON.parse(msg.data);
                 console.log('message from socket', data);
@@ -2294,7 +2300,8 @@ module.exports = {
         cardConfirmed: 'cardConfirmed',
         reveal: 'reveal',
         winner:'winner',
-        serverMessage: 'serverMessage'
+        serverMessage: 'serverMessage',
+        close: 'close'
     }
 };
 

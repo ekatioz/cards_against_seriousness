@@ -6,6 +6,11 @@ class Socket {
             this._connection = new WebSocket(`ws://${location.hostname}:13700`);
             this._connection.onopen = () => console.log('ws connection open');
             this._connection.onerror = error => console.log('WebSocket Error ' + error);
+            this._connection.onclose = () => {
+                if (this._listeners['close']) {
+                    this._listeners['close'].forEach(cb => cb());
+                }
+            };
             this._connection.onmessage = msg => {
                 const data = JSON.parse(msg.data);
                 console.log('message from socket', data);

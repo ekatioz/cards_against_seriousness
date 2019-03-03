@@ -12,8 +12,23 @@ const initialCards = 5;
 
 var game;
 
+http.get('/userlist', (req, res) => {
+    res.send(sock.players.map(player =>
+        ({
+            id: player.id, 
+            name: player.name
+        })));
+});
+
+http.get('/kick', (req, res) => {
+    const id = req.query.id;
+    const player = sock.players.find((player) => (player.id === id)) || new Player('unknown');
+    player.socket.close();
+    res.send({});
+});
+
 sock.onPlayerLeft(player => {
-    if(game.getPlayers().length > 0){
+    if (sock.players.length > 0) {
         sock.publishPlayers();
         if (game && player.equals(game.getCurrentRound().getMaster())) {
             newRound();

@@ -1,0 +1,9 @@
+body{
+    background-color: #333;
+    color:#eee;
+    font-family: 'Major Mono Display', monospace;
+}
+
+.kick{
+    cursor: pointer;
+}
