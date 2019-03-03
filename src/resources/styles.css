@@ -20,9 +20,8 @@ body {
 }
 
 .proceed-button {
-    position: fixed;
+    position: absolute;
     z-index: 5;
-    bottom: 1em;
     cursor: pointer;
     right: 1em;
     background-color: #eeeeee;
@@ -96,4 +95,22 @@ body {
 
 .notification {
     margin-bottom: 0.5em;
+}
+
+.scoreboard {
+    margin-top: 1em;
+    display: table;;
+}
+
+.scoreRow {
+    display: table-row;
+}
+
+.player {
+    display: table-cell;
+}
+
+.score {
+    display: table-cell;
+    padding-left: 1em;
 }

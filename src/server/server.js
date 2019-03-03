@@ -72,7 +72,9 @@ function startGame(players) {
 
 sock.onChooseCard(card => {
     const winner = game.getCurrentRound().getConfirmedCards().filter(c => c.card === card)[0].player;
-    sock.broadcast({ type: msgType.winner, player: winner.name, card: card });
+    winner.score++;
+    const scores = game.getPlayers().map(player => ({name:player.name, score:player.score}));
+    sock.broadcast({ type: msgType.winner, player: winner.name, scores:scores , card: card });
 });
 
 sock.onConfirmCard((player, card) => {

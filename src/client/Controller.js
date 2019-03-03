@@ -34,6 +34,7 @@ export class Controller {
         };
         this.slave.onCardConfirmed = card => {
             Socket.send({ type: msgType.confirmCard, text: card });
+            this.roundEnd.reset();
             this.view = this.roundEnd;
         };
         this.roundEnd.onNextRound = () => Socket.send({ type: msgType.nextRound });
@@ -51,7 +52,9 @@ export class Controller {
         Socket.on(msgType.cardConfirmed, () => this.master.addCoveredCard());
         Socket.on(msgType.reveal, data => this.master.unlockCards(data.cards));
         Socket.on(msgType.winner, data => {
-            this.roundEnd.setWinner(data.player, data.card);
+            this.roundEnd.winner = data.player;
+            this.roundEnd.winningCard = data.card;
+            this.roundEnd.scores = data.scores;
             if (this.role === role.master)
                 this.roundEnd.showNextRoundButton();
         });
@@ -65,7 +68,7 @@ export class Controller {
 
     newRound() {
         this._rounds++;
-        if(this._rounds > 1) this.roundEnd.clear();
+        if(this._rounds > 1) this.roundEnd.reset();
         if (this.role === role.master) {
             this.view = this.master;
         }
