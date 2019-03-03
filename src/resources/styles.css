@@ -22,15 +22,16 @@ body {
 .proceed-button {
     position: fixed;
     z-index: 5;
-    bottom: 4em;
+    bottom: 1em;
     cursor: pointer;
-    right: 4em;
+    right: 1em;
     background-color: #eeeeee;
     background: linear-gradient(160deg, #eeeeee 0%, #eeeeee 40%, #ff9021 50%, #eeeeee 60%, #eeeeee 100%);
     background-size: 400% 400%;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; 
+    -webkit-text-fill-color: transparent;
     -webkit-animation: Shimmer 2s ease infinite;
+    font-size: 3em;
 }
 
 @-webkit-keyframes Shimmer {
@@ -40,10 +41,6 @@ body {
     100% {
         background-position: 0% 45%
     }
-}
-
-.proceed-button>.button-text {
-    font-size: 3em;
 }
 
 .cloze {
