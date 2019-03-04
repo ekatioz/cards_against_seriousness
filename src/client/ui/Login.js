@@ -8,14 +8,14 @@ export class Login extends FullscreenElement {
     constructor(loginCallback) {
         super();
         this.addClass('login');
-        const username = document.createElement('input');
-        username.className = 'username-input';
-        username.value = getCookie(userCookie) || getName();
-        this.addDomElement(username);
+        this.username = document.createElement('input');
+        this.username.className = 'username-input';
+        this.username.value = getCookie(userCookie) || getName();
+        this.addDomElement(this.username);
         this.addUiElement(new ProceedButton('Login', () => {
-            if (username.value && username.value !== '') {
-                setCookie(userCookie, username.value, 60);
-                loginCallback(username.value);
+            if (this.username.value && this.username.value !== '') {
+                setCookie(userCookie, this.username.value, 60);
+                loginCallback(this.username.value);
             }
         }));
     }

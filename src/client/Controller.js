@@ -79,6 +79,7 @@ export class Controller {
 
     init() {
         this.view = this.login;
+        this.login.username.focus();
         document.body.appendChild(this.notifications.element);
     }
 

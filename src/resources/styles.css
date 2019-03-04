@@ -33,6 +33,20 @@ body {
     font-size: 3em;
 }
 
+.username-input {
+    background-color: #222;
+    color: #fff;
+    font-family: permanentMarker;
+    font-size: 3em;
+    border: 0;
+    border-bottom: 2px solid #eee;
+    outline: none;
+}
+
+.username-input:focus {
+    border-color: #ff9021;
+}
+
 @-webkit-keyframes Shimmer {
     0% {
         background-position: 100% 60%
