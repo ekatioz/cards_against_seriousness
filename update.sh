@@ -8,3 +8,4 @@ echo "Building App"
 npm run build
 echo "Restart Service"
 sudo systemctl restart cardsagainst
+echo "Done!"
