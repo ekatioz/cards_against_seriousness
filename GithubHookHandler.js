@@ -2,7 +2,7 @@ const http = require('http');
 const exec = require('child_process').exec;
 
 http.createServer((req, res) => {
-    exec('test.sh',
+    exec('./update.sh',
         function (err, stdout, stderr) {
             if (err) throw err;
             else console.log(stdout);
