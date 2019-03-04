@@ -27,6 +27,23 @@ http.get('/kick', (req, res) => {
     res.send({});
 });
 
+http.get('/cards', (req, res) => {
+    var type = req.query.type;
+    db.getCards(type)
+        .then(rows => {
+            res.send(JSON.stringify(rows.map(r => r.value)));
+        });
+});
+
+
+http.get('/provide', (req, res) => {
+    var { text, type } = req.query;
+    if (type === 'blackcard') {
+        text = JSON.stringify(text.split('💣').map(t => t.trim()));
+    }
+    db.addCard(type, text).then(() => res.send('done!'));
+});
+
 sock.onPlayerLeft(player => {
     if (sock.players.length > 0) {
         sock.publishPlayers();

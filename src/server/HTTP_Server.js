@@ -5,7 +5,8 @@ function HTTP_Server() {
     this.app = express();
     this.app.use(express.static(join(__dirname, '..', '..', 'dist')));
     this.app.use('/admin', express.static(join(__dirname, '..', 'adminUI')));
-    console.log(join(__dirname, '..', 'adminUI'));
+    this.app.use('/cardprovider', express.static(join(__dirname, '..', 'cardprovider')));
+
     this.app.setMaxListeners(1);
 }
 

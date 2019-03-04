@@ -38,8 +38,7 @@
         var addGap = document.getElementById("addGap");
 
         function update(type) {
-            console.log('update')
-            fetch(`/update?type=${type}`).then(res => {
+            fetch(`/cards?type=${type}`).then(res => {
                 console.log(type);
                 if (type === 'whitecard') {
                     list.innerHTML = '';

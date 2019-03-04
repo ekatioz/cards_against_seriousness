@@ -47,8 +47,6 @@ WebSocket_Server.prototype.start = function (port) {
             } else {
                 console.log('is else', msg.type);
             }
-            console.log('msg:',msg.type,
-                'close con', this.wss.clients.size, 'cons', this.players.length, 'players');
         });
     });
     return this;
