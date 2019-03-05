@@ -6,8 +6,8 @@ import { Lobby } from "./ui/Lobby";
 import { MasterView } from "./ui/MasterView";
 import { SlaveView } from "./ui/SlaveView";
 import { RoundEndView } from "./ui/RoundEndView";
-import { UiElement } from "./ui/UiElement";
 import { Notifications } from "./ui/Notifications";
+import { Footer } from "./ui/Footer";
 
 export class Controller {
 
@@ -19,6 +19,7 @@ export class Controller {
 
     setUpUI() {
         this.notifications = new Notifications();
+        this.footer = new Footer();
         this.lobby = new Lobby(() => Socket.send({ type: msgType.ready }));
         this.login = new Login(username => {
             Socket.send({ type: msgType.newPlayer, name: username });
@@ -63,10 +64,14 @@ export class Controller {
             this.notifications.publish(`${data.master} wählt aus.`,10);
         });
         Socket.on(msgType.serverMessage, data => this.notifications.publish(data.msg));
-        Socket.on(msgType.close, () => this.view = this.login);
+        Socket.on(msgType.close, () => {
+            this.view = this.login;
+            if(!this.footer.isAttached()) document.body.appendChild(this.footer.element);
+        });
     }
 
     newRound() {
+        if(this.footer.isAttached()) document.body.removeChild(this.footer.element);
         this._rounds++;
         if(this._rounds > 1) this.roundEnd.reset();
         if (this.role === role.master) {
@@ -81,6 +86,7 @@ export class Controller {
         this.view = this.login;
         this.login.username.focus();
         document.body.appendChild(this.notifications.element);
+        document.body.appendChild(this.footer.element);
     }
 
     /**
