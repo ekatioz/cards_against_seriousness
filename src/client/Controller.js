@@ -35,7 +35,6 @@ export class Controller {
         };
         this.slave.onCardConfirmed = card => {
             Socket.send({ type: msgType.confirmCard, text: card });
-            this.roundEnd.reset();
             this.view = this.roundEnd;
         };
         this.roundEnd.onNextRound = () => Socket.send({ type: msgType.nextRound });
@@ -60,6 +59,7 @@ export class Controller {
                 this.roundEnd.showNextRoundButton();
         });
         Socket.on(msgType.nextRound, data => {
+            this.roundEnd.reset();
             this.newRound();
             this.notifications.publish(`${data.master} wählt aus.`,10);
         });
@@ -73,7 +73,6 @@ export class Controller {
     newRound() {
         if(this.footer.isAttached()) document.body.removeChild(this.footer.element);
         this._rounds++;
-        if(this._rounds > 1) this.roundEnd.reset();
         if (this.role === role.master) {
             this.view = this.master;
         }

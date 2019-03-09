@@ -26,8 +26,8 @@ Game.prototype.newRound = function (cloze) {
 Game.prototype.confirmCard = function (player, card) {
     this.getCurrentRound().confirmCard(player, card);
     const cards = this.getCurrentRound().getConfirmedCards();
-    console.log(this.players.map(p => `${p.name} - ${p.new}`));
-    console.log('confirmed', cards.length, 'of', this.players.filter(p => !p.new).length - 1);
+/*     console.log(this.players.map(p => `${p.name} - ${p.new}`));
+    console.log('confirmed', cards.length, 'of', this.players.filter(p => !p.new).length - 1); */
     if (cards.length === this.players.filter(p => !p.new).length - 1) {
         this.allCardsConfirmed(this.getCurrentRound().getMaster(), cards);
     }

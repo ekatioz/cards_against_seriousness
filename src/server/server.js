@@ -50,6 +50,7 @@ sock.onPlayerLeft(player => {
         if (game && player.equals(game.getCurrentRound().getMaster())) {
             newRound();
         }
+        sock.broadcast({ type: msgType.serverMessage, msg: `${player.name} hat das Spiel verlassen.` });
     } else {
         game = null;
     }
@@ -57,6 +58,7 @@ sock.onPlayerLeft(player => {
 
 sock.onNewPlayer(player => {
     sock.publishPlayers();
+    sock.broadcast({ type: msgType.serverMessage, msg: `${player.name} ist beigetreten.` });
 });
 
 sock.onPlayerReady((player, allReady, players) => {

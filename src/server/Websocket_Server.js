@@ -17,7 +17,8 @@ WebSocket_Server.prototype.start = function (port) {
         const id = req.headers['sec-websocket-key'];
         console.log('new connection',id);
         console.log('open con', this.wss.clients.size, 'cons', this.players.length, 'players');
-        ws.on('close', data => {
+        ws.on('close', (code, reason) => {
+            console.log('closing data:',code,reason);
             const player = this.getPlayer(ws);
             const index = this.players.indexOf(player);
             if(index >= 0){
