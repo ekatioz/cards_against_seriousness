@@ -58,7 +58,7 @@ sock.onPlayerLeft(player => {
 
 sock.onNewPlayer(player => {
     sock.publishPlayers();
-    sock.broadcast({ type: msgType.serverMessage, msg: `${player.name} ist beigetreten.` });
+    sock.broadcast({ type: msgType.serverMessage, msg: `${player.name} ist beigetreten.` },player);
 });
 
 sock.onPlayerReady((player, allReady, players) => {
