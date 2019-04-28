@@ -22,6 +22,7 @@
         <h1>Blackcards</h1>
         <textarea class="textInput" id="blackText"></textarea>
         <button id="addGap">Lücke einfügen</button>
+        <button id="addPlayerGap">Spielername einfügen</button>
         <button id="addBlack">hinzufügen</button>
         <br>
         <div id="listBlack"></div>
@@ -53,15 +54,13 @@
                     listBlack.innerHTML = '';
                     blackText.value = '';
                     res.json().then(json => json.forEach(element => {
+                        element = element.replace(/\%w/g,'💣');
+                        element = element.replace(/\%p/g,'😎');
+                        
                         var entry = document.createElement('div');
                         entry.className = 'entry';
-                        var parts = JSON.parse(element);
-                        var string = '';
-                        parts.forEach((part,i) => {
-                            string = string + part + (i === parts.length-1? '' : '💣');
-                        });
-
-                        entry.innerText = string;
+                        entry.innerText = element;
+                        list.appendChild(entry);
                         listBlack.appendChild(entry);
                     }));
                 }

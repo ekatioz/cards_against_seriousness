@@ -1,6 +1,6 @@
 const HTTP_Server = require('./HTTP_Server');
 const WebSocket_Server = require('./Websocket_Server');
-const DataBase = require('./DataBase');
+const DataBase = require('./DataBaseMongo');
 const Game = require('./game/Game');
 const { msgType, role } = require('../commonStrings');
 
@@ -31,7 +31,7 @@ http.get('/cards', (req, res) => {
     var type = req.query.type;
     db.getCards(type)
         .then(rows => {
-            res.send(JSON.stringify(rows.map(r => r.value)));
+            res.send(rows.map(r => r.value));
         });
 });
 
