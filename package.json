@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack",
-    "server": "nodemon ./src/server/server.js",
+    "server-dev": "nodemon ./src/server/server.js",
+    "server": "node ./src/server/server.js",
     "cardprovider": "nodemon ./src/cardprovider/cardprovider.js"
   },
   "author": "",
