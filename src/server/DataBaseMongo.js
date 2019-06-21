@@ -1,36 +1,36 @@
 const { msgType } = require('../commonStrings');
-const mysql = require('mysql');
-const connection = mysql.createConnection({
-    host: 'raspberrypi',
-    user: 'root',
-    password: 'jla3vw39y',
-    database: 'cards_against'
-});
+const MongoClient = require('mongodb').MongoClient;
+const mongoUrl = 'mongodb://192.168.188.36:27017';
 
 function DataBase() {
     this.whitecards = [];
     this.blackcards = [];
 }
 
+
 DataBase.prototype.addCard = function (topic, text) {
-    const q = `INSERT INTO cards(type,value) VALUES (${connection.escape(topic)},${connection.escape(text)});`;
-    //   console.log(q);
-    return query(q);
+   return MongoClient.connect(mongoUrl, { useNewUrlParser: true })
+        .then(db => {
+            var dbo = db.db("cards");
+            var card = { value: text };
+            dbo.collection(`${topic}s`).insertOne(card)
+            .then(() => db.close());
+        });
 };
 
 DataBase.prototype.reloadCards = function () {
     const promiseWhite = this.getCards(msgType.whitecard).then((rows) => {
         this.whitecards = shuffle(rows.map(r => r.value));
         console.log('loaded', this.whitecards.length, 'whitecards');
-    });
+    }).catch(err => console.error(err));
     const promiseBlack = this.getCards(msgType.blackcard).then((rows) => {
-        this.blackcards = shuffle(rows.map(r => JSON.parse(r.value)));
+        this.blackcards = shuffle(rows.map(r => r.value));
         console.log('loaded', this.blackcards.length, 'blackcards');
-    });
+    }).catch(err => console.error(err));
 
     return Promise.all([promiseWhite, promiseBlack])
         .then(() => (
-            { 
+            {
                 whitecards: this.whitecards.length,
                 blackcards: this.blackcards.length
             }));
@@ -43,32 +43,18 @@ DataBase.prototype.getRandomCards = function (topic, count = 1) {
 };
 
 DataBase.prototype.getCards = function (topic) {
-    return query(`SELECT value FROM cards where type = "${topic}";`);
+    return MongoClient.connect(mongoUrl, { useNewUrlParser: true })
+        .then(db => {
+            var dbo = db.db("cards");
+            return dbo.collection(`${topic}s`).find({}).toArray()
+                .then(result => {
+                    db.close();
+                    return result;
+                });
+        });
 };
 
-function query(query) {
-    return new Promise((res, rej) => {
-        connection.query(query, (err, rows) => {
-            if (err) rej(err);
-            else res(rows);
-        });
-       // connection.end();
-    });
-}
 
-function getRandom(arr, taken, n = 1) {
-    var result = [];
-    if ((n + taken.length) > arr.length)
-        throw new RangeError("getRandom: more elements taken than available");
-    while (n) {
-        var i = Math.floor(Math.random() * arr.length);
-        if (!result.includes(arr[i]) && !taken.includes(arr[i])) {
-            result.push(arr[i]);
-            n--;
-        }
-    }
-    return result;
-}
 
 function shuffle(a) {
     for (let i = a.length - 1; i > 0; i--) {

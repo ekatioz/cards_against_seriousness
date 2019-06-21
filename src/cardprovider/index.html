@@ -22,6 +22,7 @@
         <h1>Blackcards</h1>
         <textarea class="textInput" id="blackText"></textarea>
         <button id="addGap">Lücke einfügen</button>
+        <button id="addPlayerGap">Spielername einfügen</button>
         <button id="addBlack">hinzufügen</button>
         <br>
         <div id="listBlack"></div>
@@ -53,23 +54,26 @@
                     listBlack.innerHTML = '';
                     blackText.value = '';
                     res.json().then(json => json.forEach(element => {
+                        element = element.replace(/\%w/g, '💣');
+                        element = element.replace(/\%p/g, '😎');
+
                         var entry = document.createElement('div');
                         entry.className = 'entry';
-                        var parts = JSON.parse(element);
-                        var string = '';
-                        parts.forEach((part,i) => {
-                            string = string + part + (i === parts.length-1? '' : '💣');
-                        });
-
-                        entry.innerText = string;
+                        entry.innerText = element;
                         listBlack.appendChild(entry);
                     }));
                 }
             })
         }
 
+        const escape = (value) => value.replace('💣', '%25w').replace('😎', '%25p');
+
         addGap.addEventListener('click', (e) => {
             blackText.value = blackText.value + '💣';
+            blackText.focus();
+        });
+        addPlayerGap.addEventListener('click', (e) => {
+            blackText.value = blackText.value + '😎';
             blackText.focus();
         });
         addWhite.addEventListener('click', (e) => {
@@ -79,7 +83,7 @@
         });
         addBlack.addEventListener('click', (e) => {
             if (blackText.value !== '') {
-                fetch(`/provide?text=${blackText.value}&type=blackcard`).then(() => update('blackcard'));
+                fetch(`/provide?text=${escape(blackText.value)}&type=blackcard`).then(() => update('blackcard'));
             }
         });
         update('whitecard');
