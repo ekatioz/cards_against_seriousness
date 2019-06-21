@@ -1,6 +1,6 @@
 const { msgType } = require('../commonStrings');
 const MongoClient = require('mongodb').MongoClient;
-const mongoUrl = 'mongodb://cardsuser:jla3vw39y@dockerhost:27017/cards';
+const mongoUrl = 'mongodb://192.168.188.36:27017';
 
 function DataBase() {
     this.whitecards = [];
@@ -9,18 +9,24 @@ function DataBase() {
 
 
 DataBase.prototype.addCard = function (topic, text) {
-    throw new Error('not implemented yet');
+   return MongoClient.connect(mongoUrl, { useNewUrlParser: true })
+        .then(db => {
+            var dbo = db.db("cards");
+            var card = { value: text };
+            dbo.collection(`${topic}s`).insertOne(card)
+            .then(() => db.close());
+        });
 };
 
 DataBase.prototype.reloadCards = function () {
     const promiseWhite = this.getCards(msgType.whitecard).then((rows) => {
         this.whitecards = shuffle(rows.map(r => r.value));
         console.log('loaded', this.whitecards.length, 'whitecards');
-    });
+    }).catch(err => console.error(err));
     const promiseBlack = this.getCards(msgType.blackcard).then((rows) => {
-        this.blackcards = shuffle(rows.map(r => JSON.parse(r.value)));
+        this.blackcards = shuffle(rows.map(r => r.value));
         console.log('loaded', this.blackcards.length, 'blackcards');
-    });
+    }).catch(err => console.error(err));
 
     return Promise.all([promiseWhite, promiseBlack])
         .then(() => (
@@ -37,19 +43,15 @@ DataBase.prototype.getRandomCards = function (topic, count = 1) {
 };
 
 DataBase.prototype.getCards = function (topic) {
-    return new Promise((res, rej) => {
-        MongoClient.connect(mongoUrl, { useNewUrlParser: true })
-            .then(db => {
-                var dbo = db.db("cards");
-                dbo.collection(`${topic}s`).find({}).toArray()
-                    .then(result => {
-                        res(result);
-                        db.close();
-                    })
-                    .catch(err => rej(err));
-            })
-            .catch(err => rej(err));
-    });
+    return MongoClient.connect(mongoUrl, { useNewUrlParser: true })
+        .then(db => {
+            var dbo = db.db("cards");
+            return dbo.collection(`${topic}s`).find({}).toArray()
+                .then(result => {
+                    db.close();
+                    return result;
+                });
+        });
 };
 
 

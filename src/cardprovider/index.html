@@ -54,21 +54,26 @@
                     listBlack.innerHTML = '';
                     blackText.value = '';
                     res.json().then(json => json.forEach(element => {
-                        element = element.replace(/\%w/g,'💣');
-                        element = element.replace(/\%p/g,'😎');
-                        
+                        element = element.replace(/\%w/g, '💣');
+                        element = element.replace(/\%p/g, '😎');
+
                         var entry = document.createElement('div');
                         entry.className = 'entry';
                         entry.innerText = element;
-                        list.appendChild(entry);
                         listBlack.appendChild(entry);
                     }));
                 }
             })
         }
 
+        const escape = (value) => value.replace('💣', '%25w').replace('😎', '%25p');
+
         addGap.addEventListener('click', (e) => {
             blackText.value = blackText.value + '💣';
+            blackText.focus();
+        });
+        addPlayerGap.addEventListener('click', (e) => {
+            blackText.value = blackText.value + '😎';
             blackText.focus();
         });
         addWhite.addEventListener('click', (e) => {
@@ -78,7 +83,7 @@
         });
         addBlack.addEventListener('click', (e) => {
             if (blackText.value !== '') {
-                fetch(`/provide?text=${blackText.value}&type=blackcard`).then(() => update('blackcard'));
+                fetch(`/provide?text=${escape(blackText.value)}&type=blackcard`).then(() => update('blackcard'));
             }
         });
         update('whitecard');

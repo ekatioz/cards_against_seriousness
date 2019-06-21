@@ -38,9 +38,6 @@ http.get('/cards', (req, res) => {
 
 http.get('/provide', (req, res) => {
     var { text, type } = req.query;
-    if (type === 'blackcard') {
-        text = JSON.stringify(text.split('💣').map(t => t.trim()));
-    }
     db.addCard(type, text).then(() => res.send('done!'));
 });
 
