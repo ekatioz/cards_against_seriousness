@@ -27,6 +27,6 @@ export class MasterView extends FullscreenElement {
     }
 
     set cloze(parts) {
-        this._cloze.setTextParts(...parts);
+        this._cloze.setTextParts(parts);
     }
 }

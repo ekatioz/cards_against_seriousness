@@ -10,64 +10,6 @@ body {
     font-size: 1.5em;
 }
 
-.fullscreen {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    position: absolute;
-    padding: 1em;
-}
-
-.proceed-button {
-    position: absolute;
-    z-index: 5;
-    cursor: pointer;
-    right: 1em;
-    background-color: #eeeeee;
-    background: linear-gradient(160deg, #eeeeee 0%, #eeeeee 40%, #ff9021 50%, #eeeeee 60%, #eeeeee 100%);
-    background-size: 400% 400%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-animation: Shimmer 2s ease infinite;
-    font-size: 3em;
-}
-
-.username-input {
-    background-color: #222;
-    color: #eee;
-    font-family: permanentMarker;
-    font-size: 2em;
-    border: 0;
-    box-shadow: 0px 2px 0px 0px #eee;
-    outline: none;
-    width: 100%;
-    margin-bottom:10vh;
-}
-
-.username-input:focus {
-    box-shadow: 0px 2px 0px 0px #ff9021;
-}
-
-@-webkit-keyframes Shimmer {
-    0% {
-        background-position: 100% 60%
-    }
-    100% {
-        background-position: 0% 45%
-    }
-}
-
-.cloze {
-    height: 33%;
-}
-
-.hand {
-    height: 67%;
-    overflow: -webkit-paged-x;
-    display: flex;
-    padding: 1em;
-}
 
 .coveredHand {
     height: 67%;
@@ -82,20 +24,7 @@ body {
     padding: 10% 5%;
 }
 
-.card {
-    height: 100%;
-    margin-right: 1em;
-    background: #eee;
-    width: 33.333%;
-    flex: 1;
-    min-width: 33.333%;
-    border: 1px solid #666;
-    color: #222;
-    border-radius: 1em;
-    padding: 1em;
-    word-break: break-word;
-    cursor: pointer;
-}
+
 
 .notifications {
     position: fixed;

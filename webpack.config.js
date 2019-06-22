@@ -15,7 +15,7 @@ module.exports = {
   devtool: "source-map",
   module: {
     rules: [
-      { test: /\.(ttf)$/, loader: 'url-loader' },
+      { test: /\.(ttf)$/, loader: "url-loader" },
       {
         test: /\.css$/,
         use: [
@@ -32,8 +32,7 @@ module.exports = {
         use: [
           {
             loader: "html-loader",
-            options:
-            {
+            options: {
               attrs: ["img:src"]
             }
           }
@@ -49,7 +48,7 @@ module.exports = {
             }
           }
         ]
-      },
+      }
     ]
   },
   devServer: {
@@ -63,4 +62,4 @@ module.exports = {
       template: "./src/resources/index.html"
     })
   ]
-}
+};
