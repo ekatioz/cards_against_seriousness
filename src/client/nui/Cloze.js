@@ -11,7 +11,7 @@ class Cloze extends LitElement {
   static get styles() {
     return css`
       .cloze {
-        height: 33%;
+        height: 20vh;
       }
     `;
   }

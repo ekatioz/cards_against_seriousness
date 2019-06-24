@@ -11,7 +11,9 @@ export class Hand extends LitElement {
   static get styles() {
     return css`
       :host {
-        height: 67%;
+        display: block;
+        text-align: center;
+        height: 80vh;
       }
     `;
   }

@@ -1,58 +1,54 @@
-import { Cloze } from "./Cloze";
-import { FullscreenElement } from "./FullscreenElement";
-import { ProceedButton } from "./ProceedButton";
-import { Scoreboard } from "./Scoreboard";
+import "./Cloze";
+import "./ProceedButton";
+import "./Scoreboard";
+import { LitElement, html, css } from "lit-element";
+import store, { observeStore } from "../store/store";
+import { finishRound } from "../store/actions";
+import { role } from "../../commonStrings";
 
-export class RoundEndView extends FullscreenElement {
+export class RoundEnd extends LitElement {
+  static get properties() {
+    return { varib: "" };
+  }
+  static get styles() {
+    return css`
+      :host {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
+        padding: 1em;
+      }
+    `;
+  }
 
-    constructor() {
-        super();
-        this.addClass('roundEnd');
-        this._cloze = new Cloze();
-        this.addUiElement(this._cloze);
+  onNewRound(e) {
+    store.dispatch(finishRound());
+  }
 
-        this._winner = document.createElement('div');
-        this._winner.className = 'winner';
-        this.addDomElement(this._winner);
-
-        this._winningCard = document.createElement('div');
-        this._winningCard.className = 'winningCard';
-        this.addDomElement(this._winningCard);
-
-        this._scores = new Scoreboard();
-        this.addUiElement(this._scores);
-
-        this._nextRound = new ProceedButton('Nächste Runde', () => this._nextRoundCallback());
+  proceedWhenMaster() {
+    if (store.getState().role === role.master) {
+      return html`
+        <proceed-button
+          action="Nächste Runde"
+          @proceed="${this.onNewRound}"
+        ></proceed-button>
+      `;
+    } else {
+      return html``;
     }
+  }
 
-    reset(){
-        this._winner.innerText = '';
-        this._winningCard.innerText = '';
-        this.removeUiElement(this._nextRound);
-        this._cloze.clear();
-    }
-
-    showNextRoundButton() {
-        this.addUiElement(this._nextRound);
-    }
-
-    set winner(winner) {
-        this._winner.innerText = `${winner} gewinnt diese Runde!`;
-    }
-    
-    set winningCard(card){
-        this._winningCard.innerText = card;
-    }
-
-    set scores(scores){
-        this._scores.scores = scores;
-    }
-
-    set onNextRound(cb) {
-        this._nextRoundCallback = cb;
-    }
-
-    set cloze(parts) {
-        this._cloze.setTextParts(...parts);
-    }
+  render() {
+    return html`
+      <cloze-text></cloze-text>
+      <score-board></score-board>
+      <winner-player></winner-player>
+      <winning-card></winning-card>
+      ${this.proceedWhenMaster()}
+    `;
+  }
 }
+
+customElements.define("round-end", RoundEnd);

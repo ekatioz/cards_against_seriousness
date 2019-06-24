@@ -1,4 +1,5 @@
 import "./Cloze";
+import "./CoveredHand";
 import { LitElement, html, css } from "lit-element";
 
 class MasterView extends LitElement {
@@ -22,34 +23,8 @@ class MasterView extends LitElement {
   render() {
     return html`
       <cloze-text></cloze-text>
+      <covered-hand></covered-hand>
     `;
-  }
-
-  /*   constructor() {
-    super();
-    this.addClass("master");
-
-    this._cCards = [];
-    this._coveredHand = new CoveredHand(confirmed =>
-      this._chooseCallback(confirmed)
-    );
-    this.addUiElement(this._coveredHand);
-  } */
-
-  addCoveredCard() {
-    this._coveredHand.addCoveredCard();
-  }
-
-  unlockCards(cards) {
-    this._coveredHand.unlockCards(cards);
-  }
-
-  set onCardChoosen(cb) {
-    this._chooseCallback = cb;
-  }
-
-  set cloze(parts) {
-    this._cloze.setTextParts(...parts);
   }
 }
 

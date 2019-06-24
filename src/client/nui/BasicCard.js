@@ -10,21 +10,32 @@ class BasicCard extends LitElement {
   }
   static get styles() {
     return css`
+      :host {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        box-sizing: border-box;
+      }
       .card {
-        margin: 1vw;
+        margin: 1vmin;
+        border: none;
         background: #eee;
-        width: 27vw;
-        height: 27vw;
-        border: 1px solid #666;
+        width: 27vmin;
+        min-width: 11em;
+        height: 27vmin;
+        min-height: 11em;
         color: #222;
         border-radius: 1em;
-        padding: 1em;
+        padding: 1rem;
         word-break: break-word;
         cursor: pointer;
         font-family: permanentMarker;
         vertical-align: middle;
         font-size: 0.9em;
-        margin-bottom: 2vw;
+      }
+
+      .card:hover {
+        box-shadow: 0 0 7px 3px rgba(238, 238, 238, 0.5);
       }
     `;
   }

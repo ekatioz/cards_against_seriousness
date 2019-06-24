@@ -1,38 +1,61 @@
-import { UiElement } from "./UiElement";
-import { CoveredCard } from "./CoveredCard";
+import "./CoveredCard";
+import { LitElement, html, css } from "lit-element";
+import store, { observeStore } from "../store/store";
+import { chooseCard, revealCard } from "../store/actions";
 
-export class CoveredHand extends UiElement{
+export class CoveredHand extends LitElement {
+  static get properties() {
+    return {
+      cards: {
+        type: Array,
+        value: []
+      }
+    };
+  }
 
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+        text-align: center;
+        height: 80vh;
+      }
+    `;
+  }
 
+  constructor() {
+    super();
+    observeStore(
+      state => state.confirmedCards,
+      () => {
+        this.cards = store.getState().confirmedCards;
+      }
+    );
+  }
 
-    constructor(chooseCallback) {
-        super();
-        this.addClass('coveredHand');
-        this._chooseCallback = chooseCallback;
-        this._cCards = [];
+  onChooseCard(e) {
+    if (e.detail.covered) {
+      store.dispatch(revealCard(e.detail.card));
+    } else {
+      store.dispatch(chooseCard(e.detail.card));
     }
+  }
 
-    addCoveredCard() {
-        const cCard = new CoveredCard(choosen => {
-            this._cCards.forEach(card => {
-                this.removeUiElement(card);
-            });
-            this._cCards.length = 0;
-            this._chooseCallback(choosen.text);
-        });
-        this._cCards.push(cCard);
-        this.addUiElement(cCard);
-    }
-
-    unlockCards(cards) {
-        shuffle(cards).forEach((card, i) => this._cCards[i].revealCovered(card));
-    }
+  render() {
+    return html`
+      ${this.cards.map(
+      card =>
+        html`
+            <covered-card
+              @choose="${this.onChooseCard}"
+              text=${card.text ? card.text : ""}
+              covered=${card.covered ? card.covered : ""}
+              card=${card}
+            ></covered-card>
+          `
+    )}
+    `;
+  }
 }
 
-function shuffle(a) {
-    for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-}
+customElements.define("covered-hand", CoveredHand);

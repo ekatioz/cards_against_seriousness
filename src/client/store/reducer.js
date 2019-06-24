@@ -12,7 +12,7 @@ const reduce = (state = initialState, action) => {
       case msgType.newPlayer:
         Socket.send({ type: action.type, name: state.username });
         document.title = `${state.username} - ${document.title}`;
-        draft.activeView = "lobby";
+        draft.activeView = "user-lobby";
         break;
       case msgType.ready:
         Socket.send({ type: action.type });
@@ -30,7 +30,9 @@ const reduce = (state = initialState, action) => {
         draft.whitecards.push(...action.data.response);
         break;
       case msgType.nextRound:
+        // reset
         draft.round++;
+        draft.roundMaster = data.master;
         draft.activeView = `${state.role}-view`;
         break;
       case msgType.chooseCard:
@@ -41,17 +43,35 @@ const reduce = (state = initialState, action) => {
         Socket.send({ type: action.type, text: action.card });
         draft.activeView = "round-end";
         break;
+      case msgType.revealCard:
+        const found = draft.confirmedCards.filter(
+          card => card.text === action.card
+        )[0];
+        found.covered = false;
+        break;
       case msgType.finishRound:
         Socket.send({ type: msgType.nextRound });
         break;
       case msgType.cardConfirmed:
-        draft.confirmedCards.push({ revealed: false });
+        draft.confirmedCards.push({
+          covered: true
+        });
         break;
       case msgType.reveal:
         action.data.cards.forEach((card, index) => {
-          draft.confirmedCards[index].revealed = true;
           draft.confirmedCards[index].text = card;
         });
+        break;
+      case msgType.close:
+        draft.activeView = "user-login";
+        break;
+      case msgType.winner:
+        draft.winner = data.player;
+        draft.winningCard = data.card;
+        draft.scores = data.scores;
+        break;
+      case msgType.serverMessage:
+        draft.notifications.push(data.msg);
         break;
       default:
         break;

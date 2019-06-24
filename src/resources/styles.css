@@ -10,22 +10,6 @@ body {
     font-size: 1.5em;
 }
 
-
-.coveredHand {
-    height: 67%;
-    overflow: -webkit-paged-x;
-    display: flex;
-    padding: 1em;
-}
-
-.card.covered {
-    font-size: 3em;
-    text-align: center;
-    padding: 10% 5%;
-}
-
-
-
 .notifications {
     position: fixed;
     right: 0;
@@ -42,23 +26,7 @@ body {
     margin-bottom: 0.5em;
 }
 
-.scoreboard {
-    margin-top: 1em;
-    display: table;;
-}
 
-.scoreRow {
-    display: table-row;
-}
-
-.player {
-    display: table-cell;
-}
-
-.score {
-    display: table-cell;
-    padding-left: 1em;
-}
 
 .footer {
     position: absolute;

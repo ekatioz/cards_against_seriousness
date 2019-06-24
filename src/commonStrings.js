@@ -17,6 +17,7 @@ module.exports = {
     confirmCard: "confirmCard",
     cardConfirmed: "cardConfirmed",
     reveal: "reveal",
+    revealCard: "revealCard",
     winner: "winner",
     serverMessage: "serverMessage",
     close: "close"

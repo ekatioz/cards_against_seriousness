@@ -23,6 +23,11 @@ export const chooseCard = card => ({
   card
 });
 
+export const revealCard = card => ({
+  type: msgType.revealCard,
+  card
+});
+
 export const confirmCard = card => ({
   type: msgType.confirmCard,
   card
