@@ -46,7 +46,6 @@ export class RoundEnd extends LitElement {
     return html`
       <cloze-text></cloze-text>
       <winning-card></winning-card>
-      <br />
       <score-board></score-board>
       <br />
       <winner-player></winner-player>

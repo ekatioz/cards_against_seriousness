@@ -23,7 +23,7 @@ class Login extends LitElement {
         font-family: permanentMarker;
         font-size: 2em;
         border: 0;
-        box-shadow: 0px 2px 0px 0px #eee;
+        border-bottom: 2px solid #eee;
         outline: none;
         width: 100%;
         margin-bottom: 10vh;

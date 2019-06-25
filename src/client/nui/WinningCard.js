@@ -19,7 +19,7 @@ export class WinningCard extends LitElement {
       .winningCard {
         margin: 1vmin;
         border: none;
-        background: #eee;
+        background: #ccc;
         width: 27vmin;
         min-width: 11em;
         height: 27vmin;
@@ -28,7 +28,6 @@ export class WinningCard extends LitElement {
         border-radius: 1em;
         padding: 1rem;
         word-break: break-word;
-        cursor: pointer;
         font-family: permanentMarker;
         vertical-align: middle;
         font-size: 0.9em;
@@ -47,11 +46,9 @@ export class WinningCard extends LitElement {
   }
 
   render() {
-    return html`
-      <button class="winningCard">
-        ${this.card ? this.card : ""}
-      </button>
-    `;
+    return html([
+      this.card ? '<button class="winningCard">' + this.card + "</button>" : ""
+    ]);
   }
 }
 

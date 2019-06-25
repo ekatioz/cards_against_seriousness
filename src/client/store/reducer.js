@@ -30,16 +30,22 @@ const reduce = (state = initialState, action) => {
         draft.whitecards.push(...action.data.response);
         break;
       case msgType.nextRound:
-        // reset
         draft.round++;
         draft.roundMaster = action.data.master;
         draft.activeView = `${state.role}-view`;
+        draft.winner = undefined;
+        draft.winningCard = undefined;
+        draft.confirmedCards = [];
+
         break;
       case msgType.chooseCard:
         Socket.send({ type: action.type, card: action.card });
         draft.activeView = "round-end";
         break;
       case msgType.confirmCard:
+        draft.whitecards = state.whitecards.filter(
+          card => card !== action.card
+        );
         Socket.send({ type: action.type, text: action.card });
         draft.activeView = "round-end";
         break;
