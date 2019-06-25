@@ -37,6 +37,7 @@
     "mongodb": "^3.2.3",
     "redux": "^4.0.1",
     "reset-css": "^4.0.1",
+    "shuffle-array": "^1.0.1",
     "ws": "^6.2.1"
   }
 }

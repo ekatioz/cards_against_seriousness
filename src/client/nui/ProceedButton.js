@@ -8,7 +8,7 @@ export class ProceedButton extends LitElement {
   static get styles() {
     return css`
       .proceed-button {
-        outline:none;
+        outline: none;
         font-family: permanentMarker;
         position: absolute;
         z-index: 5;

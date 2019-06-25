@@ -42,7 +42,7 @@ DataBase.prototype.reloadCards = async function () {
 DataBase.prototype.getRandomCards = function (topic, count = 1) {
   return topic === "whitecard"
     ? this.whitecards.splice(0, count)
-    : this.blackcards.splice(0, count)[0];
+    : this.blackcards.splice(0, count);
 };
 
 DataBase.prototype.getCards = function (topic) {

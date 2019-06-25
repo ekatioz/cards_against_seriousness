@@ -1,43 +1,8 @@
 {
-  "round": 1,
+  "round": 0,
   "notifications": [],
-  "activeView": "round-end",
-  "role": "master",
-  "cloze": "Das ist ein toller %w mit einer Lücke!",
-  "whitecards": [
-    "Fleischfressende Bakterien",
-    "Ein rechtschaffender Cop, der nichts zu verlieren hat",
-    "Einen Kronleuchter auf deine Gegner fallenlassen und das Seil hochklettern",
-    "Der unausweichliche Hitzetod des Universums",
-    "Das Anstarren eines Glücksbärchens",
-    "Der Moment wenn man einen Rettungstortilla losschickt der dann abbricht"
-  ],
-  "confirmedCards": [
-    {
-      "covered": true,
-      "text": "Fleischfressende Bakterien"
-    },
-    {
-      "covered": true,
-      "text": "Ein rechtschaffender Cop, der nichts zu verlieren hat"
-    },
-    {
-      "covered": true,
-      "text": "Der Moment wenn man einen Rettungstortilla losschickt der dann abbricht"
-    }
-  ],
-  "scores": [
-    {
-      "name":"Bob",
-      "score":5
-    },
-    {
-      "name":"Jürgen",
-      "score":20
-    },
-    {
-      "name":"Ingo",
-      "score":15
-    }
-  ]
+  "whitecards": [],
+  "activeView": "user-login",
+  "confirmedCards": [],
+  "scores": []
 }

@@ -1,3 +1,4 @@
+const shuffle = require("shuffle-array");
 const HTTP_Server = require("./HTTP_Server");
 const WebSocket_Server = require("./Websocket_Server");
 const DataBase = require("./DataBaseMongo");
@@ -93,10 +94,7 @@ function startGame(players) {
       sock.send(master, { type: "reveal", cards: cards.map(c => c.card) });
     });
     distributeWhitecards(players, initialCards);
-    distributeBlackcards();
-    distributeWhitecards(
-      players.filter(p => p !== game.getCurrentRound().getMaster())
-    );
+    newRound();
   });
 }
 
@@ -133,7 +131,14 @@ function newRound() {
 }
 
 function distributeBlackcards() {
-  return setUpNewRound(db.getRandomCards(msgType.blackcard));
+  let cloze = db.getRandomCards(msgType.blackcard)[0];
+  const names = shuffle(game.getPlayers().map(p => p.name));
+  let i = 0;
+  while (cloze.includes("%p")) {
+    cloze = cloze.replace("%p", names[i]);
+    i++;
+  }
+  return setUpNewRound(cloze);
 }
 
 function distributeWhitecards(players, count = 1) {

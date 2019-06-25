@@ -1,6 +1,8 @@
 import "./Cloze";
 import "./ProceedButton";
 import "./Scoreboard";
+import "./Winner";
+import "./WinningCard";
 import { LitElement, html, css } from "lit-element";
 import store, { observeStore } from "../store/store";
 import { finishRound } from "../store/actions";
@@ -43,9 +45,12 @@ export class RoundEnd extends LitElement {
   render() {
     return html`
       <cloze-text></cloze-text>
-      <score-board></score-board>
-      <winner-player></winner-player>
       <winning-card></winning-card>
+      <br />
+      <score-board></score-board>
+      <br />
+      <winner-player></winner-player>
+      <br />
       ${this.proceedWhenMaster()}
     `;
   }

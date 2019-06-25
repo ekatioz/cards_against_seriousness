@@ -32,7 +32,7 @@ const reduce = (state = initialState, action) => {
       case msgType.nextRound:
         // reset
         draft.round++;
-        draft.roundMaster = data.master;
+        draft.roundMaster = action.data.master;
         draft.activeView = `${state.role}-view`;
         break;
       case msgType.chooseCard:
@@ -66,12 +66,12 @@ const reduce = (state = initialState, action) => {
         draft.activeView = "user-login";
         break;
       case msgType.winner:
-        draft.winner = data.player;
-        draft.winningCard = data.card;
-        draft.scores = data.scores;
+        draft.winner = action.data.player;
+        draft.winningCard = action.data.card;
+        draft.scores = action.data.scores;
         break;
       case msgType.serverMessage:
-        draft.notifications.push(data.msg);
+        draft.notifications.push(action.data.msg);
         break;
       default:
         break;
