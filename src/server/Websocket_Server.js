@@ -43,7 +43,6 @@ WebSocket_Server.prototype.start = function(port) {
     });
     ws.on("message", raw => {
       const msg = JSON.parse(raw);
-      console.log("msg", msg);
       if (msg.type === msgType.newPlayer) {
         const player = new Player(msg.name, id, ws);
         this.players.push(player);

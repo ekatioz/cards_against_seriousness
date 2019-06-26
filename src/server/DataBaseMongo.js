@@ -2,7 +2,6 @@ const shuffle = require("shuffle-array");
 const { msgType } = require("../commonStrings");
 const MongoClient = require("mongodb").MongoClient;
 const mongoUrl = process.env.MONGO_SERVER;
-console.log(mongoUrl);
 
 function DataBase() {
   this.whitecards = [];

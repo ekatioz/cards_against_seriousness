@@ -43,10 +43,11 @@ const reduce = (state = initialState, action) => {
         draft.winner = undefined;
         draft.winningCards = initialState.winningCards;
         draft.confirmedCards = initialState.confirmedCards;
+        draft.choosableCards = initialState.choosableCards;
         break;
       case msgType.chooseCard:
         console.log("action.card", action.card);
-        Socket.send({ type: action.type, cards: action.card });
+        Socket.send({ type: action.type, cards: action.card.map(c => c.text) });
         draft.activeView = "round-end";
         break;
       case msgType.confirmCard:
@@ -90,7 +91,7 @@ const reduce = (state = initialState, action) => {
         break;
       case msgType.winner:
         draft.winner = action.data.player;
-        draft.winningCards = action.data.card;
+        draft.winningCards = action.data.cards;
         draft.scores = action.data.scores;
         break;
       case msgType.serverMessage:

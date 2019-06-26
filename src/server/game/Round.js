@@ -1,7 +1,13 @@
-function Round(master) {
+function Round(master, cloze) {
   this.master = master;
   this.cards = [];
   this.confirmationPromise;
+  this.desiredWhitecards = 0;
+  var regex = /%w/gi,
+    result;
+  while ((result = regex.exec(cloze))) {
+    this.desiredWhitecards++;
+  }
 }
 
 Round.prototype.getMaster = function() {
@@ -14,6 +20,10 @@ Round.prototype.confirmCards = function(player, cards) {
 
 Round.prototype.getConfirmedCards = function() {
   return this.cards;
+};
+
+Round.prototype.getDesiredWhitecards = function() {
+  return this.desiredWhitecards;
 };
 
 module.exports = Round;

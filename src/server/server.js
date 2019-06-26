@@ -105,7 +105,7 @@ sock.onChooseCard(cards => {
   const winner = game
     .getCurrentRound()
     .getConfirmedCards()
-    .filter(c => c.card === cards)[0].player;
+    .filter(c => c.cards.every(card => cards.includes(card)))[0].player;
   winner.score++;
   const scores = game
     .getPlayers()
@@ -119,7 +119,6 @@ sock.onChooseCard(cards => {
 });
 
 sock.onConfirmCard((player, cards) => {
-  console.log(`${cards} from ${player.name} confirmed`);
   sock.send(game.getCurrentRound().getMaster(), { type: "cardConfirmed" });
   game.confirmCards(player, cards);
 });
@@ -127,24 +126,16 @@ sock.onConfirmCard((player, cards) => {
 sock.onNextRound(newRound);
 
 function newRound() {
-  distributeBlackcards();
+  setUpNewRound();
   distributeWhitecards(
     game.getPlayers().filter(p => p !== game.getCurrentRound().getMaster())
   );
 }
 
-function distributeBlackcards() {
-  let cloze = db.getRandomCards(msgType.blackcard)[0];
-  const names = shuffle(game.getPlayers().map(p => p.name));
-  let i = 0;
-  while (cloze.includes("%p")) {
-    cloze = cloze.replace("%p", names[i]);
-    i++;
-  }
-  return setUpNewRound(cloze);
-}
-
-function distributeWhitecards(players, count = 1) {
+function distributeWhitecards(
+  players,
+  count = game.getCurrentRound().getDesiredWhitecards()
+) {
   const cards = db.getRandomCards(msgType.whitecard, players.length * count);
   players.forEach(player =>
     sock.send(player, {
@@ -154,7 +145,14 @@ function distributeWhitecards(players, count = 1) {
   );
 }
 
-function setUpNewRound(cloze) {
+function setUpNewRound() {
+  let cloze = "%p ist %w , weil %w.";
+  const names = shuffle(game.getPlayers().map(p => p.name));
+  let i = 0;
+  while (cloze.includes("%p")) {
+    cloze = cloze.replace("%p", names[i]);
+    i++;
+  }
   game.newRound(cloze);
   const master = game.getCurrentRound().getMaster();
   sock.send(master, { type: msgType.role, role: role.master });
