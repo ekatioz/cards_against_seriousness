@@ -91,18 +91,21 @@ function startGame(players) {
       msg: `${cardcounds.blackcards} blackcards geladen.`
     });
     game.onAllCardsConfirmed((master, cards) => {
-      sock.send(master, { type: "reveal", cards: cards.map(c => c.card) });
+      sock.send(master, {
+        type: "reveal",
+        cards: cards.map(group => group.cards)
+      });
     });
     distributeWhitecards(players, initialCards);
     newRound();
   });
 }
 
-sock.onChooseCard(card => {
+sock.onChooseCard(cards => {
   const winner = game
     .getCurrentRound()
     .getConfirmedCards()
-    .filter(c => c.card === card)[0].player;
+    .filter(c => c.card === cards)[0].player;
   winner.score++;
   const scores = game
     .getPlayers()
@@ -110,15 +113,15 @@ sock.onChooseCard(card => {
   sock.broadcast({
     type: msgType.winner,
     player: winner.name,
-    scores: scores,
-    card: card
+    scores,
+    cards
   });
 });
 
-sock.onConfirmCard((player, card) => {
-  //console.log(`${card} from ${player.name} confirmed`);
+sock.onConfirmCard((player, cards) => {
+  console.log(`${cards} from ${player.name} confirmed`);
   sock.send(game.getCurrentRound().getMaster(), { type: "cardConfirmed" });
-  game.confirmCard(player, card);
+  game.confirmCards(player, cards);
 });
 
 sock.onNextRound(newRound);

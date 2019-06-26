@@ -43,14 +43,15 @@ WebSocket_Server.prototype.start = function(port) {
     });
     ws.on("message", raw => {
       const msg = JSON.parse(raw);
+      console.log("msg", msg);
       if (msg.type === msgType.newPlayer) {
         const player = new Player(msg.name, id, ws);
         this.players.push(player);
         this.newPlayerCallback(player);
       } else if (msg.type === msgType.confirmCard) {
-        this.confirmCardCallback(this.getPlayer(ws), msg.text);
+        this.confirmCardCallback(this.getPlayer(ws), msg.cards);
       } else if (msg.type === msgType.chooseCard) {
-        this.chooseCardCallback(msg.card);
+        this.chooseCardCallback(msg.cards);
       } else if (msg.type === msgType.nextRound) {
         this.nextRoundCallback(this.getPlayer(ws));
       } else if (msg.type === msgType.ready) {

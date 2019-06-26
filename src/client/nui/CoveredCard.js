@@ -56,7 +56,6 @@ export class CoveredCard extends LitElement {
   }
 
   render() {
-    console.log(this.text, this.covered);
     return html`
       <button
         class="card 

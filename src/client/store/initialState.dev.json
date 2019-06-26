@@ -1,9 +1,9 @@
 {
   "round": 1,
   "notifications": [],
-  "activeView": "round-end",
+  "activeView": "master-view",
   "role": "master",
-  "cloze": "Das ist ein toller %w mit einer Lücke!",
+  "cloze": "Das ist ein toller %w mit 2 %w!",
   "whitecards": [
     "Fleischfressende Bakterien",
     "Ein rechtschaffender Cop, der nichts zu verlieren hat",
@@ -12,22 +12,35 @@
     "Das Anstarren eines Glücksbärchens",
     "Der Moment wenn man einen Rettungstortilla losschickt der dann abbricht"
   ],
-  "confirmedCards": [
-    {
-      "covered": true,
-      "text": "Fleischfressende Bakterien"
-    },
-    {
-      "covered": true,
-      "text": "Ein rechtschaffender Cop, der nichts zu verlieren hat"
-    },
-    {
-      "covered": true,
-      "text": "Der Moment wenn man einen Rettungstortilla losschickt der dann abbricht"
-    }
+  "confirmedCards": [],
+  "choosableCards": [
+    [
+      {
+        "covered": true,
+        "text": "Fleischfressende Bakterien"
+      },
+      {
+        "covered": true,
+        "text": "Ein rechtschaffender Cop, der nichts zu verlieren hat"
+      }
+    ],
+    [
+      {
+        "covered": true,
+        "text": "Der Moment wenn man einen Rettungstortilla losschickt der dann abbricht"
+      },
+      {
+        "covered": true,
+        "text": "Das Anstarren eines Glücksbärchens"
+      }
+    ]
+    
   ],
   "winner": "Ingo",
-  "winningCard": "Der Moment wenn man einen Rettungstortilla losschickt der dann abbricht",
+  "winningCards": [
+    "Das Anstarren eines Glücksbärchens",
+    "Der Moment wenn man einen Rettungstortilla losschickt der dann abbricht"
+  ],
   "scores": [
     {
       "name": "Bob",
@@ -41,5 +54,6 @@
       "name": "Ingo",
       "score": 15
     }
-  ]
+  ],
+  "desiredWhitecards": 2
 }

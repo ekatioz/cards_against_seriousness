@@ -1,6 +1,8 @@
+const shuffle = require("shuffle-array");
 const { msgType } = require("../commonStrings");
 const MongoClient = require("mongodb").MongoClient;
-const mongoUrl = "mongodb://192.168.188.36:27017";
+const mongoUrl = process.env.MONGO_SERVER;
+console.log(mongoUrl);
 
 function DataBase() {
   this.whitecards = [];
@@ -58,13 +60,5 @@ DataBase.prototype.getCards = function (topic) {
       });
   });
 };
-
-function shuffle(a) {
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
 
 module.exports = DataBase;

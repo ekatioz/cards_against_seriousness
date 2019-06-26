@@ -3,7 +3,7 @@ import store, { observeStore } from "../store/store";
 
 export class WinningCard extends LitElement {
   static get properties() {
-    return { card: { type: String } };
+    return { cards: { type: String } };
   }
   static get styles() {
     return css`
@@ -38,18 +38,28 @@ export class WinningCard extends LitElement {
   constructor() {
     super();
     observeStore(
-      state => state.winningCard,
+      state => state.winningCards,
       () => {
-        this.card = store.getState().winningCard;
+        this.cards = store.getState().winningCards;
       }
     );
   }
 
   render() {
-    return html([
-      this.card ? '<button class="winningCard">' + this.card + "</button>" : ""
-    ]);
+    if (this.cards.length > 0) {
+      return html`
+        ${this.cards.map(toCard)}
+      `;
+    } else {
+      return html``;
+    }
   }
 }
 
 customElements.define("winning-card", WinningCard);
+
+function toCard(card) {
+  return html`
+    <button class="winningCard">${card}</button>
+  `;
+}

@@ -1,6 +1,7 @@
 import produce from "immer";
 import Socket from "../Socket";
 import { msgType } from "../../commonStrings";
+// import initialState from "./initialState.dev.json";
 import initialState from "./initialState.json";
 
 const reduce = (state = initialState, action) => {
@@ -25,6 +26,12 @@ const reduce = (state = initialState, action) => {
         break;
       case msgType.blackcard:
         draft.cloze = action.data.response;
+        draft.desiredWhitecards = 0;
+        var regex = /%w/gi,
+          result;
+        while ((result = regex.exec(action.data.response))) {
+          draft.desiredWhitecards++;
+        }
         break;
       case msgType.whitecard:
         draft.whitecards.push(...action.data.response);
@@ -34,46 +41,56 @@ const reduce = (state = initialState, action) => {
         draft.roundMaster = action.data.master;
         draft.activeView = `${state.role}-view`;
         draft.winner = undefined;
-        draft.winningCard = undefined;
-        draft.confirmedCards = [];
-
+        draft.winningCards = initialState.winningCards;
+        draft.confirmedCards = initialState.confirmedCards;
         break;
       case msgType.chooseCard:
-        Socket.send({ type: action.type, card: action.card });
+        console.log("action.card", action.card);
+        Socket.send({ type: action.type, cards: action.card });
         draft.activeView = "round-end";
         break;
       case msgType.confirmCard:
         draft.whitecards = state.whitecards.filter(
           card => card !== action.card
         );
-        Socket.send({ type: action.type, text: action.card });
-        draft.activeView = "round-end";
+        draft.confirmedCards.push(action.card);
+        if (draft.confirmedCards.length === state.desiredWhitecards) {
+          Socket.send({ type: action.type, cards: draft.confirmedCards });
+          draft.activeView = "round-end";
+        }
         break;
       case msgType.revealCard:
-        const found = draft.confirmedCards.filter(
-          card => card.text === action.card
-        )[0];
+        const found = draft.choosableCards
+          .flat()
+          .filter(card => card.text === action.card)[0];
         found.covered = false;
         break;
       case msgType.finishRound:
         Socket.send({ type: msgType.nextRound });
         break;
       case msgType.cardConfirmed:
-        draft.confirmedCards.push({
-          covered: true
-        });
+        const covered = [];
+        for (let index = 0; index < state.desiredWhitecards; index++) {
+          covered.push({
+            covered: true
+          });
+        }
+        draft.choosableCards.push(covered);
         break;
       case msgType.reveal:
-        action.data.cards.forEach((card, index) => {
-          draft.confirmedCards[index].text = card;
-        });
+        action.data.cards.forEach((group, groupIndex) =>
+          group.forEach(
+            (card, cardIndex) =>
+              (draft.choosableCards[groupIndex][cardIndex].text = card)
+          )
+        );
         break;
       case msgType.close:
         draft.activeView = "user-login";
         break;
       case msgType.winner:
         draft.winner = action.data.player;
-        draft.winningCard = action.data.card;
+        draft.winningCards = action.data.card;
         draft.scores = action.data.scores;
         break;
       case msgType.serverMessage:
