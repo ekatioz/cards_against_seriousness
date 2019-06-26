@@ -146,7 +146,7 @@ function distributeWhitecards(
 }
 
 function setUpNewRound() {
-  let cloze = "%p ist %w , weil %w.";
+  let cloze = db.getRandomCards(msgType.blackcard)[0];
   const names = shuffle(game.getPlayers().map(p => p.name));
   let i = 0;
   while (cloze.includes("%p")) {
