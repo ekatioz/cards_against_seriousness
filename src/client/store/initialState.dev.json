@@ -1,7 +1,23 @@
 {
   "round": 1,
-  "notifications": [],
-  "activeView": "master-view",
+  "notifications": [
+    {
+      "timestamp": "2019-06-30T08:23:21.536Z",
+      "show":true,
+      "msg": "das ist ein Test"
+    },
+    {
+      "timestamp": "2019-06-30T09:23:25.536Z",
+      "show":true,
+      "msg": "das auch"
+    },
+    {
+      "timestamp": "2019-06-30T09:23:29.536Z",
+      "show":true,
+      "msg": "Früher war ich auch ein Abenteurer, aber dann habe ich einen Pfeil ins Knie bekommen!"
+    }
+  ],
+  "activeView": "slave-view",
   "role": "master",
   "cloze": "Das ist ein toller %w mit 2 %w!",
   "whitecards": [
@@ -34,7 +50,6 @@
         "text": "Das Anstarren eines Glücksbärchens"
       }
     ]
-    
   ],
   "winner": "Ingo",
   "winningCards": [

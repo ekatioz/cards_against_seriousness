@@ -18,7 +18,6 @@ export class CoveredHand extends LitElement {
       :host {
         display: block;
         text-align: center;
-        height: 80vh;
       }
 
       .group:hover {

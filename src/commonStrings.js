@@ -20,6 +20,8 @@ module.exports = {
     revealCard: "revealCard",
     winner: "winner",
     serverMessage: "serverMessage",
-    close: "close"
+    close: "close",
+    removeNotification: "removeNotification",
+    showNotification: "showNotification"
   }
 };

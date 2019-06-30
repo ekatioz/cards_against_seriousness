@@ -1,57 +1,11 @@
 @font-face {
-    font-family: permanentMarker;
-    src: url(./PermanentMarker.ttf);
+  font-family: permanentMarker;
+  src: url(./PermanentMarker.ttf);
 }
 
 body {
-    background-color: #222;
-    color: #eee;
-    font-family: permanentMarker;
-    font-size: 1.5em;
-}
-
-.notifications {
-    position: fixed;
-    right: 0;
-    top: 20vh;
-    z-index: 30;
-    font-size: large;
-    text-align: right;
-    padding: 1em;
-    background-color: #222;
-    cursor: pointer;
-}
-
-.notification {
-    margin-bottom: 0.5em;
-}
-
-
-
-.footer {
-    position: absolute;
-    bottom: 1em;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    box-shadow: 4px -2px 2px -1px #eee;
-    padding-top: 1em;
-}
-
-.footer-link {
-    height: 64px;
-    width: 64px;
-    margin-left: 16px;
-    margin-right: 16px;
-}
-.cardprovider {
-    background-image: url('../resources/cardprovider.png')
-}
-
-.adminPanel {
-    background-image: url('../resources/adminPanel.png')
-}
-
-.github {
-    background-image: url('../resources/GitHub.png')
+  background-color: #222;
+  color: #eee;
+  font-family: permanentMarker;
+  font-size: 1.5em;
 }

@@ -1,4 +1,6 @@
-export { setCookie, getCookie };
+import crypto from "crypto";
+
+export { setCookie, getCookie, hashString };
 
 function setCookie(cname, cvalue, exdays) {
   var d = new Date();
@@ -21,4 +23,10 @@ function getCookie(cname) {
     }
   }
   return;
+}
+
+function hashString(value) {
+  const hash = crypto.createHash("sha256");
+  hash.update(value);
+  return hash.digest("hex");
 }

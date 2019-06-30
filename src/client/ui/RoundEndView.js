@@ -4,26 +4,19 @@ import "./Scoreboard";
 import "./Winner";
 import "./WinningCard";
 import { LitElement, html, css } from "lit-element";
-import store, { observeStore } from "../store/store";
+import store from "../store/store";
 import { finishRound } from "../store/actions";
 import { role } from "../../commonStrings";
+import fullscreen from "../../resources/fullscreen.comp.css";
 
 export class RoundEnd extends LitElement {
   static get properties() {
     return { varib: "" };
   }
   static get styles() {
-    return css`
-      :host {
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        position: absolute;
-        padding: 1em;
-      }
-    `;
+    return css([fullscreen]);
   }
+
 
   onNewRound(e) {
     store.dispatch(finishRound());

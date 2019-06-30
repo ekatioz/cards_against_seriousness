@@ -1,8 +1,8 @@
 import produce from "immer";
 import Socket from "../Socket";
 import { msgType } from "../../commonStrings";
-// import initialState from "./initialState.dev.json";
 import initialState from "./initialState.json";
+//import initialState from "./initialState.dev.json";
 
 const reduce = (state = initialState, action) => {
   return produce(state, draft => {
@@ -94,8 +94,19 @@ const reduce = (state = initialState, action) => {
         draft.winningCards = action.data.cards;
         draft.scores = action.data.scores;
         break;
-      case msgType.serverMessage:
-        draft.notifications.push(action.data.msg);
+      case msgType.showNotification:
+        draft.notifications.push({
+          timestamp: action.timestamp,
+          show: true,
+          msg: action.msg,
+          hash: action.hash
+        });
+        break;
+      case msgType.removeNotification:
+        const hide = draft.notifications.filter(
+          ntfctn => ntfctn.hash === action.hash
+        )[0];
+        hide.show = false;
         break;
       default:
         break;

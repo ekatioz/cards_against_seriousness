@@ -17,6 +17,7 @@ export class ProceedButton extends LitElement {
         color: #eeeeee;
         background-color: transparent;
         font-size: 3em;
+        cursor: pointer;
       }
     `;
   }
@@ -35,7 +36,6 @@ export class ProceedButton extends LitElement {
 }
 
 customElements.define("proceed-button", ProceedButton);
-
 
 /* background: linear-gradient(
   160deg,

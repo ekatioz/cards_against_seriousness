@@ -1,5 +1,6 @@
 import store from "./store/store";
-import { socketAction } from "./store/actions";
+import { socketAction, showNotification } from "./store/actions";
+import { msgType } from "../commonStrings";
 
 class Socket {
   constructor() {
@@ -17,7 +18,11 @@ class Socket {
       this._connection.onmessage = msg => {
         const data = JSON.parse(msg.data);
         console.log("message from socket", data);
-        store.dispatch(socketAction(data));
+        if (data.type === msgType.serverMessage) {
+          store.dispatch(showNotification(data.msg));
+        } else {
+          store.dispatch(socketAction(data));
+        }
       };
       Socket.instance = this;
     }

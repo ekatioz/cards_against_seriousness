@@ -1,22 +1,17 @@
 import getName from "../../resources/names";
-import { LitElement, html, css } from "lit-element";
+import { LitElement, html, css, unsafeCSS } from "lit-element";
 import { getCookie, setCookie } from "../utils";
 import store from "../store/store";
+import fullscreen from "../../resources/fullscreen.comp.css";
 import { updateUsername, login } from "../store/actions";
 import "./ProceedButton";
+import "./Footer";
 
 const userCookie = "username";
 class Login extends LitElement {
   static get styles() {
     return css`
-      :host {
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        position: absolute;
-        padding: 1em;
-      }
+      ${unsafeCSS(fullscreen)}
       .username-input {
         background-color: #222;
         color: #eee;
@@ -39,7 +34,7 @@ class Login extends LitElement {
     const username = store.getState().username;
     if (username && username !== "") {
       setCookie(userCookie, username, 60);
-      store.dispatch(login())
+      store.dispatch(login());
     }
   }
 
@@ -59,6 +54,7 @@ class Login extends LitElement {
         action="Login"
         @proceed="${this.onLogin}"
       ></proceed-button>
+      <cards-footer></cards-footer>
     `;
   }
 }

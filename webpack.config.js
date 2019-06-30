@@ -4,7 +4,7 @@ const HTMLWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
-    main: ["./src/client/CardsAgainst"]
+    main: ["./src/client/ui/CardsAgainst"]
   },
   mode: "development",
   output: {
@@ -17,7 +17,18 @@ module.exports = {
     rules: [
       { test: /\.(ttf)$/, loader: "url-loader" },
       {
-        test: /\.css$/,
+        test: /\.comp\.css$/,
+        use: [
+          {
+            loader: "to-string-loader"
+          },
+          {
+            loader: "css-loader"
+          }
+        ]
+      },
+      {
+        test: [/styles\.css$/, /reset\.css$/],
         use: [
           {
             loader: "style-loader"

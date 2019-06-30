@@ -13,7 +13,6 @@ export class Hand extends LitElement {
       :host {
         display: block;
         text-align: center;
-        height: 80vh;
       }
     `;
   }

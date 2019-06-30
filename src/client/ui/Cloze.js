@@ -10,8 +10,9 @@ class Cloze extends LitElement {
 
   static get styles() {
     return css`
-      .cloze {
-        height: 20vh;
+      :host {
+        display: block;
+        height: 18vh;
       }
     `;
   }
@@ -28,7 +29,7 @@ class Cloze extends LitElement {
 
   render() {
     return html`
-      <div class="cloze">${this.cloze.replace(/%w/g, gapSeperator)}</div>
+      ${this.cloze.replace(/%w/g, gapSeperator)}
     `;
   }
 }
