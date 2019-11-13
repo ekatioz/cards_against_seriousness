@@ -6,7 +6,8 @@ class Socket {
   constructor() {
     if (!Socket.instance) {
       this._listeners = {};
-      this._connection = new WebSocket(`ws://${location.hostname}:13700`);
+      const socketURL = `ws://${window.location.hostname}:${window.location.port}/`;
+      this._connection = new WebSocket(socketURL);
       this._connection.onopen = () => console.log("ws connection open");
       this._connection.onerror = error =>
         console.log("WebSocket Error " + error);
