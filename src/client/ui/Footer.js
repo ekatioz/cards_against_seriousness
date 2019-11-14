@@ -60,7 +60,7 @@ class Footer extends LitElement {
       <footer-icon
         caption="Admin Panel"
         image="${adminPanel}"
-        target="adminPanel"
+        target="admin"
       ></footer-icon>
       <footer-icon
         caption="Cards Against Seriousness auf GitHub"
