@@ -14,6 +14,7 @@ export class ProceedButton extends LitElement {
         z-index: 5;
         border: none;
         right: 1em;
+        bottom: 0;
         color: #eeeeee;
         background-color: transparent;
         font-size: 3em;
