@@ -66,7 +66,7 @@
             })
         }
 
-        const escape = (value) => value.replace('💣', '%25w').replace('😎', '%25p');
+        const escape = (value) => value.replace(/💣/g, '%25w').replace(/😎/g, '%25p');
 
         addGap.addEventListener('click', (e) => {
             blackText.value = blackText.value + '💣';
