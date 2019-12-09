@@ -54,7 +54,7 @@ function ExpressServer() {
       console.log("new message: ", raw);
       const msg = JSON.parse(raw);
       if (msg.type === msgType.newPlayer) {
-        const player = new Player(msg.name, ws.id, ws);
+        const player = new Player(msg.name, id, ws);
         this.players.push(player);
         this.newPlayerCallback(player);
       } else if (msg.type === msgType.confirmCard) {
