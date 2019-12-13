@@ -38,8 +38,10 @@ export class Scoreboard extends LitElement {
 
   render() {
     return html`
-      ${this.scores.sort((a, b) => b.score - a.score).map(scoreToRow)}
-      <div class="row"></cloze-text>
+      ${this.scores
+        .map(x => x)
+        .sort((a, b) => b.score - a.score)
+        .map(scoreToRow)}
     `;
   }
 }
