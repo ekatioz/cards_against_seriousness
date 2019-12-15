@@ -20,7 +20,7 @@ export class CoveredHand extends LitElement {
         text-align: center;
       }
 
-      .group:hover {
+      .group:not(.slave):hover {
         background-color: #eeeeee;
         background: radial-gradient(
           ellipse at center,
@@ -64,7 +64,7 @@ export class CoveredHand extends LitElement {
       `;
     }
     return html`
-      <div class="group">
+      <div class="group ${store.getState().role}">
         ${cards.map(this.toCard.bind(this))}
       </div>
     `;

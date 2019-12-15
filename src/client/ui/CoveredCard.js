@@ -1,4 +1,6 @@
 import { LitElement, html, css } from "lit-element";
+import store from "../store/store";
+import { role } from "../../commonStrings";
 
 export class CoveredCard extends LitElement {
   static get properties() {
@@ -39,14 +41,20 @@ export class CoveredCard extends LitElement {
         font-size: 6em;
       }
 
-      .card:not(.locked):hover {
+      .card:not(.locked):not(.slave):hover {
         box-shadow: 0 0 7px 3px rgba(238, 238, 238, 0.5);
+      }
+
+      .slave {
+        opacity: 0.6;
+        filter: grayscale(1);
+        cursor: unset;
       }
     `;
   }
 
   onClick(e) {
-    if (this.text) {
+    if (this.text && store.getState().role === role.master) {
       this.dispatchEvent(
         new CustomEvent("choose", {
           detail: { covered: this.covered, card: this.text }
@@ -61,6 +69,7 @@ export class CoveredCard extends LitElement {
         class="card 
         ${this.covered ? "covered" : ""}
         ${this.text ? "" : "locked"}
+        ${store.getState().role}
         "
         @click="${this.onClick}"
       >

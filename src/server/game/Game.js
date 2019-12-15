@@ -1,7 +1,7 @@
 const Round = require("./Round");
 
-function Game(players) {
-  this.players = players;
+function Game() {
+  this.players = [];
   this.rounds = [];
 }
 
@@ -9,8 +9,21 @@ Game.prototype.getPlayers = function() {
   return this.players;
 };
 
+Game.prototype.getPlayer = function(id) {
+  return this.players.find(player => player.id === id);
+};
+
 Game.prototype.addPlayer = function(player) {
   player.new = true;
+  this.players.push(player);
+};
+
+Game.prototype.removePlayer = function(id) {
+  const player = this.getPlayer(id);
+  if (player) {
+    this.players.splice(this.players.indexOf(player), 1);
+  }
+  return player;
 };
 
 Game.prototype.newRound = function(cloze) {
@@ -24,8 +37,11 @@ Game.prototype.newRound = function(cloze) {
 };
 
 Game.prototype.confirmCards = function(player, cards) {
+  console.log("confirmCards",player,cards);
   this.getCurrentRound().confirmCards(player, cards);
   const confirmed = this.getCurrentRound().getConfirmedCards();
+  console.log("confirmed",confirmed);
+  console.log("plyers",this.players);
   if (confirmed.length === this.players.filter(p => !p.new).length - 1) {
     this.allCardsConfirmed(this.getCurrentRound().getMaster(), confirmed);
   }

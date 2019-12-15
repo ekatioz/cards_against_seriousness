@@ -3,8 +3,7 @@ import "./CoveredHand";
 import { LitElement, html, css } from "lit-element";
 import fullscreen from "../../resources/fullscreen.comp.css";
 
-class MasterView extends LitElement {
-
+class SpectatorView extends LitElement {
   static get styles() {
     return css([fullscreen]);
   }
@@ -17,4 +16,4 @@ class MasterView extends LitElement {
   }
 }
 
-customElements.define("master-view", MasterView);
+customElements.define("spectator-view", SpectatorView);

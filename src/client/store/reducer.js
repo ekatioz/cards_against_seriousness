@@ -1,6 +1,6 @@
 import produce from "immer";
 import Socket from "../Socket";
-import { msgType } from "../../commonStrings";
+import { msgType, role } from "../../commonStrings";
 import initialState from "./initialState.json";
 //import initialState from "./initialState.dev.json";
 
@@ -46,7 +46,6 @@ const reduce = (state = initialState, action) => {
         draft.choosableCards = initialState.choosableCards;
         break;
       case msgType.chooseCard:
-        console.log("action.card", action.card);
         Socket.send({ type: action.type, cards: action.card.map(c => c.text) });
         draft.activeView = "round-end";
         break;
@@ -57,14 +56,21 @@ const reduce = (state = initialState, action) => {
         draft.confirmedCards.push(action.card);
         if (draft.confirmedCards.length === state.desiredWhitecards) {
           Socket.send({ type: action.type, cards: draft.confirmedCards });
-          draft.activeView = "round-end";
+          draft.activeView = "spectator-view";
         }
         break;
       case msgType.revealCard:
         const found = draft.choosableCards
           .flat()
-          .filter(card => card.text === action.card)[0];
+          .find(
+            card =>
+              card.text ===
+              (draft.role === role.master ? action.card : action.data.card)
+          );
         found.covered = false;
+        if (draft.role === role.master) {
+          Socket.send({ type: action.type, card: action.card });
+        }
         break;
       case msgType.finishRound:
         Socket.send({ type: msgType.nextRound });
@@ -93,6 +99,7 @@ const reduce = (state = initialState, action) => {
         draft.winner = action.data.player;
         draft.winningCards = action.data.cards;
         draft.scores = action.data.scores;
+        draft.activeView = "round-end";
         break;
       case msgType.showNotification:
         draft.notifications.push({

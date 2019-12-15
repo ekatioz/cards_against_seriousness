@@ -1,10 +1,9 @@
 const shuffle = require("shuffle-array");
-const HTTP_Server = require("./HTTP_Server");
-const WebSocket_Server = require("./Websocket_Server");
 const ExpressServer = require("./ExpressServer");
 const DataBase = require("./DataBaseMongo");
 const Game = require("./game/Game");
 const { msgType, role } = require("../commonStrings");
+const Player = require("./game/Player");
 
 const express = new ExpressServer().start(8081);
 const db = new DataBase();
@@ -42,10 +41,19 @@ express.get("/provide", (req, res) => {
   db.addCard(type, text).then(() => res.send("done!"));
 });
 
-express.onPlayerLeft(player => {
-  if (express.players.length > 0) {
-    express.publishPlayers();
-    if (game && player.equals(game.getCurrentRound().getMaster())) {
+express.on(msgType.playerLeft, (msg, id) => {
+  const player = game ? game.removePlayer(id) : {};
+  if (!game || !player) {
+    return;
+  }
+  if (game.getPlayers().length > 0) {
+    publishPlayers();
+    if (
+      game &&
+      game.isRunning() &&
+      player &&
+      player.equals(game.getCurrentRound().getMaster())
+    ) {
       newRound();
     }
     express.broadcast({
@@ -57,51 +65,33 @@ express.onPlayerLeft(player => {
   }
 });
 
-express.onNewPlayer(player => {
-  express.publishPlayers();
+express.on(msgType.newPlayer, (msg, id) => {
+  if (!game) game = new Game();
+  const player = new Player(msg.name, id);
+  game.addPlayer(player);
+  publishPlayers();
   express.broadcast(
-    { type: msgType.serverMessage, msg: `${player.name} ist beigetreten.` },
+    {
+      type: msgType.serverMessage,
+      msg: `${player.name} ist beigetreten.`
+    },
     player
   );
 });
 
-express.onPlayerReady((player, allReady, players) => {
-  express.publishPlayers();
+express.on(msgType.ready, (msg, id) => {
+  const player = game.getPlayer(id);
+  const players = game.getPlayers();
+  player.ready = true;
+  const allReady = players.filter(p => !p.ready).length === 0;
+  publishPlayers();
   if (allReady) {
     if (!game || !game.isRunning()) startGame(players);
-    else joinGame(player);
+    else players.filter(player => player.new).forEach(joinGame);
   }
 });
 
-function joinGame(player) {
-  console.log(player.name, "joined");
-  game.addPlayer(player);
-  distributeWhitecards([player], initialCards);
-}
-
-function startGame(players) {
-  game = new Game(players);
-  db.reloadCards().then(cardcounds => {
-    express.broadcast({
-      type: msgType.serverMessage,
-      msg: `${cardcounds.whitecards} whitecards geladen.`
-    });
-    express.broadcast({
-      type: msgType.serverMessage,
-      msg: `${cardcounds.blackcards} blackcards geladen.`
-    });
-    game.onAllCardsConfirmed((master, cards) => {
-      express.send(master, {
-        type: "reveal",
-        cards: cards.map(group => group.cards)
-      });
-    });
-    distributeWhitecards(players, initialCards);
-    newRound();
-  });
-}
-
-express.onChooseCard(cards => {
+express.on(msgType.chooseCard, ({ cards }) => {
   const winner = game
     .getCurrentRound()
     .getConfirmedCards()
@@ -118,12 +108,53 @@ express.onChooseCard(cards => {
   });
 });
 
-express.onConfirmCard((player, cards) => {
-  express.send(game.getCurrentRound().getMaster(), { type: "cardConfirmed" });
-  game.confirmCards(player, cards);
+express.on(msgType.confirmCard, (msg, id) => {
+  express.broadcast({ type: "cardConfirmed" });
+  game.confirmCards(game.getPlayer(id), msg.cards);
 });
 
-express.onNextRound(newRound);
+express.on(msgType.nextRound, newRound);
+
+express.on(msgType.revealCard, (msg, id) => {
+  express.broadcast({ type: msgType.revealCard, card: msg.card }, id);
+});
+
+function publishPlayers() {
+  express.broadcast({
+    type: msgType.userlist,
+    users: game.getPlayers().map(player => ({
+      name: player.name,
+      ready: player.ready
+    }))
+  });
+}
+
+function joinGame(player) {
+  console.log("joinGame")
+  console.log(player.name, "joined");
+  distributeWhitecards([player], initialCards);
+}
+
+function startGame(players) {
+  db.reloadCards().then(cardcounds => {
+    express.broadcast({
+      type: msgType.serverMessage,
+      msg: `${cardcounds.whitecards} whitecards geladen.`
+    });
+    express.broadcast({
+      type: msgType.serverMessage,
+      msg: `${cardcounds.blackcards} blackcards geladen.`
+    });
+    game.onAllCardsConfirmed((master, cards) => {
+      express.broadcast({
+        type: "reveal",
+        cards: cards.map(group => group.cards)
+      });
+    });
+    distributeWhitecards(players, initialCards);
+    newRound();
+  });
+}
 
 function newRound() {
   setUpNewRound();
@@ -138,7 +169,7 @@ function distributeWhitecards(
 ) {
   const cards = db.getRandomCards(msgType.whitecard, players.length * count);
   players.forEach(player =>
-    express.send(player, {
+    express.send(player.id, {
       type: msgType.whitecard,
       response: cards.splice(0, count)
     })
@@ -155,8 +186,8 @@ function setUpNewRound() {
   }
   game.newRound(cloze);
   const master = game.getCurrentRound().getMaster();
-  express.send(master, { type: msgType.role, role: role.master });
-  express.broadcast({ type: msgType.role, role: role.slave }, master);
+  express.send(master.id, { type: msgType.role, role: role.master });
+  express.broadcast({ type: msgType.role, role: role.slave }, master.id);
   express.broadcast({ type: msgType.nextRound, master: master.name });
   express.broadcast({ type: msgType.blackcard, response: cloze });
 }

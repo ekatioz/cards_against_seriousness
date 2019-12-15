@@ -5,6 +5,7 @@ import "../../resources/styles.css";
 import "./Login";
 import "./Lobby";
 import "./MasterView";
+import "./SpectatorView";
 import "./SlaveView";
 import "./RoundEndView";
 import "./Notifications";

@@ -6,6 +6,7 @@ module.exports = {
   msgType: {
     updateUsername: "updateUsername",
     newPlayer: "newUser",
+    playerLeft: "playerLeft",
     ready: "ready",
     userlist: "userlist",
     role: "role",
