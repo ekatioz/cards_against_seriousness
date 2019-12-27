@@ -32,13 +32,18 @@ express.get("/kick", (req, res) => {
 express.get("/cards", (req, res) => {
   var type = req.query.type;
   db.getCards(type).then(rows => {
-    res.send(rows.map(r => r.value));
+    res.send(rows);
   });
 });
 
 express.get("/provide", (req, res) => {
   var { text, type } = req.query;
   db.addCard(type, text).then(() => res.send("done!"));
+});
+
+express.get("/delete", (req, res) => {
+  var { id, type } = req.query;
+  db.deleteCard(type, id).then(() => res.send("done!"));
 });
 
 express.on(msgType.playerLeft, (msg, id) => {

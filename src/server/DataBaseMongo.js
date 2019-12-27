@@ -1,6 +1,6 @@
 const shuffle = require("shuffle-array");
 const { msgType } = require("../commonStrings");
-const MongoClient = require("mongodb").MongoClient;
+const {MongoClient, ObjectId} = require("mongodb");
 const mongoUrl = process.env.MONGO_SERVER;
 
 function DataBase() {
@@ -15,6 +15,17 @@ DataBase.prototype.addCard = function (topic, text) {
     dbo
       .collection(`${topic}s`)
       .insertOne(card)
+      .then(() => db.close());
+  });
+};
+
+DataBase.prototype.deleteCard = function (topic, id) {
+  return MongoClient.connect(mongoUrl, { useNewUrlParser: true }).then(db => {
+    var dbo = db.db("cards");
+    var card = { _id: ObjectId(id) };
+    dbo
+      .collection(`${topic}s`)
+      .deleteOne(card)
       .then(() => db.close());
   });
 };

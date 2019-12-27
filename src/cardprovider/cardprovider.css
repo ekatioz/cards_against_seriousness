@@ -13,6 +13,10 @@ button {
   cursor: pointer;
 }
 
+.deleteBtn{
+  display: block;
+}
+
 .textInput {
   border: 5px solid orange;
   font-size: 20px;
@@ -41,7 +45,7 @@ button {
 }
 
 .entry {
-  border-bottom: 1px solid #bbb;
+  border-bottom: 1px solid orange;
   line-height: 35px;
   font-size: 20px;
 }

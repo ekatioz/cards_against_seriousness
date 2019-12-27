@@ -2,93 +2,97 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Card Provider</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="cardprovider.css" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Card Provider</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" media="screen" href="cardprovider.css" />
 </head>
 
 <body>
-    <div class="whites">
-        <h1>Whitecards</h1>
-        <textarea class="textInput" id="whiteText"></textarea>
-        <button id="addWhite">hinzufügen</button>
-        <br>
-        <div id="list"></div>
-    </div>
+  <div class="whites">
+    <h1>Whitecards</h1>
+    <textarea class="textInput" id="whiteText"></textarea>
+    <button id="addWhite">hinzufügen</button>
+    <br>
+    <div id="list"></div>
+  </div>
 
-    <div class="blacks">
-        <h1>Blackcards</h1>
-        <textarea class="textInput" id="blackText"></textarea>
-        <button id="addGap">Lücke einfügen</button>
-        <button id="addPlayerGap">Spielername einfügen</button>
-        <button id="addBlack">hinzufügen</button>
-        <br>
-        <div id="listBlack"></div>
-    </div>
+  <div class="blacks">
+    <h1>Blackcards</h1>
+    <textarea class="textInput" id="blackText"></textarea>
+    <button id="addGap">Lücke einfügen</button>
+    <button id="addPlayerGap">Spielername einfügen</button>
+    <button id="addBlack">hinzufügen</button>
+    <br>
+    <div id="listBlack"></div>
+  </div>
 
-    <script>
+  <script>
 
-        var list = document.getElementById("list");
-        var listBlack = document.getElementById("listBlack");
-        var addWhite = document.getElementById("addWhite");
-        var addBlack = document.getElementById("addBlack");
-        var whiteText = document.getElementById("whiteText");
-        var blackText = document.getElementById("blackText");
-        var addGap = document.getElementById("addGap");
+    var list = document.getElementById("list");
+    var listBlack = document.getElementById("listBlack");
+    var addWhite = document.getElementById("addWhite");
+    var addBlack = document.getElementById("addBlack");
+    var whiteText = document.getElementById("whiteText");
+    var blackText = document.getElementById("blackText");
+    var addGap = document.getElementById("addGap");
 
-        function update(type) {
-            fetch(`/cards?type=${type}`).then(res => {
-                console.log(type);
-                if (type === 'whitecard') {
-                    list.innerHTML = '';
-                    whiteText.value = '';
-                    res.json().then(json => json.forEach(element => {
-                        var entry = document.createElement('div');
-                        entry.className = 'entry';
-                        entry.innerText = element;
-                        list.appendChild(entry);
-                    }));
-                } else {
-                    listBlack.innerHTML = '';
-                    blackText.value = '';
-                    res.json().then(json => json.forEach(element => {
-                        element = element.replace(/\%w/g, '💣');
-                        element = element.replace(/\%p/g, '😎');
+    function addEntry(list, element, type) {
+      var entry = document.createElement('div');
+      var deleteBtn = document.createElement('button');
+      deleteBtn.className = "deleteBtn";
+      deleteBtn.innerText ="löschen";
+      deleteBtn.addEventListener("click", () => fetch(`/delete?id=${element._id}&type=${type}`).then(() => update(type)));
+      entry.className = 'entry';
+      entry.innerText = element.value;
+      entry.appendChild(deleteBtn);
+      list.appendChild(entry);
+    }
 
-                        var entry = document.createElement('div');
-                        entry.className = 'entry';
-                        entry.innerText = element;
-                        listBlack.appendChild(entry);
-                    }));
-                }
-            })
+    function update(type) {
+      fetch(`/cards?type=${type}`).then(res => {
+        console.log(type);
+        if (type === 'whitecard') {
+          list.innerHTML = '';
+          whiteText.value = '';
+          res.json().then(json => json.forEach(element => addEntry(list, element, type)));
+        } else {
+          listBlack.innerHTML = '';
+          blackText.value = '';
+          res.json().then(json => json.forEach(element => {
+            element.value = element.value.replace(/\%w/g, '💣');
+            element.value = element.value.replace(/\%p/g, '😎');
+
+            addEntry(listBlack, element, type)
+          }));
         }
+      })
+    }
 
-        const escape = (value) => value.replace(/💣/g, '%25w').replace(/😎/g, '%25p');
+    const escape = (value) => value.replace(/💣/g, '%25w').replace(/😎/g, '%25p');
 
-        addGap.addEventListener('click', (e) => {
-            blackText.value = blackText.value + '💣';
-            blackText.focus();
-        });
-        addPlayerGap.addEventListener('click', (e) => {
-            blackText.value = blackText.value + '😎';
-            blackText.focus();
-        });
-        addWhite.addEventListener('click', (e) => {
-            if (whiteText.value !== '') {
-                fetch(`/provide?text=${whiteText.value}&type=whitecard`).then(() => update('whitecard'));
-            }
-        });
-        addBlack.addEventListener('click', (e) => {
-            if (blackText.value !== '') {
-                fetch(`/provide?text=${escape(blackText.value)}&type=blackcard`).then(() => update('blackcard'));
-            }
-        });
-        update('whitecard');
-        update('blackcard'); 
-    </script>
+    addGap.addEventListener('click', (e) => {
+      blackText.value = blackText.value + '💣';
+      blackText.focus();
+    });
+    addPlayerGap.addEventListener('click', (e) => {
+      blackText.value = blackText.value + '😎';
+      blackText.focus();
+    });
+    addWhite.addEventListener('click', (e) => {
+      if (whiteText.value !== '') {
+        fetch(`/provide?text=${whiteText.value}&type=whitecard`).then(() => update('whitecard'));
+      }
+    });
+    addBlack.addEventListener('click', (e) => {
+      if (blackText.value !== '') {
+        fetch(`/provide?text=${escape(blackText.value)}&type=blackcard`).then(() => update('blackcard'));
+      }
+    });
+    update('whitecard');
+    update('blackcard'); 
+  </script>
 </body>
 
 </html>
