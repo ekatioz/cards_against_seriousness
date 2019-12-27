@@ -1,21 +1,52 @@
-.whites{
-    width: 47%;
-    position: absolute;
-    left:0;
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
 }
 
-.blacks{
-    width: 47%;
-    position: absolute;
-    right:0;
-}
-
-.entry{
-    border-bottom: 1px solid #bbb;
-    line-height: 25px;
+button {
+  padding: 5px 15px;
+  background-color: orange;
+  font-weight: bolder;
+  cursor: pointer;
 }
 
 .textInput {
-    width: 90%;
-    height: 8em;
+  border: 5px solid orange;
+  font-size: 20px;
+  padding: 15px;
+}
+
+.whites, .blacks {
+  width: 50%;
+  position: absolute;
+  padding: 0 15px;
+}
+
+.whites {
+  left: 0;
+}
+
+.blacks {
+  background-color: #222;
+  color: #fff;
+  right: 0;
+}
+
+.blacks .textInput {
+  background-color: #222;
+  color: #fff;
+}
+
+.entry {
+  border-bottom: 1px solid #bbb;
+  line-height: 35px;
+  font-size: 20px;
+}
+
+.textInput {
+  width: 90%;
+  height: 8em;
 }
