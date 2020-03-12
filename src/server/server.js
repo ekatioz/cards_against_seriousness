@@ -153,7 +153,7 @@ function startGame(players) {
     game.onAllCardsConfirmed((master, cards) => {
       express.broadcast({
         type: "reveal",
-        cards: cards.map(group => group.cards)
+        cards: cards.map(group => group.cards).shuffle()
       });
     });
     distributeWhitecards(players, initialCards);
