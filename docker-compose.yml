@@ -1,0 +1,24 @@
+version: "3.3"
+services:
+  cards:
+    build: .
+    command: bash -c "npm run build && npm run server"
+    volumes:
+      - .:/usr/src/app/
+      - /usr/src/app/node_modules
+    ports:
+      - "8081:8081"
+    restart: always
+    depends_on:
+      - mongo
+    environment:
+      MONGO_SERVER: "mongodb://root:oier9g839ve9er03249fus0d@mongo:27017"
+
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - /data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: oier9g839ve9er03249fus0d
