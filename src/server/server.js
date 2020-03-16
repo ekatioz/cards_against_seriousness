@@ -135,7 +135,7 @@ function publishPlayers() {
 }
 
 function joinGame(player) {
-  console.log("joinGame")
+  console.log("joinGame");
   console.log(player.name, "joined");
   distributeWhitecards([player], initialCards);
 }
@@ -153,7 +153,7 @@ function startGame(players) {
     game.onAllCardsConfirmed((master, cards) => {
       express.broadcast({
         type: "reveal",
-        cards: cards.map(group => group.cards).shuffle()
+        cards: shuffle(cards.map(group => group.cards))
       });
     });
     distributeWhitecards(players, initialCards);
