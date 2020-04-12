@@ -53,8 +53,9 @@ function ExpressServer() {
   });
 
   const interval = setInterval(() => {
+    console.log('sending heartbeat');
     this.wss.clients.forEach((socket) => {
-      if (!socket.isAlive) socket.terminte();
+      if (!socket.isAlive) socket.terminate();
       else {
         socket.isAlive = false;
         socket.ping(() => { });
