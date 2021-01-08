@@ -1,0 +1,36 @@
+version: "3.9"
+services:
+    client:
+        image: "nginx"
+        volumes: 
+            - "./client/dist:/usr/share/nginx/html"
+        restart: unless-stopped
+    api-server:
+        build: ./server/.
+        image: "cards-server"
+        volumes: 
+            - "./server:/server"
+            - "./node_modules:/server/node_modules"
+        restart: unless-stopped
+        environment:
+            SERVER_PORT: "${SERVER_PORT}"
+            MONGO_SERVER_URI: "${MONGO_SERVER_URI}"
+    nginx:
+        image: "nginx"
+        volumes:
+            - ./nginx.conf:/etc/nginx/nginx.conf
+            - ./certs/:/etc/nginx/certs/
+        ports:
+            - 80:80
+            - 443:443
+        restart: unless-stopped
+    mongo:
+        image: mongo
+        restart: unless-stopped
+        ports: 
+            - 27017:27017
+        volumes:
+            - ./database:/data/db
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: "${MONGO_INITDB_ROOT_USERNAME}"
+            MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"

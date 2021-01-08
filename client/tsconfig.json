@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "ES6",
+        "moduleResolution": "Node",
+        "target": "es2016",
+        "noImplicitAny": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "allowJs": true,
+        "esModuleInterop": true
+    },
+    "include": [
+      "**/*.ts"
+    ]
+}

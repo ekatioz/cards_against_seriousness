@@ -1,0 +1,6 @@
+node_modules
+database
+certs
+dist
+client/package-lock.json
+server/package-lock.json
